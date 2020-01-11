@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node main.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "pkg": "wasm-pack build --target web --release --out-dir ../../trusted-ui/static/js/pkg ../phase2-2/phase2 && rm -f ./static/js/pkg/.gitignore"
   },
   "keywords": [],
   "author": "",

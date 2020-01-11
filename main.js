@@ -10,7 +10,7 @@ const express = require('express')
 const fileUpload = require('express-fileupload')
 const app = express()
 app.use(fileUpload({}))
-app.use(express.static('public'))
+app.use(express.static('static'))
 
 let currentContributionIndex = 0
 
@@ -28,13 +28,13 @@ async function uploadToS3(response) {
 }
 
 async function verifyResponse() {
-    const { stdout, stderr } = await exec('./verify_transform_constrained challenge response new_challenge')
+    const { stdout, stderr } = await exec('./verify_contribution circuit.json old.params new.params')
     console.log(stdout)
     console.error(stderr)
 }
 
 app.get('/challenge', async (req, res) => {
-    res.sendFile('challenge', { root: __dirname })
+    res.sendFile('old.params', { root: __dirname })
 })
 
 app.post('/response', async (req, res) => {
@@ -45,13 +45,13 @@ app.post('/response', async (req, res) => {
 
     await mutex.runExclusive(async () => {
         console.log(`Started processing response ${currentContributionIndex}`)
-        await fs.writeFile('response', req.files.response.data)
+        await fs.writeFile('new.params', req.files.response.data)
         await verifyResponse()
-        await uploadToS3(req.files.response.data)
-        await fs.rename('response', `response${currentContributionIndex}`)
+//        await uploadToS3(req.files.response.data)
+//        await fs.rename('response', `response${currentContributionIndex}`)
 
         console.log(`Committing changes for contribution ${currentContributionIndex}`)
-        await fs.rename('new_challenge', 'challenge')
+        await fs.rename('new.params', 'old.params')
         currentContributionIndex++;
 
         console.log('Finished')
