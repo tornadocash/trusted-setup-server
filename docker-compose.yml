@@ -1,0 +1,11 @@
+version: '2'
+services:
+  app:
+    build: .
+    environment:
+      VIRTUAL_HOST: trustedaf.poma.in
+      LETSENCRYPT_HOST: trustedaf.poma.in
+networks:
+  default:
+    external:
+      name: frontend_default
