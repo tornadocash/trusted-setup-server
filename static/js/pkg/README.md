@@ -4,7 +4,7 @@ This library is still under development.
 
 ## WebAssembly how-to
 
-Build wasm package using `wasm-pack build --release`
+Build wasm package using `wasm-pack build --release -- --no-default-features --features wasm`
 
 this will generate `./pkg` directory with wasm file and js bindings. After that you 
 can use this package in your browser application like so:

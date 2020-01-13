@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node main.js",
-    "pkg": "wasm-pack build --target web --release --out-dir ../../trusted-ui/static/js/pkg ../phase2-2/phase2 && rm -f ./static/js/pkg/.gitignore"
+    "pkg": "wasm-pack build --target web --release --out-dir ../../trusted-ui/static/js/pkg ../phase2-2/phase2 -- --no-default-features --features wasm && rm -f ./static/js/pkg/.gitignore"
   },
   "keywords": [],
   "author": "",

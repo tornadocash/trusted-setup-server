@@ -1,13 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
 /**
-*/
-export function test1(): void;
-/**
-* @param {Uint8Array} params 
-*/
-export function test2(params: Uint8Array): void;
-/**
 * @param {Uint8Array} params 
 * @returns {Uint8Array} 
 */

@@ -47,11 +47,6 @@ function takeObject(idx) {
     dropObject(idx);
     return ret;
 }
-/**
-*/
-export function test1() {
-    wasm.test1();
-}
 
 let WASM_VECTOR_LEN = 0;
 
@@ -60,14 +55,6 @@ function passArray8ToWasm0(arg, malloc) {
     getUint8Memory0().set(arg, ptr / 1);
     WASM_VECTOR_LEN = arg.length;
     return ptr;
-}
-/**
-* @param {Uint8Array} params
-*/
-export function test2(params) {
-    var ptr0 = passArray8ToWasm0(params, wasm.__wbindgen_malloc);
-    var len0 = WASM_VECTOR_LEN;
-    wasm.test2(ptr0, len0);
 }
 
 let cachegetInt32Memory0 = null;
@@ -186,6 +173,9 @@ function init(module) {
     };
     imports.wbg.__wbindgen_throw = function(arg0, arg1) {
         throw new Error(getStringFromWasm0(arg0, arg1));
+    };
+    imports.wbg.__wbindgen_rethrow = function(arg0) {
+        throw takeObject(arg0);
     };
 
     if ((typeof URL === 'function' && module instanceof URL) || typeof module === 'string' || (typeof Request === 'function' && module instanceof Request)) {
