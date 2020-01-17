@@ -28,13 +28,19 @@ async function uploadToS3(response) {
 }
 
 async function verifyResponse() {
-    const { stdout, stderr } = await exec('./verify_contribution circuit.json old.params new.params')
+    const { stdout, stderr } = await exec(
+        '../bin/verify_contribution circuit.json old.params new.params',
+        {
+            cwd: './snark_files/', 
+            env: { 'RUST_BACKTRACE': 1}
+        }
+    )
     console.log(stdout)
     console.error(stderr)
 }
 
 app.get('/challenge', async (req, res) => {
-    res.sendFile('old.params', { root: __dirname })
+    res.sendFile('./snark_files/old.params', { root: __dirname })
 })
 
 app.post('/response', async (req, res) => {
@@ -46,18 +52,19 @@ app.post('/response', async (req, res) => {
     await mutex.runExclusive(async () => {
         try {
             console.log(`Started processing response ${currentContributionIndex}`)
-            await fs.writeFile('new.params', req.files.response.data)
+            await fs.writeFile('./snark_files/new.params', req.files.response.data)
             await verifyResponse()
     //        await uploadToS3(req.files.response.data)
     //        await fs.rename('response', `response${currentContributionIndex}`)
 
             console.log(`Committing changes for contribution ${currentContributionIndex}`)
-            await fs.rename('new.params', 'old.params')
+            await fs.rename('./snark_files/new.params', './snark_files/old.params')
             currentContributionIndex++;
 
             console.log('Finished')
             res.send()
         } catch (e) {
+            console.log('e', e)
             res.status(503).send(e.toString())
         }
     });
