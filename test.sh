@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 set -e
 
-./new circuit.json old.params
 npm run start &
 
 cp ./contribute /tmp
