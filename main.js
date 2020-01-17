@@ -44,18 +44,22 @@ app.post('/response', async (req, res) => {
     }
 
     await mutex.runExclusive(async () => {
-        console.log(`Started processing response ${currentContributionIndex}`)
-        await fs.writeFile('new.params', req.files.response.data)
-        await verifyResponse()
-//        await uploadToS3(req.files.response.data)
-//        await fs.rename('response', `response${currentContributionIndex}`)
+        try {
+            console.log(`Started processing response ${currentContributionIndex}`)
+            await fs.writeFile('new.params', req.files.response.data)
+            await verifyResponse()
+    //        await uploadToS3(req.files.response.data)
+    //        await fs.rename('response', `response${currentContributionIndex}`)
 
-        console.log(`Committing changes for contribution ${currentContributionIndex}`)
-        await fs.rename('new.params', 'old.params')
-        currentContributionIndex++;
+            console.log(`Committing changes for contribution ${currentContributionIndex}`)
+            await fs.rename('new.params', 'old.params')
+            currentContributionIndex++;
 
-        console.log('Finished')
-        res.send()
+            console.log('Finished')
+            res.send()
+        } catch (e) {
+            res.status(503).send(e.toString())
+        }
     });
 })
 
