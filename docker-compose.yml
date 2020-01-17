@@ -2,9 +2,13 @@ version: '2'
 services:
   app:
     build: .
+    restart: always
     environment:
       VIRTUAL_HOST: trustedaf.poma.in
       LETSENCRYPT_HOST: trustedaf.poma.in
+      nginx_client_max_body_size: 50m
+    volumes:
+      - /data/powers/verify_contribution:/app/verify_contribution
 networks:
   default:
     external:
