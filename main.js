@@ -78,15 +78,25 @@ app.post('/response', async (req, res) => {
 
 async function init() {
     db = await mysql.createPool({
-        host: process.env.DB_HOST || 'localhost',
-        port: process.env.DB_PORT || '3306',
-        user: process.env.DB_USER || 'root',
-        database: process.env.DB_DATABASE || 'phase2',
-        password: process.env.DB_PASSWORD,
+        host: process.env.MYSQL_HOST || 'localhost',
+        port: process.env.MYSQL_PORT || '3306',
+        user: process.env.MYSQL_USER || 'root',
+        database: process.env.MYSQL_DATABASE || 'phase2',
+        password: process.env.MYSQL_PASSWORD,
         connectionLimit: 100
     })
-    const [rows, _] = await db.query('select max(id) as max from contributions')
-    currentContributionIndex = rows[0].max
+    let [rows, _] = await db.query("show tables like 'contributions'")
+    if (rows.length === 0) {
+        console.log("Database appears to be empty, creating tables")
+        const sqlFile = await fs.readFile('seed.sql')
+        for (let s of sqlFile.toString().split(';')) {
+            if (s.trim().length > 0) {
+                await db.query(s)
+            }
+        }
+    }
+    [rows, _] = await db.query('select max(id) as max from contributions')
+    currentContributionIndex = rows[0].max || 0
     const port = process.env.PORT || 8000
     app.listen(port)
     console.log('Started on port', port)
