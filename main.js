@@ -20,7 +20,7 @@ async function uploadToS3(response) {
     try {
         await s3.upload({
             Bucket: process.env.AWS_S3_BUCKET,
-            Key: `response${currentContributionIndex}`,
+            Key: `response_${currentContributionIndex}`,
             ACL: 'public-read',
             Body: response,
         }).promise()
@@ -31,7 +31,7 @@ async function uploadToS3(response) {
 
 async function verifyResponse() {
     const { stdout, stderr } = await exec(
-        '../bin/verify_contribution circuit.json old.params new.params',
+        '../bin/verify_contribution circuit.json current.params new.params',
         {
             cwd: './snark_files/', 
             env: { 'RUST_BACKTRACE': 1}
@@ -42,11 +42,16 @@ async function verifyResponse() {
 }
 
 async function insertContributionInfo(name, company) {
-    const [rows, _] = await db.execute('insert into contributions values(?, ?)', [name, company])
+    const bytes = await crypto.randomBytes(32)
+    const [rows, _] = await db.execute('insert into contributions values(?, ?, ?)', [bytes.toString('hex'), name, company])
+}
+
+async function insertContributionInfoByToken(token, name, company) {
+    const [rows, _] = await db.execute('update contributions set name = ?, company = ? where token = ? limit 1', [name, company, token])
 }
 
 app.get('/challenge', async (req, res) => {
-    res.sendFile('./snark_files/old.params', { root: __dirname })
+    res.sendFile('./snark_files/current.params', { root: __dirname })
 })
 
 app.post('/response', async (req, res) => {
@@ -60,11 +65,14 @@ app.post('/response', async (req, res) => {
             console.log(`Started processing response ${currentContributionIndex}`)
             await fs.writeFile('./snark_files/new.params', req.files.response.data)
             await verifyResponse()
-    //        await uploadToS3(req.files.response.data)
-    //        await fs.rename('response', `response${currentContributionIndex}`)
+
+            console.log("Contribution is correct, uploading to storage")
+            await uploadToS3(req.files.response.data)
+            await fs.copyFile('new.params', `response_${currentContributionIndex}`)
 
             console.log(`Committing changes for contribution ${currentContributionIndex}`)
-            await fs.rename('./snark_files/new.params', './snark_files/old.params')
+            await fs.rename('./snark_files/new.params', './snark_files/current.params')
+            await insertContributionInfo(req.body.name, req.body.company)
             currentContributionIndex++;
 
             console.log('Finished')

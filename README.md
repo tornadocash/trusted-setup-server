@@ -8,9 +8,9 @@
 1. Download [withdraw.json](https://github.com/tornadocash/tornado-core/releases/download/v2.0/withdraw.json) for required circuit to `./phase2` folder
 1. `cd ../phase2`
 1. `cp ../powersoftau/phase1radix* .`
-1. `cargo run --release --bin new withdraw.json old.params`
-1. The `old.params` file is your initial challenge file.
-1. copy `old.params` and `withdraw.json` to trusted-setup-server project.
+1. `cargo run --release --bin new withdraw.json current.params`
+1. The `current.params` file is your initial challenge file.
+1. copy `current.params` and `withdraw.json` to trusted-setup-server project.
 1. `mv withdraw.json circuit.json`
  
 # Run the server
