@@ -1,5 +1,6 @@
 require('dotenv').config()
 const fs = require('fs').promises
+const crypto = require('crypto')
 const util = require('util')
 const exec = util.promisify(require('child_process').exec)
 const { Mutex } = require('async-mutex')
@@ -42,8 +43,8 @@ async function verifyResponse() {
 }
 
 async function insertContributionInfo(name, company) {
-    const bytes = await crypto.randomBytes(32)
-    const [rows, _] = await db.execute('insert into contributions values(?, ?, ?)', [bytes.toString('hex'), name, company])
+    const token = crypto.randomBytes(32).toString('hex')
+    const [rows, _] = await db.execute('insert into contributions(token, name, company) values(?, ?, ?)', [token, name, company])
 }
 
 async function insertContributionInfoByToken(token, name, company) {
@@ -72,7 +73,7 @@ app.post('/response', async (req, res) => {
 
             console.log(`Committing changes for contribution ${currentContributionIndex}`)
             await fs.rename('./snark_files/new.params', './snark_files/current.params')
-            await insertContributionInfo(req.body.name, req.body.company)
+            await insertContributionInfo('qwe', 'asd') /*req.body.name, req.body.company*/
             currentContributionIndex++;
 
             console.log('Finished')
@@ -104,7 +105,8 @@ async function init() {
         }
     }
     [rows, _] = await db.query('select max(id) as max from contributions')
-    currentContributionIndex = rows[0].max || 0
+    currentContributionIndex = (rows[0].max || 0) + 1
+    console.log('Current contribution index:', currentContributionIndex)
     const port = process.env.PORT || 8000
     app.listen(port)
     console.log('Started on port', port)
