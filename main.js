@@ -12,6 +12,8 @@ const app = express()
 app.use(fileUpload({}))
 app.use(express.static('static'))
 
+const mysql = require('mysql2/promise');
+let db;
 let currentContributionIndex = 0
 
 async function uploadToS3(response) {
@@ -37,6 +39,10 @@ async function verifyResponse() {
     )
     console.log(stdout)
     console.error(stderr)
+}
+
+async function insertContributionInfo(name, company) {
+    const [rows, _] = await db.execute('insert into contributions values(?, ?)', [name, company])
 }
 
 app.get('/challenge', async (req, res) => {
@@ -70,8 +76,22 @@ app.post('/response', async (req, res) => {
     });
 })
 
-const port = process.env.PORT || 8000
-app.listen(port)
-console.log('Started on port', port)
+async function init() {
+    db = await mysql.createPool({
+        host: process.env.DB_HOST || 'localhost',
+        port: process.env.DB_PORT || '3306',
+        user: process.env.DB_USER || 'root',
+        database: process.env.DB_DATABASE || 'phase2',
+        password: process.env.DB_PASSWORD,
+        connectionLimit: 100
+    })
+    const [rows, _] = await db.query('select max(id) as max from contributions')
+    currentContributionIndex = rows[0].max
+    const port = process.env.PORT || 8000
+    app.listen(port)
+    console.log('Started on port', port)
+}
+
+init()
 
 
