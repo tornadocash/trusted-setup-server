@@ -68,8 +68,8 @@ app.post('/response', async (req, res) => {
             await verifyResponse()
 
             console.log("Contribution is correct, uploading to storage")
-            await uploadToS3(req.files.response.data)
-            await fs.copyFile('new.params', `response_${currentContributionIndex}`)
+            // await uploadToS3(req.files.response.data)
+            await fs.copyFile('./snark_files/new.params', `./snark_files/response_${currentContributionIndex}`)
 
             console.log(`Committing changes for contribution ${currentContributionIndex}`)
             await fs.rename('./snark_files/new.params', './snark_files/current.params')

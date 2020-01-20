@@ -13,6 +13,13 @@
 1. copy `current.params` and `withdraw.json` to trusted-setup-server project.
 1. `mv withdraw.json circuit.json`
  
+# Setup
+1. `npm i`
+1. `cp .env.example .env`
+1. Install mysql db. `brew install mysql` 
+1. `mysql -uroot`
+1. `CREATE DATABASE phase2;`
+
 # Run the server
 
 ```shell script
