@@ -7,14 +7,34 @@ const { Mutex } = require('async-mutex')
 const mutex = new Mutex()
 const aws = require('aws-sdk')
 const s3 = new aws.S3()
+
 const express = require('express')
+const bodyParser = require('body-parser')
+const logger = require('express-logger')
+const cookieParser = require('cookie-parser')
+const session = require('express-session')
+const cors = require('cors')
+
 const fileUpload = require('express-fileupload')
+const mysql = require('mysql2/promise')
 const app = express()
 app.use(fileUpload({}))
 app.use(express.static('static'))
 
-const mysql = require('mysql2/promise');
-let db;
+const sessions = require('./controllers/sessions');
+app.use(cors())
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.json())
+app.use(logger({ path: "log/express.log" }))
+app.use(cookieParser())
+app.use(session({ secret: process.env.SESSION_SECRET, resave: false, saveUninitialized: true }))
+app.use((req, res, next) => {
+  res.locals.session = req.session
+  next()
+})
+app.use('/sessions', sessions);
+
+let db
 let currentContributionIndex = 0
 
 async function uploadToS3(response) {
