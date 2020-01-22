@@ -9,8 +9,13 @@
   <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center">
     <div class="col-md-12 p-lg-5 mx-auto my-5">
       <h1 class="display-4 font-weight-normal">Trusted AF Setup Ceremony</h1>
+      <% if (userData) { %>
+        <h2> Hello <%= userData.name %></h2>
+      <% } %>
       <button class="btn btn-primary" href="#" id="contributeBtn">Make the contribution</button>
-      <a class="btn btn-primary" href="/sessions/connect">SignIn</a>
+      <% if (userData.name === 'Anonymous') { %>
+        <a class="btn btn-primary" href="/connect">SignIn</a>
+      <% } %>
       <p class="lead font-weight-normal" id="status"></p>
     </div>
   </div>

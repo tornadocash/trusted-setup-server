@@ -3,16 +3,19 @@ const router = express.Router()
 const oauth = require('oauth')
 const logger = require('express-logger')
 
-const _twitterConsumerKey = process.env.TWITTER_CONSUMER_KEY
-const _twitterConsumerSecret = process.env.TWITTER_CONSUMER_SECRET
-const twitterCallbackUrl = process.env.TWITTER_CALLBACK_URL
-const consumer = new oauth.OAuth('https://twitter.com/oauth/request_token', 'https://twitter.com/oauth/access_token',_twitterConsumerKey, _twitterConsumerSecret, '1.0A', twitterCallbackUrl, 'HMAC-SHA1')
+const consumer = new oauth.OAuth(
+  'https://twitter.com/oauth/request_token',
+  'https://twitter.com/oauth/access_token',
+  process.env.TWITTER_CONSUMER_KEY,
+  process.env.TWITTER_CONSUMER_SECRET,
+  '1.0A',
+  process.env.TWITTER_CALLBACK_URL,
+  'HMAC-SHA1')
 
 router.get('/connect', (req, res) => {
-  consumer.getOAuthRequestToken(function (error, oauthToken, oauthTokenSecret, results) {
-    console.log('error, oauthToken, oauthTokenSecret, results', error, oauthToken, oauthTokenSecret, results)
+  consumer.getOAuthRequestToken(function (error, oauthToken, oauthTokenSecret,) {
     if (error) {
-      res.send(error, 500)
+      res.status(500).send(error)
     } else {
       req.session.oauthRequestToken = oauthToken
       req.session.oauthRequestTokenSecret = oauthTokenSecret
@@ -29,31 +32,33 @@ router.get('/twitter_callback', (req, res) => {
     (error, oauthAccessToken, oauthAccessTokenSecret,) => {
       if (error) {
         logger.error(error)
-        res.send(error, 500)
-      }
-      else {
+        res.status(500).send(error)
+      } else {
         req.session.oauthAccessToken = oauthAccessToken
         req.session.oauthAccessTokenSecret = oauthAccessTokenSecret
-        res.redirect('/sessions/home')
+        res.redirect('/')
       }
     })
 })
 
 router.get('/home', function(req, res){
-  consumer.get('https://api.twitter.com/1.1/account/verify_credentials.json', req.session.oauthAccessToken, req.session.oauthAccessTokenSecret, function (error, data,) {
-    if (error) {
-      console.log('error', error)
-      res.redirect('/sessions/connect')
-      // res.send("Error getting twitter screen name : " + util.inspect(error), 500);
-    } else {
-      var parsedData = JSON.parse(data)
-      console.log('name', parsedData.name)
-      console.log('screen_name', parsedData.screen_name)
-      console.log('description', parsedData.description)
+  consumer.get(
+    'https://api.twitter.com/1.1/account/verify_credentials.json',
+    req.session.oauthAccessToken,
+    req.session.oauthAccessTokenSecret, 
+    function (error, data,) {
+      if (error) {
+        console.log('error', error)
+        res.redirect('/connect')
+      } else {
+        var parsedData = JSON.parse(data)
+        console.log('name', parsedData.name)
+        console.log('screen_name', parsedData.screen_name)
+        console.log('description', parsedData.description)
 
-      // req.session.twitterScreenName = response.screen_name;    
-      res.send('You are signed in: @' + parsedData.screen_name)
-    } 
-  })
+        // req.session.twitterScreenName = response.screen_name;    
+        res.send('You are signed in: @' + parsedData.screen_name)
+      } 
+    })
 })
 module.exports = router
