@@ -17,12 +17,18 @@ Contributions.insertContributionInfo = async function(name, company) {
   )
 }
   
-// async function insertContributionInfoByToken(token, name, company) {
-//   const [rows, _] = await db.execute(
-//     'update contributions set name = ?, company = ? where token = ? limit 1',
-//     [name, company, token]
-//   )
-// }
+Contributions.updateContributionInfo = async function(token, name, company) {
+  await sql.execute(
+    'insert into contributions(token, name, company) values(?, ?, ?)',
+    [token, name, company]
+  )
+}
+
+Contributions.getContributions = async function() {
+  const [rows,] = await db.execute('select id, name, company from contributions')
+  return rows
+}
+
 
 async function main () {
   ({ sql } = await db())

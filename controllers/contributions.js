@@ -1,5 +1,5 @@
-// const aws = require('aws-sdk')
-// const s3 = new aws.S3()
+const aws = require('aws-sdk')
+const s3 = new aws.S3()
 const fs = require('fs').promises
 const path = require('path')
 const util = require('util')
@@ -20,23 +20,20 @@ const consumer = new oauth.OAuth(
   process.env.TWITTER_CALLBACK_URL,
   'HMAC-SHA1')
 
-// async function uploadToS3(response) {
-//   try {
-//     await s3.upload({
-//       Bucket: process.env.AWS_S3_BUCKET,
-//       Key: `response_${currentContributionIndex}`,
-//       ACL: 'public-read',
-//       Body: response,
-//     }).promise()
-//   } catch (err) {
-//     console.log(err)
-//   }
-// }
+async function uploadToS3(response) {
+  const currentContributionIndex = await Contribution.currentContributionIndex()
+  return await s3.upload({
+    Bucket: process.env.AWS_S3_BUCKET,
+    Key: `response_${currentContributionIndex}`,
+    ACL: 'public-read',
+    Body: response,
+  }).promise()
+}
 
 async function verifyResponse() {
+  console.log('Running verifier')
   const { stdout, stderr } = await exec(
-    '../bin/verify_contribution circuit.json current.params new.params',
-    {
+    '../bin/verify_contribution circuit.json current.params /tmp/new.params', {
       cwd: './snark_files/', 
       env: { 'RUST_BACKTRACE': 1 }
     }
@@ -69,6 +66,11 @@ router.get('/challenge', (req, res) => {
   res.sendFile('./snark_files/current.params', { root: path.join(__dirname, '../') })
 })
 
+router.get('/contributions', async (req, res) => {
+  const contributions = await Contribution.getContributions()
+  res.json(contributions).send()
+})
+
 router.post('/response', async (req, res) => {
   if (!req.files.response) {
     res.status(400).send('Missing response file')
@@ -76,27 +78,34 @@ router.post('/response', async (req, res) => {
   }
 
   await mutex.runExclusive(async () => {
+    const currentContributionIndex = await Contribution.currentContributionIndex()
     try {
-      const currentContributionIndex = await Contribution.currentContributionIndex()
-      console.log(`Started processing response ${currentContributionIndex}`)
-      await fs.writeFile('./snark_files/new.params', req.files.response.data)
+      console.log(`Started processing contribution ${currentContributionIndex}`)
+      await fs.writeFile('/tmp/new.params', req.files.response.data)
       await verifyResponse()
+    } catch (e) {
+      console.error('Error', e)
+      res.status(422).send(e.toString())
+    }
 
+    try {
       console.log('Contribution is correct, uploading to storage')
       // await uploadToS3(req.files.response.data)
-      await fs.copyFile(
-        './snark_files/new.params',
-        `./snark_files/response_${currentContributionIndex}`
+      // await fs.copyFile(
+      //   '/tmp/new.params',
+      //   `./snark_files/response_${currentContributionIndex}`
+      // )
+
+      console.log('Committing changes')
+      await fs.rename('/tmp/new.params', './snark_files/current.params')
+      await Contribution.insertContributionInfo(
+        req.body ? req.body.name || null : null,
+        req.body ? req.body.company || null : null
       )
-
-      console.log(`Committing changes for contribution ${currentContributionIndex}`)
-      await fs.rename('./snark_files/new.params', './snark_files/current.params')
-      await Contribution.insertContributionInfo('qwe', 'asd') /*req.body.name, req.body.company*/
-
       console.log('Finished')
       res.send()
     } catch (e) {
-      console.log('e', e)
+      console.error('Error', e)
       res.status(503).send(e.toString())
     }
   })
