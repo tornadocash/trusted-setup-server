@@ -1,0 +1,63 @@
+@import 'base';
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: url('../img/bg.png') repeat;
+  background-size: 40px 164px;
+
+  > .main-content {
+    flex: 1;
+  }
+}
+
+.header {
+  padding-top: 20px;
+  padding-left: .75rem;
+  padding-right: .75rem;
+
+  @include tablet {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+
+  @include desktop {
+    > .container {
+      .navbar-brand {
+        margin-left: 0;
+
+        .navbar-item {
+          padding-left: 0;
+        }
+      }
+    }
+  }
+
+  .navbar-brand {
+    align-items: center;
+  }
+
+  @include mobile {
+    .navbar-menu {
+      text-align: center;
+    }
+  }
+
+  .logo {
+    height: 40px;
+  }
+}
+
+.input {
+  transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out;
+}
+
+.button {
+  transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+  font-weight: $weight-bold;
+
+  &.is-primary.is-outlined {
+    background-color: rgba($primary, .104);
+  }
+}
