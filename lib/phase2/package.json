@@ -1,0 +1,24 @@
+{
+  "name": "phase2",
+  "collaborators": [
+    "Sean Bowe <ewillbefull@gmail.com>"
+  ],
+  "description": "Library for performing MPCs for creating zk-SNARK public parameters",
+  "version": "0.2.2",
+  "license": "MIT/Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ebfull/phase2"
+  },
+  "files": [
+    "phase2_bg.wasm",
+    "phase2.js",
+    "phase2.d.ts",
+    "LICENSE-APACHE",
+    "LICENSE-MIT"
+  ],
+  "module": "phase2.js",
+  "homepage": "https://github.com/ebfull/phase2",
+  "types": "phase2.d.ts",
+  "sideEffects": "false"
+}
