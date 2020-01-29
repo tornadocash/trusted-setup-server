@@ -59,5 +59,19 @@
 
   &.is-primary.is-outlined {
     background-color: rgba($primary, .104);
+
+    &.is-loading:focus {
+      background-color: rgba($primary, .104);
+
+      &::after {
+        border-color: transparent transparent $primary $primary !important;
+      }
+    }
+  }
+
+  &.is-loading {
+    &::after {
+      border-radius: 100%;
+    }
   }
 }

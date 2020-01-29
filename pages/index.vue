@@ -3,7 +3,7 @@
     <div class="title is-size-1">Hello, Anonymous</div>
     <div class="buttons is-centered">
       <b-button
-        :disable="isContributeBtnDisabled"
+        :loading="isContributeBtnDisabled"
         @click="makeContribution"
         type="is-primary"
         outlined
