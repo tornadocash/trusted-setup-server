@@ -1,14 +1,20 @@
+require('dotenv').config()
+const fs = require('fs')
+const path = require('path')
 const express = require('express')
-const consola = require('consola')
+const bodyParser = require('body-parser')
+const morgan = require('morgan')
+const session = require('express-session')
+const fileUpload = require('express-fileupload')
 const { Nuxt, Builder } = require('nuxt')
+const config = require('../nuxt.config.js')
+const sessionsController = require('./controllers/sessions')
+const contributionController = require('./controllers/contributions')
+
 const app = express()
 
-// Import and Set Nuxt.js options
-const config = require('../nuxt.config.js')
-config.dev = process.env.NODE_ENV !== 'production'
-
 async function start() {
-  // Init Nuxt.js
+  config.dev = process.env.NODE_ENV !== 'production'
   const nuxt = new Nuxt(config)
 
   const { host, port } = nuxt.options.server
@@ -24,11 +30,34 @@ async function start() {
   // Give nuxt middleware to express
   app.use(nuxt.render)
 
-  // Listen the server
-  app.listen(port, host)
-  consola.ready({
-    message: `Server listening on http://${host}:${port}`,
-    badge: true
+  app.use(fileUpload({}))
+  app.use(bodyParser.urlencoded({ extended: true }))
+  app.use(bodyParser.json())
+
+  const accessLogStream = fs.createWriteStream(
+    path.join(__dirname, 'access.log'),
+    {
+      flags: 'a'
+    }
+  )
+  app.use(morgan('combined', { stream: accessLogStream }))
+
+  app.use(
+    session({
+      secret: process.env.SESSION_SECRET,
+      resave: false,
+      saveUninitialized: true
+    })
+  )
+  app.use((req, res, next) => {
+    res.locals.session = req.session
+    next()
+  })
+  app.use('/', sessionsController)
+  app.use('/', contributionController)
+
+  app.listen(port, host, () => {
+    console.log(`Server is running on port ${port}.`)
   })
 }
 start()
