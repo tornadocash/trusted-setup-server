@@ -2,18 +2,21 @@
   <div class="has-text-centered">
     <div class="title is-size-1">Hello, Anonymous</div>
     <div class="buttons is-centered">
-      <b-button :disable="isContributeBtnDisabled" type="is-primary" outlined
+      <b-button
+        :disable="isContributeBtnDisabled"
+        @click="makeContribution"
+        type="is-primary"
+        outlined
         >Make the contribution</b-button
       >
       <b-button type="is-primary" outlined>Sign In</b-button>
     </div>
+    {{ status }}
   </div>
 </template>
 
 <script>
 /* eslint-disable no-console */
-import init, { contribute } from '@/lib/phase2/phase2.js'
-const initPromise = init()
 
 const timeout = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 
@@ -28,15 +31,15 @@ export default {
     async makeContribution({ retry = 0 } = {}) {
       try {
         this.isContributeBtnDisabled = true
-        await initPromise
 
         this.status = 'Downloading last contribution'
-        let data = await fetch('challenge')
+        let data = await fetch('api/challenge')
         data = new Uint8Array(await data.arrayBuffer())
 
         this.status = 'Generating random contribution'
         await timeout(100) // allow UI to update before freezing in wasm
         console.log('Source params', data)
+        const contribute = await this.$contribute()
         const result = contribute(data)
         console.log('Updated params', result)
 
@@ -45,7 +48,7 @@ export default {
         formData.append('response', new Blob([result], { type: 'application/octet-stream' }))
         formData.append('name', 'William') // TODO put real name here
         formData.append('company', 'Microsoft')
-        const resp = await fetch('response', {
+        const resp = await fetch('api/response', {
           method: 'POST',
           body: formData
         })

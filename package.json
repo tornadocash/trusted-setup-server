@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.3.6",
+    "@open-wc/webpack-import-meta-loader": "^0.4.1",
     "async-mutex": "^0.1.4",
     "aws-sdk": "^2.610.0",
     "body-parser": "^1.19.0",
@@ -23,6 +24,7 @@
     "express-fileupload": "^1.1.6",
     "express-session": "^1.17.0",
     "morgan": "^1.9.1",
+    "multer": "^1.4.2",
     "mysql2": "^2.1.0",
     "nuxt": "^2.0.0",
     "nuxt-buefy": "^0.3.2",

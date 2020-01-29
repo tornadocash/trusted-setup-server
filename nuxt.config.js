@@ -72,7 +72,7 @@ module.exports = {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [],
+  plugins: [{ src: '~plugins/phase2', ssr: false }],
   /*
    ** Nuxt.js dev-modules
    */
@@ -107,7 +107,12 @@ module.exports = {
     /*
      ** You can extend webpack config here
      */
-    extend(config, ctx) {},
+    extend(config, ctx) {
+      config.module.rules.push({
+        test: /\.js$/,
+        loader: require.resolve('@open-wc/webpack-import-meta-loader')
+      })
+    },
     html: {
       minify: {
         collapseWhitespace: true, // as @dario30186 mentioned
