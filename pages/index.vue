@@ -34,9 +34,9 @@
       </div>
     </div>
 
-    <div v-show="status" class="status">
-      <div class="status-message">{{ status }}</div>
-      <div v-show="!isContibutionCompleted" class="status-spinner"></div>
+    <div v-show="status.msg !== ''" class="status">
+      <div :class="status.type" class="status-message">{{ status.msg }}</div>
+      <div v-show="status.type === ''" class="status-spinner"></div>
     </div>
 
     <div class="buttons is-centered">
@@ -48,7 +48,11 @@
       >
         Make the contribution
       </b-button>
-      <b-button v-if="isContibutionCompleted" type="is-primary" outlined>
+      <b-button
+        v-if="isContributeBtnDisabled && status.type === 'is-success'"
+        type="is-primary"
+        outlined
+      >
         Tweet about your contribution
       </b-button>
     </div>
@@ -67,8 +71,10 @@ export default {
   data() {
     return {
       isContributeBtnDisabled: false,
-      isContibutionCompleted: false,
-      status: '',
+      status: {
+        type: '',
+        msg: ''
+      },
       isLoggedIn: false
     }
   },
@@ -77,18 +83,19 @@ export default {
       try {
         this.isContributeBtnDisabled = true
 
-        this.status = 'Downloading last contribution'
+        this.status.msg = 'Downloading last contribution'
+        this.status.type = ''
         let data = await fetch('api/challenge')
         data = new Uint8Array(await data.arrayBuffer())
 
-        this.status = 'Generating random contribution'
+        this.status.msg = 'Generating random contribution'
         await timeout(100) // allow UI to update before freezing in wasm
         console.log('Source params', data)
         const contribute = await this.$contribute()
         const result = contribute(data)
         console.log('Updated params', result)
 
-        this.status = 'Uploading and verifying your contribution'
+        this.status.msg = 'Uploading and verifying your contribution'
         const formData = new FormData()
         formData.append('response', new Blob([result], { type: 'application/octet-stream' }))
         formData.append('name', 'William') // TODO put real name here
@@ -99,19 +106,26 @@ export default {
         })
 
         if (resp.ok) {
-          this.status = 'Your contribution is verified and recorded. THX BYE.'
-          this.isContibutionCompleted = true
+          this.status.msg = 'Your contribution is verified and recorded. THX BYE.'
+          this.status.type = 'is-success'
         } else if (resp.status === 422) {
           if (retry < 3) {
             console.log(`Looks like someone else uploaded contribution ahead of us, retrying`)
             await this.makeContribution({ retry: retry++ })
           } else {
-            this.status = `Failed to upload your contribution after ${retry} attempts`
+            this.status.msg = `Failed to upload your contribution after ${retry} attempts`
+            this.status.type = 'is-danger'
+            this.isContributeBtnDisabled = false
           }
         } else {
-          this.status = 'Error uploading your contribution'
+          this.status.msg = 'Error uploading your contribution'
+          this.status.type = 'is-danger'
+          this.isContributeBtnDisabled = false
         }
-      } finally {
+      } catch (e) {
+        console.error(e.message)
+        this.status.msg = e.message
+        this.status.type = 'is-danger'
         this.isContributeBtnDisabled = false
       }
     }

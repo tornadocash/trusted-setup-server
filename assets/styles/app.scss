@@ -184,6 +184,10 @@
   .status-message {
     color: $primary;
     text-align: center;
+
+    &.is-danger {
+      color: $danger;
+    }
   }
 }
 
