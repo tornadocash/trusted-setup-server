@@ -165,7 +165,12 @@
   justify-content: center;
   align-items: center;
 
+  &:not(:last-child) {
+    margin-bottom: $block-spacing;
+  }
+
   .status-spinner {
+    margin-top: 1.5rem;
     &:after {
       content: '';
       display: block;
@@ -177,7 +182,6 @@
   }
 
   .status-message {
-    padding-bottom: 1.5rem;
     color: $primary;
     text-align: center;
   }

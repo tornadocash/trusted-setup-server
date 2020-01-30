@@ -34,19 +34,23 @@
       </div>
     </div>
 
+    <div v-show="status" class="status">
+      <div class="status-message">{{ status }}</div>
+      <div v-show="!isContibutionCompleted" class="status-spinner"></div>
+    </div>
+
     <div class="buttons is-centered">
       <b-button
-        :loading="isContributeBtnDisabled"
+        v-if="!isContributeBtnDisabled"
         @click="makeContribution"
         type="is-primary"
         outlined
-        >Make the contribution</b-button
       >
-    </div>
-
-    <div v-show="status" class="status">
-      <div class="status-message">{{ status }}</div>
-      <div class="status-spinner"></div>
+        Make the contribution
+      </b-button>
+      <b-button v-if="isContibutionCompleted" type="is-primary" outlined>
+        Tweet about your contribution
+      </b-button>
     </div>
   </div>
 </template>
@@ -63,6 +67,7 @@ export default {
   data() {
     return {
       isContributeBtnDisabled: false,
+      isContibutionCompleted: false,
       status: '',
       isLoggedIn: false
     }
@@ -95,6 +100,7 @@ export default {
 
         if (resp.ok) {
           this.status = 'Your contribution is verified and recorded. THX BYE.'
+          this.isContibutionCompleted = true
         } else if (resp.status === 422) {
           if (retry < 3) {
             console.log(`Looks like someone else uploaded contribution ahead of us, retrying`)
