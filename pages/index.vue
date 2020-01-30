@@ -1,6 +1,39 @@
 <template>
-  <div class="has-text-centered">
-    <div class="title is-size-1">Hello, Anonymous</div>
+  <div class="ceremony">
+    <div class="title is-size-1 is-spaced">Hello, <span>Anonymous</span></div>
+    <div class="subtitle">Lorem ipsum dolor sit amet, consectetur?</div>
+    <p class="p">
+      If you don’t trust binaries, we encorage you to follow this <a href="">instruction</a> to
+      contribute by compiling from source code. It is very easy!
+    </p>
+
+    <div class="columns is-centered">
+      <div class="column is-one-third">
+        <div class="box">
+          <div class="title is-5">Lorem ipsum</div>
+          <Cloak />
+        </div>
+      </div>
+      <div class="column is-one-third">
+        <div :class="{ 'is-hovered': isLoggedIn }" class="box">
+          <div class="title is-5">Lorem ipsum</div>
+          <div v-if="isLoggedIn" class="fields">
+            <b-field label="Name">
+              <b-input value="Vitalik Buterin"></b-input>
+            </b-field>
+            <b-field label="Company">
+              <b-input value="Ethereum"></b-input>
+            </b-field>
+          </div>
+          <div v-else class="buttons">
+            <b-button @click="isLoggedIn = true" type="is-primary" outlined expanded>
+              Sign In
+            </b-button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="buttons is-centered">
       <b-button
         :loading="isContributeBtnDisabled"
@@ -9,22 +42,29 @@
         outlined
         >Make the contribution</b-button
       >
-      <b-button type="is-primary" outlined>Sign In</b-button>
     </div>
-    {{ status }}
+
+    <div v-show="status" class="status">
+      <div class="status-message">{{ status }}</div>
+      <div class="status-spinner"></div>
+    </div>
   </div>
 </template>
 
 <script>
 /* eslint-disable no-console */
-
+import Cloak from '@/components/Cloak'
 const timeout = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 
 export default {
+  components: {
+    Cloak
+  },
   data() {
     return {
       isContributeBtnDisabled: false,
-      status: ''
+      status: '',
+      isLoggedIn: false
     }
   },
   methods: {
