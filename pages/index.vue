@@ -53,6 +53,9 @@
       <b-button
         v-if="isContributeBtnDisabled && status.type === 'is-success'"
         type="is-primary"
+        tag="a"
+        href="https://twitter.com/intent/tweet?text=Hello%20world"
+        target="_blank"
         outlined
       >
         Tweet about your contribution

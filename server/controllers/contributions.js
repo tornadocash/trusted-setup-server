@@ -1,28 +1,30 @@
-// const aws = require('aws-sdk')
-// const s3 = new aws.S3()
 const fs = require('fs').promises
 const path = require('path')
 const util = require('util')
 const exec = util.promisify(require('child_process').exec)
+const aws = require('aws-sdk')
 const express = require('express')
-const router = express.Router()
 const { Mutex } = require('async-mutex')
-const mutex = new Mutex()
 const multer = require('multer')
+
+const mutex = new Mutex()
+const s3 = new aws.S3()
+const router = express.Router()
 const Contribution = require('../models/contributions.model.js')
 const upload = multer({ dest: '/tmp/tornado' })
 
-// async function uploadToS3(response) {
-//   const currentContributionIndex = await Contribution.currentContributionIndex()
-//   return await s3
-//     .upload({
-//       Bucket: process.env.AWS_S3_BUCKET,
-//       Key: `response_${currentContributionIndex}`,
-//       ACL: 'public-read',
-//       Body: response
-//     })
-//     .promise()
-// }
+async function uploadToS3({ filename }) {
+  const currentContributionIndex = await Contribution.currentContributionIndex()
+  const fileContent = await fs.readFile(`/tmp/tornado/${filename}`)
+  return s3
+    .upload({
+      Bucket: process.env.AWS_S3_BUCKET,
+      Key: `response_${currentContributionIndex}`,
+      ACL: 'public-read',
+      Body: fileContent
+    })
+    .promise()
+}
 
 async function verifyResponse({ filename }) {
   console.log('Running verifier')
@@ -56,7 +58,6 @@ router.post('/response', upload.single('response'), async (req, res) => {
     const currentContributionIndex = await Contribution.currentContributionIndex()
     try {
       console.log(`Started processing contribution ${currentContributionIndex}`)
-      // await fs.writeFile('/tmp/new.params', req.file.response.data)
       await verifyResponse({ filename: req.file.filename })
     } catch (e) {
       console.error('Error', e)
@@ -66,11 +67,9 @@ router.post('/response', upload.single('response'), async (req, res) => {
 
     try {
       console.log('Contribution is correct, uploading to storage')
-      // await uploadToS3(req.files.response.data)
-      // await fs.copyFile(
-      //   '/tmp/new.params',
-      //   `./snark_files/response_${currentContributionIndex}`
-      // )
+      if (process.env.DISABLE_S3 !== 'true') {
+        await uploadToS3({ filename: req.file.filename })
+      }
 
       console.log('Committing changes')
       await fs.rename(`/tmp/tornado/${req.file.filename}`, './server/snark_files/current.params')
