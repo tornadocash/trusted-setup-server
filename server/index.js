@@ -25,17 +25,6 @@ async function start() {
   } else {
     await nuxt.ready()
   }
-  app.use('/api', sessionsController)
-  app.use('/api', contributionController)
-
-  app.use(bodyParser.urlencoded({ extended: true }))
-  app.use(bodyParser.json())
-
-  const accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), {
-    flags: 'a'
-  })
-  app.use(morgan('combined', { stream: accessLogStream }))
-
   app.use(
     session({
       secret: process.env.SESSION_SECRET,
@@ -47,6 +36,17 @@ async function start() {
     res.locals.session = req.session
     next()
   })
+
+  app.use('/api', sessionsController)
+  app.use('/api', contributionController)
+
+  app.use(bodyParser.urlencoded({ extended: true }))
+  app.use(bodyParser.json())
+
+  const accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), {
+    flags: 'a'
+  })
+  app.use(morgan('combined', { stream: accessLogStream }))
 
   // Give nuxt middleware to express
   app.use(nuxt.render)

@@ -8,20 +8,9 @@ const express = require('express')
 const router = express.Router()
 const { Mutex } = require('async-mutex')
 const mutex = new Mutex()
-const oauth = require('oauth')
 const multer = require('multer')
 const Contribution = require('../models/contributions.model.js')
 const upload = multer({ dest: '/tmp/tornado' })
-
-const consumer = new oauth.OAuth(
-  'https://twitter.com/oauth/request_token',
-  'https://twitter.com/oauth/access_token',
-  process.env.TWITTER_CONSUMER_KEY,
-  process.env.TWITTER_CONSUMER_SECRET,
-  '1.0A',
-  process.env.TWITTER_CALLBACK_URL,
-  'HMAC-SHA1'
-)
 
 // async function uploadToS3(response) {
 //   const currentContributionIndex = await Contribution.currentContributionIndex()
@@ -47,27 +36,6 @@ async function verifyResponse({ filename }) {
   console.log(stdout)
   console.error(stderr)
 }
-
-// router.get('/', (req, res) => {
-//   let userData
-//   consumer.get(
-//     'https://api.twitter.com/1.1/account/verify_credentials.json',
-//     req.session.oauthAccessToken,
-//     req.session.oauthAccessTokenSecret,
-//     function(error, data) {
-//       if (error) {
-//         console.log('error', error)
-//         userData = { name: 'Anonymous' }
-//         res.render('pages/index', { userData })
-//         // res.send("Error getting twitter screen name : " + util.inspect(error), 500);
-//       } else {
-//         userData = JSON.parse(data)
-//         req.session.twitterScreenName = userData.screen_name
-//         res.render('pages/index', { userData })
-//       }
-//     }
-//   )
-// })
 
 router.get('/challenge', (req, res) => {
   res.sendFile('./snark_files/current.params', { root: path.join(__dirname, '../') })

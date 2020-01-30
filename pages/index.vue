@@ -1,6 +1,8 @@
 <template>
   <div class="ceremony">
-    <div class="title is-size-1 is-spaced">Hello, <span>Anonymous</span></div>
+    <div class="title is-size-1 is-spaced">
+      Hello, <span>@{{ user.handle }}</span>
+    </div>
     <div class="subtitle">Lorem ipsum dolor sit amet, consectetur?</div>
     <p class="p">
       If you don’t trust binaries, we encorage you to follow this <a href="">instruction</a> to
@@ -19,14 +21,14 @@
           <div class="title is-5">Lorem ipsum</div>
           <div v-if="isLoggedIn" class="fields">
             <b-field label="Name">
-              <b-input value="Vitalik Buterin"></b-input>
+              <b-input v-model="user.name"></b-input>
             </b-field>
             <b-field label="Company">
-              <b-input value="Ethereum"></b-input>
+              <b-input v-model="user.company"></b-input>
             </b-field>
           </div>
           <div v-else class="buttons">
-            <b-button @click="isLoggedIn = true" type="is-primary" outlined expanded>
+            <b-button @click="logIn" type="is-primary" outlined expanded>
               Sign In
             </b-button>
           </div>
@@ -75,7 +77,24 @@ export default {
         type: '',
         msg: ''
       },
-      isLoggedIn: false
+      user: { name: '', handle: 'Anonymous', company: '' }
+    }
+  },
+  computed: {
+    isLoggedIn() {
+      return !!this.user.name && this.user.name !== 'Anonymous'
+    }
+  },
+  async mounted() {
+    try {
+      const data = await this.$axios.$get('/api/user_data')
+      console.log('data', data)
+      if (data.name !== 'Anonymous') {
+        this.user.handle = data.handle
+        this.user.name = data.name
+      }
+    } catch (e) {
+      console.error('user_data fail', e)
     }
   },
   methods: {
@@ -96,10 +115,11 @@ export default {
         console.log('Updated params', result)
 
         this.status.msg = 'Uploading and verifying your contribution'
+        console.log('this.user.name', this.user)
         const formData = new FormData()
         formData.append('response', new Blob([result], { type: 'application/octet-stream' }))
-        formData.append('name', 'William') // TODO put real name here
-        formData.append('company', 'Microsoft')
+        formData.append('name', this.user.name)
+        formData.append('company', this.user.company)
         const resp = await fetch('api/response', {
           method: 'POST',
           body: formData
@@ -128,6 +148,9 @@ export default {
         this.status.type = 'is-danger'
         this.isContributeBtnDisabled = false
       }
+    },
+    logIn() {
+      window.location.replace('/api/connect')
     }
   }
 }

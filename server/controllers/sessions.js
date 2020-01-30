@@ -13,6 +13,25 @@ const consumer = new oauth.OAuth(
   'HMAC-SHA1'
 )
 
+router.get('/user_data', (req, res) => {
+  let userData = { name: 'Anonymous' }
+  consumer.get(
+    'https://api.twitter.com/1.1/account/verify_credentials.json',
+    req.session.oauthAccessToken,
+    req.session.oauthAccessTokenSecret,
+    function(error, data) {
+      if (error) {
+        console.log('Session is expired', error)
+      } else {
+        userData = JSON.parse(data)
+        userData.handle = userData.screen_name
+        // req.session.twitterScreenName = userData.screen_name
+      }
+      res.json(userData)
+    }
+  )
+})
+
 router.get('/connect', (req, res) => {
   consumer.getOAuthRequestToken(function(error, oauthToken, oauthTokenSecret) {
     if (error) {
@@ -21,8 +40,7 @@ router.get('/connect', (req, res) => {
       req.session.oauthRequestToken = oauthToken
       req.session.oauthRequestTokenSecret = oauthTokenSecret
       res.redirect(
-        'https://twitter.com/oauth/authorize?oauth_token=' +
-          req.session.oauthRequestToken
+        'https://twitter.com/oauth/authorize?oauth_token=' + req.session.oauthRequestToken
       )
     }
   })
@@ -46,25 +64,4 @@ router.get('/twitter_callback', (req, res) => {
   )
 })
 
-router.get('/home', function(req, res) {
-  consumer.get(
-    'https://api.twitter.com/1.1/account/verify_credentials.json',
-    req.session.oauthAccessToken,
-    req.session.oauthAccessTokenSecret,
-    function(error, data) {
-      if (error) {
-        console.log('error', error)
-        res.redirect('/connect')
-      } else {
-        const parsedData = JSON.parse(data)
-        console.log('name', parsedData.name)
-        console.log('screen_name', parsedData.screen_name)
-        console.log('description', parsedData.description)
-
-        // req.session.twitterScreenName = response.screen_name;
-        res.send('You are signed in: @' + parsedData.screen_name)
-      }
-    }
-  )
-})
 module.exports = router
