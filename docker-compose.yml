@@ -4,13 +4,13 @@ services:
     build: .
     restart: always
     environment:
-      VIRTUAL_HOST: trustedaf.poma.in
-      LETSENCRYPT_HOST: trustedaf.poma.in
+      VIRTUAL_HOST: ceremony.tornado.cash
+      LETSENCRYPT_HOST: ceremony.tornado.cash
       nginx_client_max_body_size: 50m
       MYSQL_HOST: mysql
     env_file: .env
-    volumes:
-      - /data/powers/verify_contribution:/app/verify_contribution
+    depends_on:
+      - mysql
 
   mysql:
     image: mysql:5.7

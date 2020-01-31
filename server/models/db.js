@@ -16,7 +16,6 @@ const mysql = require('mysql2/promise')
 //   currentContributionIndex = (rows[0].max || 0) + 1
 //   console.log('Current contribution index:', currentContributionIndex)
 
-
 module.exports = async function() {
   this.sql = await mysql.createPool({
     host: process.env.MYSQL_HOST || 'localhost',

@@ -1,4 +1,5 @@
 const crypto = require('crypto')
+const fs = require('fs')
 const db = require('./db.js')
 
 let sql
@@ -33,6 +34,18 @@ Contributions.getContributions = async function() {
 
 async function main() {
   ;({ sql } = await db())
+
+  const [rows] = await sql.query("show tables like 'contributions'")
+  if (rows.length === 0) {
+    console.log('Database appears to be empty, creating tables')
+    const sqlFile = await fs.readFileSync('seed.sql')
+    for (const s of sqlFile.toString().split(';')) {
+      if (s.trim().length > 0) {
+        await sql.query(s)
+      }
+    }
+  }
+
   const contribitionIndex = await Contributions.currentContributionIndex()
   console.log('Next contribution index is', contribitionIndex)
 }
