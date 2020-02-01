@@ -129,6 +129,36 @@ $dropdown-background-color: $modal-background-background-color;
 $widescreen-enabled: false;
 $fullhd-enabled: false;
 
+$table-background-color: transparent;
+$table-color: $white;
+$table-head-cell-color: $white;
+$table-head-cell-border-width: 0 0 4px;
+$table-cell-border: 1px solid $primary;
+$table-striped-row-even-background-color: rgba($primary, .104);
+$table-row-hover-background-color: rgba($primary, .154);
+$table-striped-row-even-hover-background-color: rgba($primary, .154);
+$table-cell-padding: 1.5em 0.75em;
+
+$pagination-color: $primary;
+$pagination-border-color: $primary;
+
+$pagination-hover-color: $primary-invert;
+$pagination-hover-border-color: $primary;
+
+$pagination-focus-color: $pagination-hover-color;
+$pagination-focus-border-color: $pagination-hover-border-color;
+
+$pagination-active-color: $pagination-hover-color;
+$pagination-active-border-color: $pagination-hover-border-color;
+
+$pagination-disabled-color: $primary;
+$pagination-disabled-background-color: rgba($primary, .104);
+$pagination-disabled-border-color: $primary;
+
+$pagination-current-color: $primary-invert;
+$pagination-current-background-color: $primary;
+$pagination-current-border-color: $primary;
+
 .columns {
   @include from(576px) {
     &.is-small {
