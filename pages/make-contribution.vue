@@ -119,7 +119,7 @@ export default {
   },
   methods: {
     makeTweet() {
-      const tweetText = `Just make the contribution %23${this.contributionIndex} to Tornado.cash trusted setup ceremony! 🚀`
+      const tweetText = `Just made the contribution %23${this.contributionIndex} to Tornado.cash Trusted Setup Ceremony! 🚀`
       const popUpWindowWidth = 600
       const popUpWindowHeight = 250
       const dualScreenLeft = window.screenLeft !== undefined ? window.screenLeft : window.screenX
@@ -174,7 +174,7 @@ export default {
           body: formData
         })
         if (resp.ok) {
-          this.status.msg = 'Your contribution is verified and recorded. THX BYE.'
+          this.status.msg = 'Your contribution is verified and recorded. Thank you.'
           this.status.type = 'is-success'
           const responseData = await resp.json()
           this.contributionIndex = responseData.contributionIndex
