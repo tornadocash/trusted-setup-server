@@ -42,7 +42,7 @@
           <a :href="props.row.attestation" target="_blank">{{ props.row.account }}</a>
         </b-table-column>
 
-        <b-table-column>
+        <b-table-column label="Contribution">
           <a :href="props.row.contribution" class="button is-icon">
             <Link />
           </a>
@@ -80,7 +80,7 @@
               </div>
             </div>
             <b-dropdown-item
-              v-for="(rows, index) in [10, 15, 20, 50]"
+              v-for="(rows, index) in [3, 10, 15, 20, 50]"
               :key="index"
               :value="rows"
               aria-role="listitem"

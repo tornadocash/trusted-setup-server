@@ -58,7 +58,7 @@ router.get('/twitter_callback', (req, res) => {
       } else {
         req.session.oauthAccessToken = oauthAccessToken
         req.session.oauthAccessTokenSecret = oauthAccessTokenSecret
-        res.redirect('/')
+        res.redirect('/make-contribution')
       }
     }
   )

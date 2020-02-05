@@ -99,12 +99,7 @@ module.exports = {
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options
    */
-  axios: {
-    baseURL:
-      process.env.NODE_ENV === 'production'
-        ? 'http://ceremony.tornado.cash/'
-        : `http://localhost:3000/`
-  },
+  axios: {},
   /*
    ** Build configuration
    */

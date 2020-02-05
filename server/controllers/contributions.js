@@ -78,7 +78,7 @@ router.post('/response', upload.single('response'), async (req, res) => {
         req.body ? req.body.company || null : null
       )
       console.log('Finished')
-      res.send()
+      res.json({ contributionIndex: currentContributionIndex })
     } catch (e) {
       console.error('Error', e)
       res.status(503).send(e.toString())
