@@ -99,7 +99,7 @@ export default {
       return !!this.user.name && this.user.name !== 'Anonymous'
     },
     isContributeBtnDisabled() {
-      return !this.contributionType
+      return !this.contributionType || (!this.isLoggedIn && this.contributionType !== 'anonymous')
     }
   },
   async mounted() {
@@ -173,10 +173,10 @@ export default {
           method: 'POST',
           body: formData
         })
-        const responseData = await resp.json()
         if (resp.ok) {
           this.status.msg = 'Your contribution is verified and recorded. THX BYE.'
           this.status.type = 'is-success'
+          const responseData = await resp.json()
           this.contributionIndex = responseData.contributionIndex
         } else if (resp.status === 422) {
           if (retry < 3) {

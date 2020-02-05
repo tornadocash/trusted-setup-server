@@ -25,7 +25,8 @@ router.get('/user_data', (req, res) => {
       } else {
         userData = JSON.parse(data)
         userData.handle = userData.screen_name
-        // req.session.twitterScreenName = userData.screen_name
+        req.session.handle = userData.screen_name
+        req.session.socialType = 'twitter'
       }
       res.json(userData)
     }

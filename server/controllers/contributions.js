@@ -73,10 +73,18 @@ router.post('/response', upload.single('response'), async (req, res) => {
 
       console.log('Committing changes')
       await fs.rename(`/tmp/tornado/${req.file.filename}`, './server/snark_files/current.params')
-      await Contribution.insertContributionInfo(
-        req.body ? req.body.name || null : null,
-        req.body ? req.body.company || null : null
-      )
+
+      const socialType = req.session.socialType || 'anonymous'
+      let name = null
+      let company = null
+      let handle = null
+      if (socialType !== 'anonymous' && req.body) {
+        name = req.body.name || null
+        company = req.body.company || null
+        handle = req.session.handle || null
+      }
+
+      await Contribution.insertContributionInfo({ name, company, handle, socialType })
       console.log('Finished')
       res.json({ contributionIndex: currentContributionIndex })
     } catch (e) {

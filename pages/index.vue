@@ -1,6 +1,6 @@
 <template>
   <div class="ceremony">
-    <h1 class="title is-size-1 is-spaced">Lorem <span>Ipsum Dolor</span></h1>
+    <h1 class="title is-size-1 is-spaced">Tornado.cash <span>Trusted setup ceremony</span></h1>
     <p class="p is-size-5">
       Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
       labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
@@ -11,7 +11,9 @@
         Make the contribution
       </b-button>
     </div>
-    <div class="currently">Currently there are <span>8999</span> contributions</div>
+    <div class="currently">
+      Currently there are <span>{{ contributions.length }}</span> contributions
+    </div>
 
     <b-table
       :data="filteredContributions"
@@ -28,16 +30,17 @@
 
         <b-table-column label="Account">
           <a
-            v-if="props.row.account"
-            :href="`#${props.row.account}`"
+            v-if="props.row.handle"
+            :href="`https://${props.row.socialType}.com/${props.row.handle}`"
             class="social-link"
             target="_blank"
           >
             <span :class="`icon-${props.row.socialType}`" class="icon"></span>
-            {{ props.row.account }}
+            @{{ props.row.handle }}
           </a>
           <div v-else class="social-link">
             <span :class="`icon-${props.row.socialType}`" class="icon"></span>
+            Anonymous
           </div>
         </b-table-column>
 
@@ -49,8 +52,8 @@
           {{ props.row.company }}
         </b-table-column>
 
-        <b-table-column label="Attestation">
-          <a :href="props.row.attestation" target="_blank">{{ props.row.account }}</a>
+        <b-table-column :centered="true" label="Attestation">
+          <a :href="props.row.attestation" target="_blank">{{ getAttestation(props.row) }}</a>
         </b-table-column>
 
         <b-table-column :centered="true" label="Contribution">
@@ -114,71 +117,18 @@ export default {
   },
   data() {
     return {
-      contributions: [
-        {
-          id: 1,
-          socialType: 'twitter',
-          account: '@VitalikButerin',
-          name: 'Vitalik Buterin',
-          company: 'Ethereum',
-          attestation: 'https://twitter.com/VitalikButerin/status/1220158987456237568',
-          contribution: '#'
-        },
-        {
-          id: 2,
-          socialType: 'twitter',
-          account: '@Chims1974',
-          name: 'Rickey Kline',
-          company: 'Big Wheel',
-          attestation: '#',
-          contribution: '#'
-        },
-        {
-          id: 3,
-          socialType: 'github',
-          account: '@Diguest',
-          name: 'Ryan Obrien',
-          company: 'Brilliant Home',
-          attestation: '#',
-          contribution: '#'
-        },
-        {
-          id: 4,
-          socialType: 'anonymous',
-          account: '',
-          name: 'Anonymous',
-          company: '',
-          attestation: '',
-          contribution: '#'
-        },
-        {
-          id: 5,
-          socialType: 'github',
-          account: '@Mathervenrat',
-          name: 'William Hartwig',
-          company: 'New World',
-          attestation: '#',
-          contribution: '#'
-        },
-        {
-          id: 6,
-          socialType: 'twitter',
-          account: '@Hichercy',
-          name: 'Wayne Biggins',
-          company: 'Balanced Fortune',
-          attestation: '#',
-          contribution: '#'
-        },
-        {
-          id: 7,
-          socialType: 'anonymous',
-          account: '',
-          name: 'Anonymous',
-          company: '',
-          attestation: '',
-          contribution: '#'
-        }
-      ],
+      contributions: [],
+      // contributions: [
+      //   {
+      //     id: 1,
+      //     socialType: 'twitter',
+      //     account: '@VitalikButerin',
+      //     name: 'Vitalik Buterin',
+      //     company: 'Ethereum',
+      //     attestation: 'https://twitter.com/VitalikButerin/status/1220158987456237568',
+      //     contribution: '#'
+      //   }
+      // ],
       rowsPerPage: 10,
       contributionSearch: ''
     }
@@ -186,8 +136,28 @@ export default {
   computed: {
     filteredContributions() {
       return this.contributions.filter((contribution) => {
-        return contribution.name.toLowerCase().includes(this.contributionSearch.toLowerCase())
+        const name = contribution.name || 'anonymous'
+        return name.toLowerCase().includes(this.contributionSearch.toLowerCase())
       })
+    }
+  },
+  async mounted() {
+    try {
+      const response = await fetch('/api/contributions')
+      const data = await response.json()
+      this.contributions = data
+    } catch (e) {
+      console.error('e', e)
+    }
+  },
+  methods: {
+    getAttestation(row) {
+      const type = {
+        twitter: 'Tweet',
+        github: 'Gist',
+        anonymous: ''
+      }
+      return type[row.socialType]
     }
   }
 }

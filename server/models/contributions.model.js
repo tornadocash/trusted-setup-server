@@ -10,16 +10,15 @@ Contributions.currentContributionIndex = async function() {
   return (rows[0].max || 0) + 1
 }
 
-Contributions.insertContributionInfo = async function(name, company) {
+Contributions.insertContributionInfo = async function({ name, company, handle, socialType }) {
   const token = crypto.randomBytes(32).toString('hex')
-  await sql.execute('insert into contributions(token, name, company) values(?, ?, ?)', [
-    token,
-    name,
-    company
-  ])
+  await sql.execute(
+    'insert into contributions(token, name, company, handle, socialType) values(?, ?, ?, ?, ?)',
+    [token, name, company, handle, socialType]
+  )
 }
 
-Contributions.updateContributionInfo = async function(token, name, company) {
+Contributions.updateContributionInfo = async function({ token, name, company }) {
   await sql.execute('insert into contributions(token, name, company) values(?, ?, ?)', [
     token,
     name,
@@ -28,7 +27,9 @@ Contributions.updateContributionInfo = async function(token, name, company) {
 }
 
 Contributions.getContributions = async function() {
-  const [rows] = await db.execute('select id, name, company from contributions')
+  const [rows] = await sql.execute(
+    'select id, name, company, handle, socialType from contributions'
+  )
   return rows
 }
 
