@@ -27,7 +27,18 @@
         </b-table-column>
 
         <b-table-column label="Account">
-          <a :href="`#${props.row.account}`" target="_blank">{{ props.row.account }}</a>
+          <a
+            v-if="props.row.account"
+            :href="`#${props.row.account}`"
+            class="social-link"
+            target="_blank"
+          >
+            <span :class="`icon-${props.row.socialType}`" class="icon"></span>
+            {{ props.row.account }}
+          </a>
+          <div v-else class="social-link">
+            <span :class="`icon-${props.row.socialType}`" class="icon"></span>
+          </div>
         </b-table-column>
 
         <b-table-column field="name" label="Name">
@@ -42,7 +53,7 @@
           <a :href="props.row.attestation" target="_blank">{{ props.row.account }}</a>
         </b-table-column>
 
-        <b-table-column label="Contribution">
+        <b-table-column :centered="true" label="Contribution">
           <a :href="props.row.contribution" class="button is-icon">
             <Link />
           </a>
@@ -106,6 +117,7 @@ export default {
       contributions: [
         {
           id: 1,
+          socialType: 'twitter',
           account: '@VitalikButerin',
           name: 'Vitalik Buterin',
           company: 'Ethereum',
@@ -114,6 +126,7 @@ export default {
         },
         {
           id: 2,
+          socialType: 'twitter',
           account: '@Chims1974',
           name: 'Rickey Kline',
           company: 'Big Wheel',
@@ -122,6 +135,7 @@ export default {
         },
         {
           id: 3,
+          socialType: 'github',
           account: '@Diguest',
           name: 'Ryan Obrien',
           company: 'Brilliant Home',
@@ -130,6 +144,16 @@ export default {
         },
         {
           id: 4,
+          socialType: 'anonymous',
+          account: '',
+          name: 'Anonymous',
+          company: '',
+          attestation: '',
+          contribution: '#'
+        },
+        {
+          id: 5,
+          socialType: 'github',
           account: '@Mathervenrat',
           name: 'William Hartwig',
           company: 'New World',
@@ -137,7 +161,8 @@ export default {
           contribution: '#'
         },
         {
-          id: 5,
+          id: 6,
+          socialType: 'twitter',
           account: '@Hichercy',
           name: 'Wayne Biggins',
           company: 'Balanced Fortune',
@@ -145,7 +170,8 @@ export default {
           contribution: '#'
         },
         {
-          id: 6,
+          id: 7,
+          socialType: 'anonymous',
           account: '',
           name: 'Anonymous',
           company: '',

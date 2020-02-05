@@ -81,8 +81,8 @@
 
   &.is-icon {
     padding:0;
-    width: 20px;
-    height: 20px;
+    width: 18px;
+    height: 18px;
     background-color: transparent;
     border: none;
 
@@ -168,6 +168,8 @@
 
     .buttons {
       flex-grow: 1;
+      flex-direction: column;
+      justify-content: center;
     }
 
     .button.is-fullwidth + .button.is-fullwidth {
@@ -260,6 +262,17 @@
       }
     }
 
+    .social-link {
+      display: flex;
+      align-items: center;
+
+      .icon {
+        margin-right: .75rem;
+        height: 18px;
+        width: 18px;
+      }
+    }
+
     th {
       font-weight: $weight-normal;
     }
@@ -321,6 +334,18 @@
   &.icon-48px {
     height: 48px;
     width: 48px;
+  }
+
+  &-twitter {
+    background-image: url('../img/icons/tw.svg');
+  }
+
+  &-github {
+    background-image: url('../img/icons/git.svg');
+  }
+
+  &-anonymous {
+    background-image: url('../img/icons/anonymous.svg');
   }
 }
 
