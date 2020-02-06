@@ -40,9 +40,8 @@
       </div>
     </div>
 
-    <div v-show="status.msg !== ''" class="status">
+    <div v-show="status.type === 'is-danger' || status.type === 'is-success'" class="status">
       <div :class="status.type" class="status-message">{{ status.msg }}</div>
-      <div v-show="status.type === ''" class="status-spinner"></div>
     </div>
 
     <div class="buttons is-centered">
@@ -70,6 +69,13 @@
       If you don’t trust binaries, we encorage you to follow this <a href="">instruction</a> to
       contribute by compiling from source code. It is very easy!
     </p>
+
+    <b-loading :active.sync="loading">
+      <div class="loading-container">
+        <div class="loading-tornado"></div>
+        <div :class="status.type" class="loading-message">{{ status.msg }}...</div>
+      </div>
+    </b-loading>
   </div>
 </template>
 
@@ -91,7 +97,8 @@ export default {
         type: '',
         msg: ''
       },
-      user: { name: '', handle: 'Anonymous', company: '' }
+      user: { name: '', handle: 'Anonymous', company: '' },
+      loading: false
     }
   },
   computed: {
@@ -148,7 +155,7 @@ export default {
     async makeContribution({ retry = 0 } = {}) {
       try {
         this.isContributeBtnSnown = true
-
+        this.loading = true
         this.status.msg = 'Downloading last contribution'
         this.status.type = ''
         let data = await fetch('api/challenge')
@@ -197,6 +204,8 @@ export default {
         this.status.msg = e.message
         this.status.type = 'is-danger'
         this.isContributeBtnSnown = false
+      } finally {
+        this.loading = false
       }
     },
     logIn() {

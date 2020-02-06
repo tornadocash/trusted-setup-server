@@ -217,26 +217,8 @@
 }
 
 .status {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
   &:not(:last-child) {
     margin-bottom: $block-spacing;
-  }
-
-  .status-spinner {
-    margin-top: 1.5rem;
-    &:after {
-      content: '';
-      display: block;
-      height: 40px;
-      width: 40px;
-      background-image: url('../img/logo.svg');
-      animation: spinAroundReverse 2000ms infinite linear;
-    }
   }
 
   .status-message {
@@ -245,6 +227,42 @@
 
     &.is-danger {
       color: $danger;
+    }
+  }
+}
+
+.loading-overlay {
+  &.is-full-page {
+    .loading-background {
+      background:rgba(0,0,0,0.85);
+    }
+  }
+  .loading-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .loading-tornado {
+      &:after {
+        content: '';
+        display: block;
+        height: 60px;
+        width: 60px;
+        background-image: url('../img/logo.svg');
+        animation: spinAroundReverse 2000ms infinite linear;
+      }
+    }
+
+    .loading-message {
+      padding-top: .5rem;
+      color: $primary;
+      text-align: center;
+
+      &.is-danger {
+        color: $danger;
+      }
     }
   }
 }
