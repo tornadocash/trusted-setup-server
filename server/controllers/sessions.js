@@ -63,4 +63,8 @@ router.get('/twitter_callback', (req, res) => {
   )
 })
 
+router.get('/logout', (req, res) => {
+  req.session.destroy()
+})
+
 module.exports = router

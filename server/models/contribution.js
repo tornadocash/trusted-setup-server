@@ -13,8 +13,9 @@ module.exports = (sequelize, DataTypes) => {
     {
       hooks: {
         beforeCreate: (contribution, options) => {
-          const { name, company } = contribution.dataValues
-          if (name.length < 4 || name.length > 35) {
+          console.log('contribution', contribution.dataValues)
+          const { name, company, socialType } = contribution.dataValues
+          if (socialType !== 'anonymous' && (name.length < 4 || name.length > 35)) {
             throw new Error('Wrong name')
           }
           if (company && company.length > 35) {
