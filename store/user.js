@@ -81,6 +81,21 @@ const actions = {
   },
   async logOut() {
     await fetch('/api/logout')
+  },
+  async getUserData({ commit }) {
+    try {
+      const response = await fetch('/api/user_data')
+      const data = await response.json()
+      console.log('data', data)
+      if (data.name !== 'Anonymous') {
+        commit('SET_HANDLE', data.handle)
+        commit('SET_NAME', data.name)
+        // TODO check whether it's github or twitter
+        commit('SET_CONTRIBUTION_TYPE', 'twitter')
+      }
+    } catch (e) {
+      console.error('user_data fail', e)
+    }
   }
 }
 

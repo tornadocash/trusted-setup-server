@@ -131,22 +131,10 @@ export default {
     }
   },
   async mounted() {
-    try {
-      const response = await fetch('/api/user_data')
-      const data = await response.json()
-      console.log('data', data)
-      if (data.name !== 'Anonymous') {
-        this.userHandle = data.handle
-        this.userName = data.name
-        // TODO check whether it's github or twitter
-        this.contributionType = 'twitter'
-      }
-    } catch (e) {
-      console.error('user_data fail', e)
-    }
+    await this.getUserData()
   },
   methods: {
-    ...mapActions('user', ['makeTweet', 'logOut']),
+    ...mapActions('user', ['makeTweet', 'logOut', 'getUserData']),
     async makeContribution({ retry = 0 } = {}) {
       try {
         this.isContributeBtnSnown = true

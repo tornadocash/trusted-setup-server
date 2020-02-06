@@ -183,10 +183,6 @@
       align-items: stretch;
     }
 
-    .button.is-fullwidth + .button.is-fullwidth {
-      margin-top: 1rem;
-    }
-
     &-anonymous {
       width: 100%;
       cursor: pointer;
@@ -601,5 +597,17 @@
 fieldset {
   &:not(:last-child) {
     margin-bottom: $block-spacing;
+  }
+
+  &.authorize {
+    max-width: 30%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+.form {
+  .button.is-fullwidth + .button.is-fullwidth {
+    margin-top: 1rem;
   }
 }
