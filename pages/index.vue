@@ -53,12 +53,13 @@
         </b-table-column>
 
         <b-table-column :centered="true" label="Attestation">
-          <a :href="props.row.attestation" target="_blank">{{ getAttestation(props.row) }}</a>
-        </b-table-column>
-
-        <b-table-column :centered="true" label="Contribution">
-          <a :href="props.row.contribution" class="button is-icon">
-            <Link />
+          <a
+            v-if="props.row.attestation"
+            :href="props.row.attestation"
+            target="_blank"
+            class="button is-icon"
+          >
+            <span class="icon icon-link"></span>
           </a>
         </b-table-column>
       </template>
@@ -109,12 +110,7 @@
 </template>
 
 <script>
-import Link from '@/components/icons/Link'
-
 export default {
-  components: {
-    Link
-  },
   data() {
     return {
       contributions: [],
@@ -148,16 +144,6 @@ export default {
       this.contributions = data
     } catch (e) {
       console.error('e', e)
-    }
-  },
-  methods: {
-    getAttestation(row) {
-      const type = {
-        twitter: 'Tweet',
-        github: 'Gist',
-        anonymous: ''
-      }
-      return type[row.socialType]
     }
   }
 }

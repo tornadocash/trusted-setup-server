@@ -101,6 +101,10 @@
     &:focus:not(:active) {
       box-shadow: none;
     }
+
+    .icon:first-child:last-child {
+      margin: 0;
+    }
   }
 }
 
@@ -343,6 +347,10 @@
 
   &-anonymous {
     background-image: url('../img/icons/anonymous.svg');
+  }
+
+  &-link {
+    background-image: url('../img/icons/link.svg');
   }
 }
 
