@@ -9,11 +9,13 @@ const { Nuxt, Builder } = require('nuxt')
 const config = require('../nuxt.config.js')
 const sessionsController = require('./controllers/sessions')
 const contributionController = require('./controllers/contributions')
+const models = require('./models')
 
 const app = express()
 
 async function start() {
   config.dev = process.env.NODE_ENV !== 'production'
+  await models.sequelize.sync()
   const nuxt = new Nuxt(config)
 
   const { host, port } = nuxt.options.server

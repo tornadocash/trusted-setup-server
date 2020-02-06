@@ -20,9 +20,7 @@ router.get('/user_data', (req, res) => {
     req.session.oauthAccessToken,
     req.session.oauthAccessTokenSecret,
     function(error, data) {
-      if (error) {
-        console.log('Session is expired', error)
-      } else {
+      if (!error) {
         userData = JSON.parse(data)
         userData.handle = userData.screen_name
         req.session.handle = userData.screen_name

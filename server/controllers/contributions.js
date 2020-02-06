@@ -10,16 +10,15 @@ const multer = require('multer')
 const mutex = new Mutex()
 const s3 = new aws.S3()
 const router = express.Router()
-const Contribution = require('../models/contributions.model.js')
+const { Contribution } = require('../models')
 const upload = multer({ dest: '/tmp/tornado' })
 
-async function uploadToS3({ filename }) {
-  const currentContributionIndex = await Contribution.currentContributionIndex()
+async function uploadToS3({ filename, contributionIndex }) {
   const fileContent = await fs.readFile(`/tmp/tornado/${filename}`)
   return s3
     .upload({
       Bucket: process.env.AWS_S3_BUCKET,
-      Key: `response_${currentContributionIndex}`,
+      Key: `response_${contributionIndex}`,
       ACL: 'public-read',
       Body: fileContent
     })
@@ -44,7 +43,9 @@ router.get('/challenge', (req, res) => {
 })
 
 router.get('/contributions', async (req, res) => {
-  const contributions = await Contribution.getContributions()
+  const contributions = await Contribution.findAll({
+    attributes: ['id', 'name', 'company', 'handle', 'socialType']
+  })
   res.json(contributions).send()
 })
 
@@ -55,25 +56,18 @@ router.post('/response', upload.single('response'), async (req, res) => {
   }
 
   await mutex.runExclusive(async () => {
-    const currentContributionIndex = await Contribution.currentContributionIndex()
+    const contributionIndex = await Contribution.nextContributionIndex()
     try {
-      console.log(`Started processing contribution ${currentContributionIndex}`)
+      console.log(`Started processing contribution ${contributionIndex}`)
       await verifyResponse({ filename: req.file.filename })
     } catch (e) {
-      console.error('Error', e)
+      console.error('Got error during verifying', e)
+      await fs.unlink(`/tmp/tornado/${req.file.filename}`)
       res.status(422).send(e.toString())
       return
     }
 
     try {
-      console.log('Contribution is correct, uploading to storage')
-      if (process.env.DISABLE_S3 !== 'true') {
-        await uploadToS3({ filename: req.file.filename })
-      }
-
-      console.log('Committing changes')
-      await fs.rename(`/tmp/tornado/${req.file.filename}`, './server/snark_files/current.params')
-
       const socialType = req.session.socialType || 'anonymous'
       let name = null
       let company = null
@@ -84,11 +78,21 @@ router.post('/response', upload.single('response'), async (req, res) => {
         handle = req.session.handle || null
       }
 
-      await Contribution.insertContributionInfo({ name, company, handle, socialType })
+      await Contribution.create({ name, company, handle, socialType })
+
+      console.log('Contribution is correct, uploading to storage')
+      if (process.env.DISABLE_S3 !== 'true') {
+        await uploadToS3({ filename: req.file.filename, contributionIndex })
+      }
+
+      console.log('Committing changes')
+      await fs.rename(`/tmp/tornado/${req.file.filename}`, './server/snark_files/current.params')
+
       console.log('Finished')
-      res.json({ contributionIndex: currentContributionIndex })
+      res.json({ contributionIndex })
     } catch (e) {
-      console.error('Error', e)
+      console.error('Got error during save', e)
+      await fs.unlink(`/tmp/tornado/${req.file.filename}`)
       res.status(503).send(e.toString())
     }
   })

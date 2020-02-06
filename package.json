@@ -27,7 +27,8 @@
     "mysql2": "^2.1.0",
     "nuxt": "^2.0.0",
     "nuxt-buefy": "^0.3.2",
-    "oauth": "^0.9.15"
+    "oauth": "^0.9.15",
+    "sequelize": "^5.21.3"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config": "^1.0.1",
@@ -40,6 +41,7 @@
     "node-sass": "^4.13.1",
     "nodemon": "^1.18.9",
     "prettier": "^1.16.4",
-    "sass-loader": "^8.0.2"
+    "sass-loader": "^8.0.2",
+    "sqlite3": "^4.1.1"
   }
 }
