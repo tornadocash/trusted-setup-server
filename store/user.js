@@ -49,8 +49,8 @@ const getters = {
 }
 
 const actions = {
-  twitterLogIn() {
-    window.location.replace('/api/connect')
+  logInVia({ state }, provider) {
+    window.location.replace(`/api/connect/${provider}`)
   },
   makeTweet({ state }) {
     const tweetText = `Just made the contribution %23${state.contributionIndex} to Tornado.cash Trusted Setup Ceremony! 🚀`
@@ -90,8 +90,7 @@ const actions = {
       if (data.name !== 'Anonymous') {
         commit('SET_HANDLE', data.handle)
         commit('SET_NAME', data.name)
-        // TODO check whether it's github or twitter
-        commit('SET_CONTRIBUTION_TYPE', 'twitter')
+        commit('SET_CONTRIBUTION_TYPE', data.socialType)
       }
     } catch (e) {
       console.error('user_data fail', e)

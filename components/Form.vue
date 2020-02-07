@@ -13,10 +13,10 @@
       </b-field>
     </div>
     <div v-else class="buttons">
-      <b-button @click="twitterLogIn" type="is-primary" outlined expanded>
+      <b-button @click="logInVia('twitter')" type="is-primary" outlined expanded>
         Sign in with Twitter
       </b-button>
-      <b-button :disabled="true" type="is-primary" outlined expanded>
+      <b-button @click="logInVia('github')" type="is-primary" outlined expanded>
         Sign in with Github
       </b-button>
     </div>
@@ -52,7 +52,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions('user', ['makeTweet', 'twitterLogIn'])
+    ...mapActions('user', ['makeTweet', 'logInVia'])
   }
 }
 </script>

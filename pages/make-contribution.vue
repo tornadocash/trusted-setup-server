@@ -132,7 +132,7 @@ export default {
   },
   async mounted() {
     this.loading = true
-    this.status.msg = 'Loading...'
+    this.status.msg = 'Loading'
     this.status.type = ''
     await this.getUserData()
     this.loading = false

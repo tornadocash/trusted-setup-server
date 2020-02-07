@@ -90,3 +90,5 @@ sw.*
 *.swp
 .env.local
 db.development.sqlite
+.env.development
+.env.production

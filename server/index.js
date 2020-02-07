@@ -1,6 +1,7 @@
-require('dotenv').config()
-const fs = require('fs')
 const path = require('path')
+const { NODE_ENV } = process.env
+require('dotenv').config({ path: path.join(__dirname, `../.env.${NODE_ENV}`) })
+const fs = require('fs')
 const express = require('express')
 const bodyParser = require('body-parser')
 const morgan = require('morgan')
@@ -14,7 +15,7 @@ const models = require('./models')
 const app = express()
 
 async function start() {
-  config.dev = process.env.NODE_ENV !== 'production'
+  config.dev = NODE_ENV !== 'production'
   await models.sequelize.sync()
   const nuxt = new Nuxt(config)
 
