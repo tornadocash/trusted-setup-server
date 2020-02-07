@@ -9,7 +9,7 @@ const consumer = new oauth.OAuth(
   process.env.TWITTER_CONSUMER_KEY,
   process.env.TWITTER_CONSUMER_SECRET,
   '1.0A',
-  process.env.TWITTER_CALLBACK_URL,
+  process.env.TWITTER_CALLBACK_URL || 'http://localhost:3000/api/twitter_callback',
   'HMAC-SHA1'
 )
 

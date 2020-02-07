@@ -4,7 +4,7 @@
       Hello, <span>@{{ userHandle }}</span>
     </h1>
     <h2 class="subtitle">
-      Lorem ipsum dolor sit amet, consectetur?
+      Do you want to authorize your contribution #{{ contributionIndex }}? Please sign in.
     </h2>
     <fieldset class="authorize">
       <Form />
@@ -25,6 +25,11 @@ export default {
   components: {
     Form
   },
+  data() {
+    return {
+      contributionIndex: 1
+    }
+  },
   computed: {
     ...mapGetters('user', ['isLoggedIn', 'hasErrorName']),
     userHandle: {
@@ -35,6 +40,8 @@ export default {
   },
   async mounted() {
     await this.getUserData()
+    // TODO. parse href to take token (it's supposed to be after #)
+    // then you need to store it in localstorage OR pass to server (to `/connect`) so after the authorization redirect server can put it in url
   },
   methods: {
     ...mapActions('user', ['getUserData'])
