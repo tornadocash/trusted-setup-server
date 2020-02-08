@@ -91,6 +91,10 @@ router.post('/response', upload.single('response'), async (req, res) => {
 
       console.log('Committing changes')
       await fs.rename(`/tmp/tornado/${req.file.filename}`, './server/snark_files/current.params')
+      await fs.copyFile(
+        './server/snark_files/current.params',
+        `./server/snark_files/response_${contributionIndex}`
+      )
 
       console.log('Finished')
       res.json({ contributionIndex })

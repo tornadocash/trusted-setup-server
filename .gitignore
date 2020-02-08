@@ -92,3 +92,4 @@ sw.*
 db.development.sqlite
 .env.development
 .env.production
+server/snark_files/response_*

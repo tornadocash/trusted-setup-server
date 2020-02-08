@@ -1,0 +1,7 @@
+node_modules
+.env
+.env.development
+.env.production
+.git
+db.development.sqlite
+server/snark_files/response_*
