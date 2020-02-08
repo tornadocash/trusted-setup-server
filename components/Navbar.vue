@@ -9,6 +9,9 @@
       <b-navbar-item href="#">
         Instructions
       </b-navbar-item>
+      <b-navbar-item href="#">
+        Download contributions
+      </b-navbar-item>
     </template>
   </b-navbar>
 </template>

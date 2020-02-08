@@ -1,6 +1,8 @@
 <template>
   <div class="ceremony">
-    <h1 class="title is-size-1 is-spaced">Tornado.cash <span>Trusted Setup Ceremony</span></h1>
+    <h1 class="title is-size-1 is-size-2-mobile is-spaced">
+      Tornado.cash <span>Trusted Setup Ceremony</span>
+    </h1>
     <p class="p is-size-6">
       zk-SNARKs require a pre-existing setup between the prover and verifier. A set of public
       parameters define the “rules of the game” for the construction of zk-SNARKs. Please contribute

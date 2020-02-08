@@ -17,19 +17,10 @@
   padding-left: .75rem;
   padding-right: .75rem;
 
-  @include tablet {
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
-  }
-
-  @include desktop {
+  @include tablet-only {
     > .container {
       .navbar-brand {
         margin-left: 0;
-
-        .navbar-item {
-          padding-left: 0;
-        }
       }
     }
   }
@@ -46,6 +37,13 @@
 
   .logo {
     height: 40px;
+  }
+
+  .navbar-menu {
+    .navbar-item {
+      padding-left: 1.25rem;
+      padding-right: 1.25rem;
+    }
   }
 }
 

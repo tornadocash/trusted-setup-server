@@ -1,6 +1,6 @@
 <template>
   <div class="ceremony">
-    <h1 class="title is-size-1 is-spaced">
+    <h1 class="title is-size-1 is-size-2-mobile is-spaced">
       Hello, <span>@{{ userHandle }}</span>
     </h1>
     <h2 class="subtitle">
