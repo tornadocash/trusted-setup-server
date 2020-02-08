@@ -36,7 +36,7 @@ $ yarn dev
 ```
 
 ## Production setup
-Follow instructions in the [Initialize ceremony]() section to generate `current.params` file.
+Follow instructions in the [Initialize ceremony](#initialize-ceremony-currentparams-file-creation) section to generate `current.params` ceremony file.
 ``` bash
 # Edit all necessary environment variables. See the explanation above.
 $ cp .env.example .env.production
@@ -51,7 +51,7 @@ $ cd ..
 $ docker-compose up -d
 ```
 
-# Initialize ceremony (`current.params` file creation):
+## Initialize ceremony (`current.params` file creation):
 1. `git clone https://github.com/tornadocash/phase2-bn254 && cd phase2-bn254`
 1. `git checkout wasm`
 1. go to `./powersoftau/src/bn256/mod.rs` and change `REQUIRED_POWER` to 15 (it's going to fit 36k constaints snark)
