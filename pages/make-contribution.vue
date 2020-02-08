@@ -198,9 +198,6 @@ export default {
     onAnonymousHandler() {
       this.logOut()
       this.contributionType = 'anonymous'
-      this.userName = null
-      this.userHandle = 'Anonymous'
-      this.userCompany = ''
     }
   }
 }

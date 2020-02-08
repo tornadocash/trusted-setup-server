@@ -79,7 +79,11 @@ const actions = {
       `menubar=no,toolbar=no,resizable=yes,scrollbars=no,height=${popUpWindowHeight},width=${popUpWindowWidth},top=${top},left=${left}`
     )
   },
-  async logOut() {
+  async logOut({ commit }) {
+    commit('SET_HANDLE', 'Anonymous')
+    commit('SET_CONTRIBUTION_TYPE', null)
+    commit('SET_NAME', null)
+    commit('SET_COMPANY', '')
     await fetch('/api/logout')
   },
   async getUserData({ commit }) {
