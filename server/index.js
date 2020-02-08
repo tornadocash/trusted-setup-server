@@ -1,10 +1,8 @@
 const path = require('path')
 const { NODE_ENV } = process.env
 require('dotenv').config({ path: path.join(__dirname, `../.env.${NODE_ENV}`) })
-const fs = require('fs')
 const express = require('express')
 const bodyParser = require('body-parser')
-const morgan = require('morgan')
 const session = require('express-session')
 const { Nuxt, Builder } = require('nuxt')
 const config = require('../nuxt.config.js')
@@ -45,11 +43,6 @@ async function start() {
 
   app.use(bodyParser.urlencoded({ extended: true }))
   app.use(bodyParser.json())
-
-  const accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), {
-    flags: 'a'
-  })
-  app.use(morgan('combined', { stream: accessLogStream }))
 
   // Give nuxt middleware to express
   app.use(nuxt.render)

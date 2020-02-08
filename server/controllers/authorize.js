@@ -1,7 +1,8 @@
+/* eslint-disable no-console */
+const crypto = require('crypto')
 const express = require('express')
 const router = express.Router()
 const oauth = require('oauth')
-const logger = require('morgan')
 
 const {
   TWITTER_CONSUMER_KEY,
@@ -33,18 +34,26 @@ const github = new oauth.OAuth2(
   'login/oauth/access_token'
 )
 
-router.get('/connect/:provider', (req, res) => {
+function validateProvider(req, res, next) {
   const { provider } = req.params
   if (!providers.includes(provider)) {
     res.status(404).send('Wrong provider')
+  } else {
+    next()
   }
+}
+
+router.get('/connect/:provider', validateProvider, (req, res) => {
+  const { provider } = req.params
 
   if (provider === 'github') {
+    const CSRFToken = crypto.randomBytes(32).toString('hex')
     const authorizeUrl = github.getAuthorizeUrl({
       redirect_uri: GITHUB_CALLBACK_URL,
       scope: [], // 'gist' - https://developer.github.com/apps/building-oauth-apps/understanding-scopes-for-oauth-apps/
-      state: 'some random string to protect against cross-site request forgery attacks'
+      state: CSRFToken
     })
+    req.session.CSRFToken = CSRFToken
     res.redirect(authorizeUrl)
   } else if (provider === 'twitter') {
     twitter.getOAuthRequestToken(function(error, oauthToken, oauthTokenSecret) {
@@ -61,21 +70,18 @@ router.get('/connect/:provider', (req, res) => {
   }
 })
 
-router.get('/oauth_callback/:provider', (req, res) => {
+router.get('/oauth_callback/:provider', validateProvider, (req, res) => {
   const { provider } = req.params
-  if (!providers.includes(provider)) {
-    res.status(404).send('Wrong provider')
-  }
 
   if (provider === 'github') {
-    github.getOAuthAccessToken(req.query.code, {}, function(
-      error,
-      accessToken,
-      refreshToken,
-      results
-    ) {
+    const { code, state } = req.query
+    if (state !== req.session.CSRFToken) {
+      res.status(404).send('Malformed request')
+      return
+    }
+    github.getOAuthAccessToken(code, {}, function(error, accessToken, refreshToken, results) {
       if (error || results.error) {
-        logger.error('getOAuthAccessToken error', error || results.error)
+        console.error('getOAuthAccessToken error', error || results.error)
         res.status(500).send(error || results.error)
       } else {
         req.session.refreshToken = refreshToken
@@ -90,7 +96,7 @@ router.get('/oauth_callback/:provider', (req, res) => {
       req.query.oauth_verifier,
       (error, oauthAccessToken, oauthAccessTokenSecret) => {
         if (error) {
-          logger.error(error)
+          console.error('getOAuthAccessToken error', error)
           res.status(500).send(error)
         } else {
           req.session.oauthAccessToken = oauthAccessToken
