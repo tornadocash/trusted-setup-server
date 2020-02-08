@@ -13,6 +13,7 @@ const {
   GITHUB_CALLBACK_URL
 } = process.env
 const providers = ['github', 'twitter']
+const signInPages = ['/make-contribution', '/authorize-contribution']
 
 // twitter uses OAuth1
 const twitter = new oauth.OAuth(
@@ -43,8 +44,31 @@ function validateProvider(req, res, next) {
   }
 }
 
-router.get('/connect/:provider', validateProvider, (req, res) => {
+function validateRefferer(req, res, next) {
+  let referrer
+  try {
+    referrer = new URL(req.get('Referrer'))
+  } catch (e) {
+    res.status(403).send('Access forbidden')
+    return
+  }
+
+  if (!signInPages.includes(referrer.pathname)) {
+    res.status(403).send('Access forbidden')
+    return
+  }
+
+  next()
+}
+
+router.get('/connect/:provider', validateProvider, validateRefferer, (req, res) => {
   const { provider } = req.params
+  const referrer = new URL(req.get('Referrer'))
+
+  req.session.pageToReturn = referrer.pathname // the page a user will be redirected after signIn
+  if (referrer.pathname === '/authorize-contribution') {
+    req.session.pageToReturn += referrer.search // to add `token` parameter for authorize-contribution page
+  }
 
   if (provider === 'github') {
     const CSRFToken = crypto.randomBytes(32).toString('hex')
@@ -86,7 +110,7 @@ router.get('/oauth_callback/:provider', validateProvider, (req, res) => {
       } else {
         req.session.refreshToken = refreshToken
         req.session.accessToken = accessToken
-        res.redirect('/make-contribution')
+        res.redirect(req.session.pageToReturn)
       }
     })
   } else if (provider === 'twitter') {
@@ -101,7 +125,7 @@ router.get('/oauth_callback/:provider', validateProvider, (req, res) => {
         } else {
           req.session.oauthAccessToken = oauthAccessToken
           req.session.oauthAccessTokenSecret = oauthAccessTokenSecret
-          res.redirect('/make-contribution')
+          res.redirect(req.session.pageToReturn)
         }
       }
     )

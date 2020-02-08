@@ -1,4 +1,15 @@
 'use strict'
+
+const validate = (contribution, options) => {
+  const { name, company, socialType } = contribution.dataValues
+  if (socialType !== 'anonymous' && (name.length < 4 || name.length > 35)) {
+    throw new Error('Wrong name')
+  }
+  if (company && company.length > 35) {
+    throw new Error('Wrong company')
+  }
+}
+
 module.exports = (sequelize, DataTypes) => {
   const Contribution = sequelize.define(
     'Contribution',
@@ -12,15 +23,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       hooks: {
-        beforeCreate: (contribution, options) => {
-          const { name, company, socialType } = contribution.dataValues
-          if (socialType !== 'anonymous' && (name.length < 4 || name.length > 35)) {
-            throw new Error('Wrong name')
-          }
-          if (company && company.length > 35) {
-            throw new Error('Wrong company')
-          }
-        }
+        beforeCreate: validate,
+        beforeUpdate: validate
       }
     }
   )

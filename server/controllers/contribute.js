@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const fs = require('fs').promises
 const path = require('path')
 const util = require('util')
@@ -97,13 +98,52 @@ router.post('/response', upload.single('response'), async (req, res) => {
       )
 
       console.log('Finished')
-      res.json({ contributionIndex })
+      res.json({ contributionIndex, token })
     } catch (e) {
       console.error('Got error during save', e)
       await fs.unlink(`/tmp/tornado/${req.file.filename}`)
       res.status(503).send(e.toString())
     }
   })
+})
+
+router.post('/authorize_contribution', async (req, res) => {
+  if (!req.body || !req.body.name || !req.body.token) {
+    res.status(404).send('Wrong request params')
+  }
+
+  const contribution = await Contribution.findOne({ where: { token: req.body.token } })
+  if (!contribution) {
+    res.status(404).send('There is no such contribution')
+    return
+  }
+
+  if (contribution.dataValues.socialType !== 'anonymous') {
+    res.status(404).send('The contribution is already authorized')
+    return
+  }
+
+  if (!req.session.socialType || req.session.socialType === 'anonymous') {
+    res.status(403).send('Access forbidden')
+    return
+  }
+
+  try {
+    await Contribution.update(
+      {
+        name: req.body.name,
+        company: req.body.company,
+        handle: req.session.handle,
+        socialType: req.session.socialType
+      },
+      { where: { token: req.body.token }, returning: true }
+    )
+  } catch (e) {
+    console.error('updateError', e)
+    res.status(404).send('Update error')
+  }
+
+  res.send('OK')
 })
 
 module.exports = router

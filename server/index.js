@@ -38,11 +38,11 @@ async function start() {
     next()
   })
 
-  app.use('/api', sessionsController)
-  app.use('/api', contributionController)
-
   app.use(bodyParser.urlencoded({ extended: true }))
   app.use(bodyParser.json())
+
+  app.use('/api', sessionsController)
+  app.use('/api', contributionController)
 
   // Give nuxt middleware to express
   app.use(nuxt.render)

@@ -174,6 +174,9 @@ export default {
           this.status.type = 'is-success'
           const responseData = await resp.json()
           this.$store.commit('user/SET_CONTRIBUTION_INDEX', responseData.contributionIndex)
+          console.log(
+            `${window.location.origin}/authorize-contribution?token=${responseData.token}`
+          )
         } else if (resp.status === 422) {
           if (retry < 3) {
             console.log(`Looks like someone else uploaded contribution ahead of us, retrying`)
