@@ -135,7 +135,9 @@ export default {
     this.status.msg = 'Loading'
     this.status.type = ''
     await this.getUserData()
-    this.loading = false
+    setTimeout(() => {
+      this.loading = false
+    }, 800)
   },
   methods: {
     ...mapActions('user', ['makeTweet', 'logOut', 'getUserData']),

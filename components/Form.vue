@@ -17,7 +17,7 @@
         <b-input v-model="userName" maxlength="35"></b-input>
       </b-field>
       <b-field label="Company">
-        <b-input v-model="userCompany"></b-input>
+        <b-input v-model="userCompany" maxlength="35"></b-input>
       </b-field>
     </div>
     <div v-else class="buttons">
