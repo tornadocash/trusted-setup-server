@@ -189,8 +189,6 @@
 
   fieldset[disabled] {
     .box {
-      opacity: .5;
-      cursor: not-allowed;
       background-color: $primary-invert;
       border-color: #393939;
 
@@ -601,6 +599,15 @@ fieldset {
     max-width: 30%;
     margin-left: auto;
     margin-right: auto;
+  }
+
+  &[disabled] {
+    opacity: .5;
+    cursor: not-allowed;
+
+    label {
+      cursor: inherit;
+    }
   }
 }
 

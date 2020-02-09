@@ -56,13 +56,6 @@
       If you don’t trust binaries, we encorage you to follow this <a href="">instruction</a> to
       contribute by compiling from source code. It is very easy!
     </p>
-
-    <b-loading :active.sync="loading">
-      <div class="loading-container">
-        <div class="loading-tornado"></div>
-        <div :class="status.type" class="loading-message">{{ status.msg }}...</div>
-      </div>
-    </b-loading>
   </div>
 </template>
 
@@ -84,8 +77,7 @@ export default {
       status: {
         type: '',
         msg: ''
-      },
-      loading: false
+      }
     }
   },
   computed: {
@@ -131,12 +123,10 @@ export default {
     }
   },
   async mounted() {
-    this.loading = true
-    this.status.msg = 'Loading'
-    this.status.type = ''
+    this.$root.$emit('enableLoading')
     await this.getUserData()
     setTimeout(() => {
-      this.loading = false
+      this.$root.$emit('disableLoading')
     }, 800)
   },
   methods: {
@@ -144,20 +134,20 @@ export default {
     async makeContribution({ retry = 0 } = {}) {
       try {
         this.isContributeBtnSnown = true
-        this.loading = true
-        this.status.msg = 'Downloading last contribution'
+        this.status.msg = ''
         this.status.type = ''
+        this.$root.$emit('enableLoading', 'Downloading last contribution')
         let data = await fetch('api/challenge')
         data = new Uint8Array(await data.arrayBuffer())
 
-        this.status.msg = 'Generating random contribution'
+        this.$root.$emit('enableLoading', 'Generating random contribution')
         await timeout(100) // allow UI to update before freezing in wasm
         console.log('Source params', data)
         const contribute = await this.$contribute()
         const result = contribute(data)
         console.log('Updated params', result)
 
-        this.status.msg = 'Uploading and verifying your contribution'
+        this.$root.$emit('enableLoading', 'Uploading and verifying your contribution')
         console.log('this.user.name', this.userName, this.userHandle, this.userCompany)
         const formData = new FormData()
         formData.append('response', new Blob([result], { type: 'application/octet-stream' }))
@@ -197,7 +187,7 @@ export default {
         this.status.type = 'is-danger'
         this.isContributeBtnSnown = false
       } finally {
-        this.loading = false
+        this.$root.$emit('disableLoading')
       }
     },
     onAnonymousHandler() {

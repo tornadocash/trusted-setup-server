@@ -6,15 +6,18 @@
         <nuxt />
       </div>
     </section>
+    <Loading />
   </div>
 </template>
 
 <script>
 import Navbar from '@/components/Navbar'
+import Loading from '@/components/Loading'
 
 export default {
   components: {
-    Navbar
+    Navbar,
+    Loading
   }
 }
 </script>

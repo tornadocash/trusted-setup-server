@@ -6,7 +6,7 @@
     <h2 class="subtitle">
       Do you want to authorize your contribution #{{ contributionIndex }}? Please sign in.
     </h2>
-    <fieldset class="authorize">
+    <fieldset :disabled="hideSaveBtn" class="authorize">
       <Form />
     </fieldset>
     <div class="buttons is-centered">
@@ -60,6 +60,7 @@ export default {
     ...mapGetters('user', ['isLoggedIn', 'hasErrorName'])
   },
   async mounted() {
+    this.$root.$emit('enableLoading')
     await this.getUserData()
     this.token = this.$route.query.token
     if (!this.token) {
@@ -68,6 +69,9 @@ export default {
       // TODO try to load contribution data. May be it's already authorized
       // also set `contributionIndex`
     }
+    setTimeout(() => {
+      this.$root.$emit('disableLoading')
+    }, 800)
   },
   methods: {
     ...mapActions('user', ['getUserData', 'makeTweet']),
