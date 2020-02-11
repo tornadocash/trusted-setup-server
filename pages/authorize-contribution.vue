@@ -66,8 +66,7 @@ export default {
     if (!this.token) {
       window.location.replace(window.location.origin)
     } else {
-      // TODO try to load contribution data. May be it's already authorized
-      // also set `contributionIndex`
+      await this.check()
     }
     setTimeout(() => {
       this.$root.$emit('disableLoading')
@@ -98,6 +97,33 @@ export default {
           const error = await response.text()
           this.status.msg = error
           this.status.type = 'is-danger'
+        }
+      } catch (e) {
+        this.status.msg = 'Something went wrong. Please contact support'
+        this.status.type = 'is-danger'
+      }
+    },
+    async check() {
+      const body = {
+        token: this.token
+      }
+      try {
+        const response = await fetch('/api/check_contribution', {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(body)
+        })
+        if (response.ok) {
+          const { id } = await response.json()
+          this.contributionIndex = id
+        } else {
+          const error = await response.text()
+          this.status.msg = error
+          this.status.type = 'is-danger'
+          this.hideSaveBtn = true
         }
       } catch (e) {
         this.status.msg = 'Something went wrong. Please contact support'

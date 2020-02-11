@@ -146,4 +146,23 @@ router.post('/authorize_contribution', async (req, res) => {
   res.send('OK')
 })
 
+router.post('/check_contribution', async (req, res) => {
+  if (!req.body || !req.body.token) {
+    res.status(404).send('Wrong request params')
+  }
+
+  const contribution = await Contribution.findOne({ where: { token: req.body.token } })
+  if (!contribution) {
+    res.status(404).send('There is no such contribution')
+    return
+  }
+
+  if (contribution.dataValues.socialType !== 'anonymous') {
+    res.status(404).send('The contribution is already authorized')
+    return
+  }
+
+  return res.json({ id: contribution.dataValues.id }).send()
+})
+
 module.exports = router
