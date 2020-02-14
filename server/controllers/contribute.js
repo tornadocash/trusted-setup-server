@@ -136,7 +136,7 @@ router.post('/authorize_contribution', async (req, res) => {
         handle: req.session.handle,
         socialType: req.session.socialType
       },
-      { where: { token: req.body.token }, returning: true }
+      { individualHooks: true, where: { token: req.body.token }, returning: true }
     )
   } catch (e) {
     console.error('updateError', e)
@@ -146,7 +146,7 @@ router.post('/authorize_contribution', async (req, res) => {
   res.send('OK')
 })
 
-router.post('/check_contribution', async (req, res) => {
+router.post('/get_contribution_index', async (req, res) => {
   if (!req.body || !req.body.token) {
     res.status(404).send('Wrong request params')
   }

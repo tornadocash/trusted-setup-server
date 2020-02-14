@@ -61,6 +61,11 @@ function validateRefferer(req, res, next) {
   next()
 }
 
+function restrictSymbols(value) {
+  const regExpression = new RegExp('[^0-9a-zA-Z\\x20]', 'g')
+  return value.replace(regExpression, '')
+}
+
 router.get('/connect/:provider', validateProvider, validateRefferer, (req, res) => {
   const { provider } = req.params
   const referrer = new URL(req.get('Referrer'))
@@ -138,6 +143,7 @@ router.get('/user_data/', (req, res) => {
     github.get('https://api.github.com/user', req.session.accessToken, function(error, data) {
       if (!error) {
         userData = JSON.parse(data)
+        userData.name = restrictSymbols(userData.name)
         userData.handle = userData.login
         userData.socialType = 'github'
         req.session.handle = userData.login
@@ -153,6 +159,7 @@ router.get('/user_data/', (req, res) => {
       function(error, data) {
         if (!error) {
           userData = JSON.parse(data)
+          userData.name = restrictSymbols(userData.name)
           userData.handle = userData.screen_name
           userData.socialType = 'twitter'
           req.session.handle = userData.screen_name

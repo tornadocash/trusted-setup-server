@@ -1,11 +1,16 @@
 'use strict'
 
+function isValidName(value, minLength = 4) {
+  const regExpression = new RegExp(`^[0-9a-zA-Z\\x20]{${minLength},35}$`)
+  return regExpression.test(value)
+}
+
 const validate = (contribution, options) => {
   const { name, company, socialType } = contribution.dataValues
-  if (socialType !== 'anonymous' && (name.length < 4 || name.length > 35)) {
+  if (socialType !== 'anonymous' && !isValidName(name)) {
     throw new Error('Wrong name')
   }
-  if (company && company.length > 35) {
+  if (company && !isValidName(company, 0)) {
     throw new Error('Wrong company')
   }
 }

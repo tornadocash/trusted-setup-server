@@ -14,10 +14,14 @@
         :message="{ [hasErrorName.msg]: hasErrorName.invalid }"
         label="Name"
       >
-        <b-input v-model="userName" maxlength="35"></b-input>
+        <b-input v-model="userName" @blur="restrictSymbols('userName')" maxlength="35"></b-input>
       </b-field>
       <b-field label="Company">
-        <b-input v-model="userCompany" maxlength="35"></b-input>
+        <b-input
+          v-model="userCompany"
+          @blur="restrictSymbols('userCompany')"
+          maxlength="35"
+        ></b-input>
       </b-field>
     </div>
     <div v-else class="buttons">
@@ -35,11 +39,6 @@
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
-  data() {
-    return {
-      nameErrorMessage: ''
-    }
-  },
   computed: {
     ...mapGetters('user', ['isLoggedIn', 'hasErrorName']),
     userName: {
@@ -60,7 +59,11 @@ export default {
     }
   },
   methods: {
-    ...mapActions('user', ['makeTweet', 'logInVia', 'logOut'])
+    ...mapActions('user', ['makeTweet', 'logInVia', 'logOut']),
+    restrictSymbols(name) {
+      const regExpression = new RegExp('[^0-9a-zA-Z\\x20]', 'g')
+      this[name] = this[name].replace(regExpression, '')
+    }
   }
 }
 </script>

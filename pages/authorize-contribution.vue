@@ -66,7 +66,7 @@ export default {
     if (!this.token) {
       window.location.replace(window.location.origin)
     } else {
-      await this.check()
+      await this.getContributionIndex()
     }
     setTimeout(() => {
       this.$root.$emit('disableLoading')
@@ -103,12 +103,12 @@ export default {
         this.status.type = 'is-danger'
       }
     },
-    async check() {
+    async getContributionIndex() {
       const body = {
         token: this.token
       }
       try {
-        const response = await fetch('/api/check_contribution', {
+        const response = await fetch('/api/get_contribution_index', {
           method: 'POST',
           headers: {
             Accept: 'application/json',
