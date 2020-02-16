@@ -1,0 +1,20 @@
+fieldset {
+  &:not(:last-child) {
+    margin-bottom: $block-spacing;
+  }
+
+  &.authorize {
+    max-width: 30%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  &[disabled] {
+    opacity: .5;
+    cursor: not-allowed;
+
+    label {
+      cursor: inherit;
+    }
+  }
+}

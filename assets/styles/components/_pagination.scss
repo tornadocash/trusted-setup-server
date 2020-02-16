@@ -1,0 +1,53 @@
+
+.pagination {
+  &-previous, &-next, &-link {
+    background-color: rgba($primary, .104);
+    font-weight: $weight-bold;
+
+    &:hover {
+      background-color: $primary;
+    }
+
+    &[disabled] {
+      opacity: .5;
+
+      &:hover {
+        background-color: rgba($primary, .104);
+      }
+    }
+  }
+
+  &-previous, &-next {
+    .icon {
+      width: 9px;
+      height: 16px;
+      background-color: $primary
+    }
+
+    &:hover {
+      .icon {
+        background-color: $primary-invert;
+      }
+    }
+
+    &[disabled] {
+      &:hover {
+        .icon {
+          background-color: $primary;
+        }
+      }
+    }
+  }
+
+  &-previous {
+    .icon {
+      mask-image: url("../img/icons/arrow-left.svg");
+    }
+  }
+
+  &-next {
+    .icon {
+      mask-image: url("../img/icons/arrow-right.svg");
+    }
+  }
+}

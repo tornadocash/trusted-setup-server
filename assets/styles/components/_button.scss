@@ -1,0 +1,50 @@
+.button {
+  transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+  font-weight: $weight-bold;
+
+  &.is-primary.is-outlined {
+    background-color: rgba($primary, .104);
+
+    &.is-loading:focus {
+      background-color: rgba($primary, .104);
+
+      &::after {
+        border-color: transparent transparent $primary $primary !important;
+      }
+    }
+  }
+
+  &.is-loading {
+    &::after {
+      border-radius: 100%;
+    }
+  }
+
+  &.is-icon {
+    padding:0;
+    width: 18px;
+    height: 18px;
+    background-color: transparent;
+    border: none;
+
+    svg {
+      height: 100%;
+      width: 100%;
+    }
+
+    &:hover {
+      path:not(.no-hover) {
+        fill: #87feb7;
+        transition: fill .15s ease-out;
+      }
+    }
+
+    &:focus:not(:active) {
+      box-shadow: none;
+    }
+
+    .icon:first-child:last-child {
+      margin: 0;
+    }
+  }
+}

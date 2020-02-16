@@ -1,0 +1,34 @@
+.header {
+  padding-top: 20px;
+  padding-left: .75rem;
+  padding-right: .75rem;
+
+  @include tablet-only {
+    > .container {
+      .navbar-brand {
+        margin-left: 0;
+      }
+    }
+  }
+
+  .navbar-brand {
+    align-items: center;
+  }
+
+  @include mobile {
+    .navbar-menu {
+      text-align: center;
+    }
+  }
+
+  .logo {
+    height: 40px;
+  }
+
+  .navbar-menu {
+    .navbar-item {
+      padding-left: 1.25rem;
+      padding-right: 1.25rem;
+    }
+  }
+}

@@ -1,0 +1,30 @@
+.icon {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+
+  &-emoticon-sad {
+    background-image: url('../img/icons/emoticon-sad.svg');
+  }
+
+  &.icon-48px {
+    height: 48px;
+    width: 48px;
+  }
+
+  &-twitter {
+    background-image: url('../img/icons/tw.svg');
+  }
+
+  &-github {
+    background-image: url('../img/icons/git.svg');
+  }
+
+  &-anonymous {
+    background-image: url('../img/icons/anonymous.svg');
+  }
+
+  &-link {
+    background-image: url('../img/icons/link.svg');
+  }
+}

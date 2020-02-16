@@ -1,0 +1,91 @@
+.b-table {
+  .table {
+    a {
+      color: $primary;
+      text-decoration: underline;
+    }
+
+    .social-link {
+      display: flex;
+      align-items: center;
+
+      .icon {
+        margin-right: .75rem;
+        height: 18px;
+        width: 18px;
+      }
+    }
+
+    th {
+      font-weight: $weight-normal;
+    }
+
+    td {
+      border-color: rgba($primary, .5)
+    }
+
+    td, th {
+      vertical-align: middle;
+    }
+
+    tbody {
+      tr {
+        &:last-child {
+          td {
+            border-bottom-width: 1px;
+          }
+        }
+
+        &:not(.is-selected) {
+          &:nth-child(odd) {
+            background-color: $table-striped-row-even-background-color;
+          }
+
+          &:hover {
+            background-color: $table-row-hover-background-color;
+            &:nth-child(odd) {
+              background-color: $table-striped-row-even-hover-background-color;
+            }
+          }
+        }
+
+        &:not(.is-selected).is-empty {
+          background-color: transparent;
+
+          &:hover {
+            background-color: transparent;
+          }
+        }
+      }
+    }
+  }
+
+  .dropdown.is-expanded {
+    min-width: 75px;
+  }
+}
+
+.table-search {
+  .icon {
+    mask-image: url("../img/icons/search.svg");
+    mask-position: center;
+    mask-repeat: no-repeat;
+    mask-size: 16px 16px;
+
+    background-color: $input-placeholder-color;
+  }
+
+  .input {
+    &:hover {
+      ~ .icon {
+        background-color: $input-hover-color;
+      }
+    }
+
+    &:focus {
+      ~ .icon {
+        background-color: $primary;
+      }
+    }
+  }
+}

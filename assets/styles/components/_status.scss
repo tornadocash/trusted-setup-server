@@ -1,0 +1,14 @@
+.status {
+  &:not(:last-child) {
+    margin-bottom: $block-spacing;
+  }
+
+  .status-message {
+    color: $primary;
+    text-align: center;
+
+    &.is-danger {
+      color: $danger;
+    }
+  }
+}
