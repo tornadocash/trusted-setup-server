@@ -9,6 +9,7 @@ const config = require('../nuxt.config.js')
 const sessionsController = require('./controllers/authorize')
 const contributionController = require('./controllers/contribute')
 const models = require('./models')
+const attestationWatcher = require('./attestationWatcher')
 
 const app = express()
 
@@ -50,5 +51,8 @@ async function start() {
   app.listen(port, host, () => {
     console.log(`Server is running on port ${port}.`)
   })
+
+  attestationWatcher()
+  console.log('attestationWatcher started')
 }
 start()

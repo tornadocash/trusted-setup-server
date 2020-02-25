@@ -27,7 +27,8 @@
     "nuxt": "^2.0.0",
     "nuxt-buefy": "^0.3.2",
     "oauth": "^0.9.15",
-    "sequelize": "^5.21.3"
+    "sequelize": "^5.21.3",
+    "twitter": "^1.7.1"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config": "^1.0.1",

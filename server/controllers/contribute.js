@@ -46,9 +46,9 @@ router.get('/challenge', (req, res) => {
 
 router.get('/contributions', async (req, res) => {
   const contributions = await Contribution.findAll({
-    attributes: ['id', 'name', 'company', 'handle', 'socialType']
+    attributes: ['id', 'name', 'company', 'handle', 'socialType', 'attestation']
   })
-  res.json(contributions).send()
+  res.json(contributions)
 })
 
 router.post('/response', upload.single('response'), async (req, res) => {
