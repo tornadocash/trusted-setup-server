@@ -49,7 +49,7 @@
         target="_blank"
         outlined
       >
-        Tweet about your contribution
+        Post attestation
       </b-button>
     </div>
     <p class="p">
@@ -160,7 +160,8 @@ export default {
           body: formData
         })
         if (resp.ok) {
-          this.status.msg = 'Your contribution is verified and recorded. Thank you.'
+          this.status.msg =
+            'Your contribution is verified and recorded. Now you can post attestation from your twitter account.'
           this.status.type = 'is-success'
           const responseData = await resp.json()
           this.$store.commit('user/SET_CONTRIBUTION_INDEX', responseData.contributionIndex)

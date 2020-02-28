@@ -27,7 +27,7 @@
         target="_blank"
         outlined
       >
-        Tweet about your contribution
+        Post attestation
       </b-button>
     </div>
     <div v-show="status.type === 'is-danger' || status.type === 'is-success'" class="status">
@@ -90,7 +90,7 @@ export default {
           body: JSON.stringify(body)
         })
         if (response.ok) {
-          this.status.msg = `Your contribution is verified and authorized. Thank you.`
+          this.status.msg = `Your contribution authorized. Now you can post attestation from your twitter account.`
           this.status.type = 'is-success'
           this.hideSaveBtn = true
         } else {
