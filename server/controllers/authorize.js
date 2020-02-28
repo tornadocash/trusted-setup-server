@@ -34,6 +34,7 @@ const github = new oauth.OAuth2(
   'login/oauth/authorize',
   'login/oauth/access_token'
 )
+github.useAuthorizationHeaderforGET(true)
 
 function validateProvider(req, res, next) {
   const { provider } = req.params
