@@ -119,7 +119,6 @@ router.post('/authorize_contribution', async (req, res) => {
   }
 
   const contribution = await Contribution.findOne({ where: { token: req.body.token } })
-  console.log('contribution', contribution.dataValues.id)
   if (!contribution) {
     res.status(404).send('There is no such contribution')
     return

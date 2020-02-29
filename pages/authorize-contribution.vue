@@ -55,7 +55,7 @@ export default {
     }
   },
   computed: {
-    ...mapState('user', ['name', 'handle', 'company']),
+    ...mapState('user', ['name', 'handle', 'company', 'contributionIndex']),
     ...mapGetters('user', ['isLoggedIn', 'hasErrorName']),
     title() {
       if (this.status.type === 'is-danger' || !this.contributionIndex) {
@@ -65,14 +65,6 @@ export default {
         return `Do you want to authorize your contribution #${this.contributionIndex}? Please sign in.`
       } else {
         return `Please, specify your name and organization.`
-      }
-    },
-    contributionIndex: {
-      get() {
-        return this.$store.state.user.contributionIndex
-      },
-      set(value) {
-        this.$store.commit('user/SET_CONTRIBUTION_INDEX', value)
       }
     }
   },
@@ -135,7 +127,7 @@ export default {
         })
         if (response.ok) {
           const { id } = await response.json()
-          this.contributionIndex = id
+          this.$store.commit('user/SET_CONTRIBUTION_INDEX', id)
         } else {
           const error = await response.text()
           this.status.msg = error
