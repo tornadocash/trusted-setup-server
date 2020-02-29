@@ -99,7 +99,7 @@
               </div>
             </div>
             <b-dropdown-item
-              v-for="(rows, index) in [3, 10, 15, 20, 50]"
+              v-for="(rows, index) in [10, 25, 50, 100]"
               :key="index"
               :value="rows"
               aria-role="listitem"
