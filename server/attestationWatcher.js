@@ -7,7 +7,8 @@ const {
   TWITTER_ACCESS_TOKEN_KEY,
   TWITTER_ACCESS_TOKEN_SECRET,
   NUXT_ENV_TWITTER_HASHTAG,
-  TWITTER_INTERVAL_ATTESTATION
+  TWITTER_INTERVAL_ATTESTATION,
+  NODE_ENV
 } = process.env
 
 const client = new Twitter({
@@ -19,23 +20,14 @@ const client = new Twitter({
 
 const { Contribution } = require('./models')
 
-async function attestationWatcher() {
+function attestationWatcher() {
   // get the last saved tweet
   let initTweet
   try {
     initTweet = require('/tmp/lastTweet.json').lastTweet
   } catch (e) {
-    initTweet = process.env.LAST_TWEET
+    initTweet = 0
   }
-
-  // get all contributions without attestation
-  const contributions = await Contribution.findAll({
-    where: {
-      socialType: 'twitter',
-      attestation: null
-    },
-    attributes: ['id', 'handle', 'socialType', 'attestation']
-  })
 
   const params = {
     since_id: initTweet,
@@ -45,20 +37,48 @@ async function attestationWatcher() {
   }
 
   // search tweets with params
-  client.get('search/tweets', params, function(error, tweets, response) {
+  client.get('search/tweets', params, async function(error, tweets, response) {
     if (!error) {
-      tweets.statuses.forEach((tweet) => {
-        contributions.forEach((contribution) => {
-          // compare account compliance
-          if (contribution.handle === tweet.user.screen_name) {
-            // update the database record by id
-            Contribution.update({ attestation: tweet.id_str }, { where: { id: contribution.id } })
-            console.log(
-              `Succesful attestation https://${contribution.socialType}.com/${contribution.handle}/status/${tweet.id_str}`
+      for (const tweet of tweets.statuses) {
+        if (NODE_ENV === 'development') {
+          console.log(
+            '\x1B[36m%s\x1B[0m',
+            `${tweet.text} https://twitter.com/${tweet.user.screen_name}/status/${tweet.id_str}`
+          )
+        }
+
+        // find the contribution id in a tweet
+        let matchTweetContributionId = null
+        let tweetContributionId = null
+
+        if ((matchTweetContributionId = tweet.text.match(/#([0-9]+)/))) {
+          tweetContributionId = Number(matchTweetContributionId[1])
+        }
+
+        // if found the contribution id then search a contribution
+        if (tweetContributionId) {
+          // try update the database record by id
+          try {
+            const result = await Contribution.update(
+              { attestation: tweet.id_str },
+              {
+                where: {
+                  id: tweetContributionId,
+                  handle: tweet.user.screen_name,
+                  attestation: null
+                }
+              }
             )
+            if (result[0]) {
+              console.log(
+                `Succesful attestation #${tweetContributionId} https://twitter.com/${tweet.user.screen_name}/status/${tweet.id_str}`
+              )
+            }
+          } catch (error) {
+            console.error(error)
           }
-        })
-      })
+        }
+      }
 
       // save the last tweet received
       fs.writeFileSync(
