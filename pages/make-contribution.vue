@@ -35,7 +35,7 @@
       <b-field position="is-centered">
         <b-input :value="contributionHash" readonly></b-input>
         <p class="control">
-          <b-button @click="copyСontributionHash()" type="is-primary">Copy</b-button>
+          <b-button @click="copyContributionHash" type="is-primary">Copy</b-button>
         </p>
       </b-field>
     </div>
@@ -212,7 +212,7 @@ export default {
       this.logOut()
       this.contributionType = 'anonymous'
     },
-    copyСontributionHash() {
+    copyContributionHash() {
       navigator.clipboard.writeText(this.contributionHash).then(() => {
         this.$buefy.toast.open({
           message: 'Copied!',
