@@ -176,6 +176,7 @@ router.get('/user_data/', (req, res) => {
 
 router.get('/logout', (req, res) => {
   req.session.destroy()
+  res.send('OK')
 })
 
 module.exports = router

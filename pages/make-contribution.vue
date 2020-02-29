@@ -42,7 +42,7 @@
         Make the contribution
       </b-button>
       <b-button
-        v-if="status.type === 'is-success'"
+        v-if="status.type === 'is-success' && contributionType !== 'anonymous'"
         @click="makeTweet"
         type="is-primary"
         tag="a"
@@ -160,14 +160,17 @@ export default {
           body: formData
         })
         if (resp.ok) {
-          this.status.msg =
-            'Your contribution is verified and recorded. Now you can post attestation from your twitter account.'
-          this.status.type = 'is-success'
           const responseData = await resp.json()
           this.$store.commit('user/SET_CONTRIBUTION_INDEX', responseData.contributionIndex)
-          console.log(
-            `${window.location.origin}/authorize-contribution?token=${responseData.token}`
-          )
+          this.status.msg = 'Your contribution is verified and recorded.'
+          this.status.type = 'is-success'
+          if (this.contributionType === 'anonymous') {
+            console.log(
+              `${window.location.origin}/authorize-contribution?token=${responseData.token}`
+            )
+          } else {
+            this.status.msg += ' Now you can post attestation from your twitter account.'
+          }
         } else if (resp.status === 422) {
           if (retry < 3) {
             console.log(`Looks like someone else uploaded contribution ahead of us, retrying`)

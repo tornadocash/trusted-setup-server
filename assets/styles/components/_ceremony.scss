@@ -79,6 +79,7 @@
     .box {
       background-color: $primary-invert;
       border-color: #393939;
+      cursor: inherit;
 
       .title {
         color: $white;
@@ -148,4 +149,15 @@
       margin-bottom: $block-spacing;
     }
   }
+
+  > .buttons {
+    &:not(:last-child) {
+      margin-bottom: 0;
+    }
+
+    .button {
+      margin-bottom: 2rem;
+    }
+  }
+
 }
