@@ -72,7 +72,7 @@ module.exports = {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [{ src: '~plugins/phase2', ssr: false }],
+  plugins: [{ src: '~plugins/phase2', ssr: false }, '~plugins/highlight'],
   /*
    ** Nuxt.js dev-modules
    */

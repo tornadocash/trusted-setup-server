@@ -29,7 +29,8 @@
     "nuxt-buefy": "^0.3.2",
     "oauth": "^0.9.15",
     "sequelize": "^5.21.3",
-    "twitter": "^1.7.1"
+    "twitter": "^1.7.1",
+    "vue-highlightjs": "^1.3.3"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config": "^1.0.1",

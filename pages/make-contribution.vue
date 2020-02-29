@@ -66,8 +66,9 @@
       </b-button>
     </div>
     <p class="p">
-      If you don’t trust binaries, we encorage you to follow this <a href="">instruction</a> to
-      contribute by compiling from source code. It is very easy!
+      If you don’t trust binaries, we encorage you to follow this
+      <router-link to="/instructions">instruction</router-link> to contribute by compiling from
+      source code. It is very easy!
     </p>
   </div>
 </template>
