@@ -46,7 +46,6 @@ export default {
   },
   data() {
     return {
-      contributionIndex: null,
       token: null,
       status: {
         type: '',
@@ -66,6 +65,14 @@ export default {
         return `Do you want to authorize your contribution #${this.contributionIndex}? Please sign in.`
       } else {
         return `Please, specify your name and organization.`
+      }
+    },
+    contributionIndex: {
+      get() {
+        return this.$store.state.user.contributionIndex
+      },
+      set(value) {
+        this.$store.commit('user/SET_CONTRIBUTION_INDEX', value)
       }
     }
   },
