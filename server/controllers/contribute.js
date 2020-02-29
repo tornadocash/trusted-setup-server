@@ -8,6 +8,7 @@ const aws = require('aws-sdk')
 const express = require('express')
 const { Mutex } = require('async-mutex')
 const multer = require('multer')
+const blake2 = require('blake2')
 
 const mutex = new Mutex()
 const s3 = new aws.S3()
@@ -83,7 +84,12 @@ router.post('/response', upload.single('response'), async (req, res) => {
         token = crypto.randomBytes(32).toString('hex')
       }
 
-      await Contribution.create({ name, company, handle, socialType, token })
+      const contribution = await fs.readFile(`/tmp/tornado/${req.file.filename}`)
+      const blake2Instance = blake2.createHash('blake2b')
+      blake2Instance.update(contribution)
+      const hash = '0x' + blake2Instance.digest('hex')
+
+      await Contribution.create({ name, company, handle, socialType, token, hash })
 
       console.log('Contribution is correct, uploading to storage')
       if (process.env.DISABLE_S3 !== 'true') {
@@ -97,8 +103,8 @@ router.post('/response', upload.single('response'), async (req, res) => {
         `./server/snark_files/response_${contributionIndex}`
       )
 
-      console.log('Finished')
-      res.json({ contributionIndex, token })
+      console.log('Finished. The hash of the contribution is', hash)
+      res.json({ contributionIndex, token, hash })
     } catch (e) {
       console.error('Got error during save', e)
       await fs.unlink(`/tmp/tornado/${req.file.filename}`)
@@ -113,6 +119,7 @@ router.post('/authorize_contribution', async (req, res) => {
   }
 
   const contribution = await Contribution.findOne({ where: { token: req.body.token } })
+  console.log('contribution', contribution.dataValues.id)
   if (!contribution) {
     res.status(404).send('There is no such contribution')
     return
@@ -136,14 +143,13 @@ router.post('/authorize_contribution', async (req, res) => {
         handle: req.session.handle,
         socialType: req.session.socialType
       },
-      { individualHooks: true, where: { token: req.body.token }, returning: true }
+      { where: { id: contribution.dataValues.id }, individualHooks: true }
     )
+    res.send('OK')
   } catch (e) {
     console.error('updateError', e)
     res.status(404).send('Update error')
   }
-
-  res.send('OK')
 })
 
 router.post('/get_contribution_index', async (req, res) => {

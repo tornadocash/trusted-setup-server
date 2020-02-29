@@ -4,7 +4,7 @@
       Hello, <span>@{{ handle }}</span>
     </h1>
     <h2 class="subtitle">
-      Do you want to authorize your contribution #{{ contributionIndex }}? Please sign in.
+      {{ title }}
     </h2>
     <fieldset :disabled="hideSaveBtn" class="authorize">
       <Form />
@@ -46,7 +46,7 @@ export default {
   },
   data() {
     return {
-      contributionIndex: 1,
+      contributionIndex: null,
       token: null,
       status: {
         type: '',
@@ -57,7 +57,17 @@ export default {
   },
   computed: {
     ...mapState('user', ['name', 'handle', 'company']),
-    ...mapGetters('user', ['isLoggedIn', 'hasErrorName'])
+    ...mapGetters('user', ['isLoggedIn', 'hasErrorName']),
+    title() {
+      if (this.status.type === 'is-danger' || !this.contributionIndex) {
+        return null
+      }
+      if (!this.isLoggedIn) {
+        return `Do you want to authorize your contribution #${this.contributionIndex}? Please sign in.`
+      } else {
+        return `Please, specify your name and organization.`
+      }
+    }
   },
   async mounted() {
     this.$root.$emit('enableLoading')

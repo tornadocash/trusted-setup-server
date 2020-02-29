@@ -30,6 +30,12 @@
     <div v-show="status.type === 'is-danger' || status.type === 'is-success'" class="status">
       <div :class="status.type" class="status-message">{{ status.msg }}</div>
     </div>
+    <div v-show="contributionHash" class="is-success status-message">
+      Your contribution hash (Blake2b) is {{ contributionHash }}
+    </div>
+    <div v-show="authorizeLink" class="is-success status-message">
+      You still can authorize your contribution by following this <a :href="authorizeLink">link.</a>
+    </div>
 
     <div class="buttons is-centered">
       <b-button
@@ -77,7 +83,9 @@ export default {
       status: {
         type: '',
         msg: ''
-      }
+      },
+      contributionHash: null,
+      authorizeLink: null
     }
   },
   computed: {
@@ -164,10 +172,9 @@ export default {
           this.$store.commit('user/SET_CONTRIBUTION_INDEX', responseData.contributionIndex)
           this.status.msg = 'Your contribution is verified and recorded.'
           this.status.type = 'is-success'
+          this.contributionHash = responseData.hash
           if (this.contributionType === 'anonymous') {
-            console.log(
-              `${window.location.origin}/authorize-contribution?token=${responseData.token}`
-            )
+            this.authorizeLink = `${window.location.origin}/authorize-contribution?token=${responseData.token}`
           } else {
             this.status.msg += ' Now you can post attestation from your twitter account.'
           }
