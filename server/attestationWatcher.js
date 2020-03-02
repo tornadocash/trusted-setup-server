@@ -6,7 +6,7 @@ const {
   TWITTER_CONSUMER_SECRET,
   TWITTER_ACCESS_TOKEN_KEY,
   TWITTER_ACCESS_TOKEN_SECRET,
-  NUXT_ENV_TWITTER_HASHTAG,
+  TWITTER_HASHTAG,
   TWITTER_INTERVAL_ATTESTATION,
   NODE_ENV
 } = process.env
@@ -31,7 +31,7 @@ function attestationWatcher() {
 
   const params = {
     since_id: initTweet,
-    q: `#${NUXT_ENV_TWITTER_HASHTAG} -filter:retweets`,
+    q: `#${TWITTER_HASHTAG} -filter:retweets`,
     result_type: 'recent',
     count: 100
   }
