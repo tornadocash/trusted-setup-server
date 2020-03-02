@@ -3,9 +3,8 @@
     <h1 class="title is-size-1 is-size-2-mobile is-spaced">
       Instructions
     </h1>
-
     <h2 class="subtitle">
-      for Rust:
+      Using pure Rust implementation:
     </h2>
     <figure class="highlight">
       <pre v-highlightjs><code class="bash"># Install rust
@@ -20,7 +19,7 @@ cargo run --release --bin tornado</code></pre>
     </figure>
 
     <h2 class="subtitle">
-      for Docker:
+      Using Docker container:
     </h2>
 
     <div class="content p">
@@ -30,22 +29,14 @@ cargo run --release --bin tornado</code></pre>
       </p>
       <p>
         First you need to install the docker on your system:
+        <a
+          href="https://download.docker.com/win/stable/Docker%20Desktop%20Installer.exe"
+          target="_blank"
+          >Windows</a
+        >
+        <a href="https://download.docker.com/mac/stable/Docker.dmg" target="_blank">Mac</a>
+        <a href="https://docs.docker.com/install/#supported-platforms" target="_blank">Linux</a>
       </p>
-      <ul>
-        <li>
-          <a
-            href="https://download.docker.com/win/stable/Docker%20Desktop%20Installer.exe"
-            target="_blank"
-          >
-            Download Docker for Windows</a
-          >
-        </li>
-        <li>
-          <a href="https://download.docker.com/mac/stable/Docker.dmg" target="_blank">
-            Download Docker for Mac</a
-          >
-        </li>
-      </ul>
     </div>
 
     <figure class="highlight">
