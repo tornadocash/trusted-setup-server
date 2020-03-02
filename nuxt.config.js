@@ -72,7 +72,7 @@ module.exports = {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [{ src: '~plugins/phase2', ssr: false }],
+  plugins: [{ src: '~plugins/phase2', ssr: false }, '~plugins/highlight'],
   /*
    ** Nuxt.js dev-modules
    */
@@ -123,5 +123,8 @@ module.exports = {
   server: {
     port: 3000, // default: 3000
     host: '0.0.0.0' // default: localhost
+  },
+  env: {
+    hashtag: process.env.TWITTER_HASHTAG
   }
 }

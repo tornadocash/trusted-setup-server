@@ -53,7 +53,7 @@ const actions = {
     window.location.replace(`/api/connect/${provider}`)
   },
   makeTweet({ state }) {
-    const tweetText = `Just made the contribution %23${state.contributionIndex} to Tornado.cash Trusted Setup Ceremony! 🚀`
+    const tweetText = `Just made the contribution %23${state.contributionIndex} to @TornadoCash Trusted Setup Ceremony! 🚀 %23${process.env.hashtag}`
     const popUpWindowWidth = 600
     const popUpWindowHeight = 250
     const dualScreenLeft = window.screenLeft !== undefined ? window.screenLeft : window.screenX

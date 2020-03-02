@@ -6,7 +6,7 @@
       </b-navbar-item>
     </template>
     <template slot="end">
-      <b-navbar-item href="#">
+      <b-navbar-item tag="router-link" to="/instructions">
         Instructions
       </b-navbar-item>
       <b-navbar-item href="#">

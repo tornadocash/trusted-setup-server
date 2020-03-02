@@ -57,7 +57,9 @@
         <b-table-column :centered="true" label="Attestation">
           <a
             v-if="props.row.attestation"
-            :href="props.row.attestation"
+            :href="
+              `https://${props.row.socialType}.com/${props.row.handle}/status/${props.row.attestation}`
+            "
             target="_blank"
             class="button is-icon"
           >
@@ -97,7 +99,7 @@
               </div>
             </div>
             <b-dropdown-item
-              v-for="(rows, index) in [3, 10, 15, 20, 50]"
+              v-for="(rows, index) in [10, 25, 50, 100]"
               :key="index"
               :value="rows"
               aria-role="listitem"

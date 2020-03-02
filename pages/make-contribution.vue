@@ -30,6 +30,19 @@
     <div v-show="status.type === 'is-danger' || status.type === 'is-success'" class="status">
       <div :class="status.type" class="status-message">{{ status.msg }}</div>
     </div>
+    <div v-show="contributionHash" class="status">
+      <div class="label">Your contribution hash (Blake2b)</div>
+      <b-field position="is-centered">
+        <b-input :value="contributionHash" readonly></b-input>
+        <p class="control">
+          <b-button @click="copyContributionHash" type="is-primary">Copy</b-button>
+        </p>
+      </b-field>
+    </div>
+    <div v-show="authorizeLink" class="status">
+      You still can authorize your contribution by following this
+      <a :href="authorizeLink" class="has-text-primary">link</a>.
+    </div>
 
     <div class="buttons is-centered">
       <b-button
@@ -42,19 +55,20 @@
         Make the contribution
       </b-button>
       <b-button
-        v-if="status.type === 'is-success'"
+        v-if="status.type === 'is-success' && contributionType !== 'anonymous'"
         @click="makeTweet"
         type="is-primary"
         tag="a"
         target="_blank"
         outlined
       >
-        Tweet about your contribution
+        Post attestation
       </b-button>
     </div>
     <p class="p">
-      If you don’t trust binaries, we encorage you to follow this <a href="">instruction</a> to
-      contribute by compiling from source code. It is very easy!
+      If you don’t trust binaries, we encorage you to follow this
+      <router-link to="/instructions">instruction</router-link> to contribute by compiling from
+      source code. It is very easy!
     </p>
   </div>
 </template>
@@ -77,7 +91,9 @@ export default {
       status: {
         type: '',
         msg: ''
-      }
+      },
+      contributionHash: null,
+      authorizeLink: null
     }
   },
   computed: {
@@ -160,13 +176,16 @@ export default {
           body: formData
         })
         if (resp.ok) {
-          this.status.msg = 'Your contribution is verified and recorded. Thank you.'
-          this.status.type = 'is-success'
           const responseData = await resp.json()
           this.$store.commit('user/SET_CONTRIBUTION_INDEX', responseData.contributionIndex)
-          console.log(
-            `${window.location.origin}/authorize-contribution?token=${responseData.token}`
-          )
+          this.status.msg = 'Your contribution is verified and recorded.'
+          this.status.type = 'is-success'
+          this.contributionHash = responseData.hash
+          if (this.contributionType === 'anonymous') {
+            this.authorizeLink = `${window.location.origin}/authorize-contribution?token=${responseData.token}`
+          } else {
+            this.status.msg += ' Now you can post attestation from your twitter account.'
+          }
         } else if (resp.status === 422) {
           if (retry < 3) {
             console.log(`Looks like someone else uploaded contribution ahead of us, retrying`)
@@ -193,6 +212,14 @@ export default {
     onAnonymousHandler() {
       this.logOut()
       this.contributionType = 'anonymous'
+    },
+    copyContributionHash() {
+      navigator.clipboard.writeText(this.contributionHash).then(() => {
+        this.$buefy.toast.open({
+          message: 'Copied!',
+          type: 'is-primary'
+        })
+      })
     }
   }
 }

@@ -25,6 +25,10 @@
         text-decoration: underline;
       }
     }
+
+    ul {
+      list-style: none;
+    }
   }
 
   .columns:not(:last-child) {
@@ -79,6 +83,7 @@
     .box {
       background-color: $primary-invert;
       border-color: #393939;
+      cursor: inherit;
 
       .title {
         color: $white;
@@ -133,6 +138,16 @@
         display: none;
       }
     }
+
+    &.has-addons .control {
+      &:not(:last-child) {
+        z-index: 1;
+      }
+
+      &:last-child {
+        z-index: 10;
+      }
+    }
   }
 
   .currently {
@@ -148,4 +163,15 @@
       margin-bottom: $block-spacing;
     }
   }
+
+  > .buttons {
+    &:not(:last-child) {
+      margin-bottom: 0;
+    }
+
+    .button {
+      margin-bottom: 2rem;
+    }
+  }
+
 }

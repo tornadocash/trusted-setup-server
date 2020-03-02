@@ -11,5 +11,4 @@ COPY --from=bin /usr/bin/phase2_verify_contribution /app/server/bin/
 
 EXPOSE 3000
 HEALTHCHECK CMD curl -f http://localhost:3000/
-RUN yarn build
 CMD ["yarn", "start"]

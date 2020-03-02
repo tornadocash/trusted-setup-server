@@ -10,6 +10,7 @@ $warning: #ff8a00;
 $black: #2c4538;
 $danger: #FF0658;
 $dark: #242424;
+$pre: $white;
 $info: $primary-invert;
 $info-invert: $white;
 $custom-colors: ("black": ($black, $primary-invert));
@@ -158,6 +159,8 @@ $pagination-disabled-border-color: $primary;
 $pagination-current-color: $primary-invert;
 $pagination-current-background-color: $primary;
 $pagination-current-border-color: $primary;
+
+$pre-background: rgba($primary, 0.104);
 
 .columns {
   @include from(576px) {
