@@ -31,7 +31,7 @@ function attestationWatcher() {
 
   const params = {
     since_id: initTweet,
-    q: `#${TWITTER_HASHTAG} -filter:retweets`,
+    q: `contribution #${TWITTER_HASHTAG} -filter:retweets`,
     result_type: 'recent',
     count: 100
   }

@@ -27,17 +27,30 @@
       </div>
     </fieldset>
 
-    <div v-show="status.type === 'is-danger' || status.type === 'is-success'" class="status">
-      <div :class="status.type" class="status-message">{{ status.msg }}</div>
-    </div>
     <div v-show="contributionHash" class="status">
       <div class="label">Your contribution hash (Blake2b)</div>
-      <b-field position="is-centered">
-        <b-input :value="contributionHash" readonly></b-input>
-        <p class="control">
-          <b-button @click="copyContributionHash" type="is-primary">Copy</b-button>
-        </p>
+      <b-field position="is-centered" class="has-addons contribution-hash">
+        <b-input
+          @click.native="copyContributionHash"
+          :value="contributionHash"
+          icon="copy"
+          readonly
+        ></b-input>
       </b-field>
+    </div>
+    <div v-show="status.type !== ''" class="status">
+      <div :class="status.type" class="status-message">{{ status.msg }}</div>
+      <div
+        v-show="status.type === 'is-success' && contributionType !== 'anonymous'"
+        class="status-message is-success"
+      >
+        Now you can post attestation from your twitter account.
+        <div class="buttons is-centered">
+          <b-button @click="makeTweet" type="is-primary" tag="a" target="_blank" outlined>
+            Post attestation
+          </b-button>
+        </div>
+      </div>
     </div>
     <div v-show="authorizeLink" class="status">
       You still can authorize your contribution by following this
@@ -53,16 +66,6 @@
         outlined
       >
         Make the contribution
-      </b-button>
-      <b-button
-        v-if="status.type === 'is-success' && contributionType !== 'anonymous'"
-        @click="makeTweet"
-        type="is-primary"
-        tag="a"
-        target="_blank"
-        outlined
-      >
-        Post attestation
       </b-button>
     </div>
     <p class="p">
@@ -183,8 +186,6 @@ export default {
           this.contributionHash = responseData.hash
           if (this.contributionType === 'anonymous') {
             this.authorizeLink = `${window.location.origin}/authorize-contribution?token=${responseData.token}`
-          } else {
-            this.status.msg += ' Now you can post attestation from your twitter account.'
           }
         } else if (resp.status === 422) {
           if (retry < 3) {

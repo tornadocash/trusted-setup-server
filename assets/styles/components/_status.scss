@@ -10,5 +10,9 @@
     &.is-danger {
       color: $danger;
     }
+
+    .buttons .button {
+      margin-top: .5rem;
+    }
   }
 }

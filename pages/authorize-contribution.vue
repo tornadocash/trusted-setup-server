@@ -19,19 +19,17 @@
       >
         Save information
       </b-button>
-      <b-button
-        v-if="status.type === 'is-success'"
-        @click="makeTweet"
-        type="is-primary"
-        tag="a"
-        target="_blank"
-        outlined
-      >
-        Post attestation
-      </b-button>
     </div>
-    <div v-show="status.type === 'is-danger' || status.type === 'is-success'" class="status">
+    <div v-show="status.type !== ''" class="status">
       <div :class="status.type" class="status-message">{{ status.msg }}</div>
+      <div v-show="status.type === 'is-success'" class="status-message is-success">
+        Now you can post attestation from your twitter account.
+        <div class="buttons is-centered">
+          <b-button @click="makeTweet" type="is-primary" tag="a" target="_blank" outlined>
+            Post attestation
+          </b-button>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -99,7 +97,7 @@ export default {
           body: JSON.stringify(body)
         })
         if (response.ok) {
-          this.status.msg = `Your contribution authorized. Now you can post attestation from your twitter account.`
+          this.status.msg = `Your contribution authorized.`
           this.status.type = 'is-success'
           this.hideSaveBtn = true
         } else {

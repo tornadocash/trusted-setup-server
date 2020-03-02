@@ -67,25 +67,9 @@
 
 .table-search {
   .icon {
-    mask-image: url("../img/icons/search.svg");
-    mask-position: center;
-    mask-repeat: no-repeat;
-    mask-size: 16px 16px;
-
-    background-color: $input-placeholder-color;
-  }
-
-  .input {
-    &:hover {
-      ~ .icon {
-        background-color: $input-hover-color;
-      }
-    }
-
-    &:focus {
-      ~ .icon {
-        background-color: $primary;
-      }
-    }
+    background-image: url("../img/icons/search.svg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 16px 16px;
   }
 }
