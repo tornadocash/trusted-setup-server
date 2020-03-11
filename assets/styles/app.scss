@@ -35,3 +35,17 @@
 .box {
   border: 1px solid #393939;
 }
+
+.modal {
+  &-card {
+    margin: 0;
+    border: 1px solid #393939;
+    border-radius: $box-radius;
+
+    &-foot {
+      .button {
+        padding-right: 1.3rem;
+      }
+    }
+  }
+}
