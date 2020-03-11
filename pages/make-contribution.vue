@@ -60,7 +60,7 @@
     <div class="buttons is-centered">
       <b-button
         v-if="!isContributeBtnSnown"
-        @click="makeContribution"
+        @click="getUserRandom"
         :disabled="isContributeBtnDisabled"
         type="is-primary"
         outlined
@@ -150,8 +150,22 @@ export default {
   },
   methods: {
     ...mapActions('user', ['makeTweet', 'logOut', 'getUserData']),
-    async makeContribution({ retry = 0 } = {}) {
+    getUserRandom() {
+      this.$buefy.dialog.prompt({
+        title: 'Contribution',
+        message: `Please provide a random input. The input, along with browser randomness, will be used as a source of entropy for your contribution.`,
+        inputAttrs: {
+          maxlength: 300
+        },
+        trapFocus: true,
+        onConfirm: (userInput) => {
+          this.makeContribution({ userInput })
+        }
+      })
+    },
+    async makeContribution({ userInput, retry = 0 } = {}) {
       try {
+        const contribute = await this.$contribute()
         this.isContributeBtnSnown = true
         this.status.msg = ''
         this.status.type = ''
@@ -162,12 +176,22 @@ export default {
         this.$root.$emit('enableLoading', 'Generating random contribution')
         await timeout(100) // allow UI to update before freezing in wasm
         console.log('Source params', data)
-        const contribute = await this.$contribute()
-        const result = contribute(data)
+
+        const encoder = new TextEncoder(userInput)
+        const entropyFromUser = encoder.encode(userInput)
+
+        const entropy = new Uint8Array(userInput.length)
+        const entropyFromBrowser = window.crypto.getRandomValues(entropy)
+        // suffle the browser and user random
+        for (let i = 0; i < entropyFromBrowser.length; i++) {
+          entropy[i] = entropyFromBrowser[i] + entropyFromUser[i]
+        }
+
+        console.log('entropy', entropy)
+        const result = contribute(data, entropy)
         console.log('Updated params', result)
 
         this.$root.$emit('enableLoading', 'Uploading and verifying your contribution')
-        console.log('this.user.name', this.userName, this.userHandle, this.userCompany)
         const formData = new FormData()
         formData.append('response', new Blob([result], { type: 'application/octet-stream' }))
         if (this.contributionType !== 'anonymous') {
@@ -202,7 +226,7 @@ export default {
           this.isContributeBtnSnown = false
         }
       } catch (e) {
-        console.error(e.message)
+        console.error(e)
         this.status.msg = e.message
         this.status.type = 'is-danger'
         this.isContributeBtnSnown = false

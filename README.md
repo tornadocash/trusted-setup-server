@@ -64,3 +64,12 @@ $ docker-compose up -d
 1. The `current.params` file is your initial challenge file.
 1. copy `current.params`, `withdraw.json` and `phase1radix*` to `./server/snark_files` folder.
 1. `mv withdraw.json circuit.json`
+
+
+## In case of WASM module changes
+1. go to `phase2` folder in [phase2-bn254](https://github.com/tornadocash/phase2-bn254) (ceremony branch for now) and run the following command:
+1. `wasm-pack build --release --target web -- --no-default-features --features wasm`
+1. it will generate wasm modules in `pkg` folder, then you need to copy it to this project
+1. `cp -r pkg/* <path_to_current_project>/lib/phase2 && cp pkg/phase2_bg.wasm <path_to_current_project>/static/_nuxt/lib/phase2/`
+
+Example: `wasm-pack build --release --target web -- --no-default-features --features wasm && cp -r pkg/* ../../trusted-setup-nuxt/lib/phase2 && cp pkg/phase2_bg.wasm ../../trusted-setup-nuxt/static/_nuxt/lib/phase2/`

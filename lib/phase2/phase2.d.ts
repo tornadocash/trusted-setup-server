@@ -2,9 +2,10 @@
 /* eslint-disable */
 /**
 * @param {Uint8Array} params 
+* @param {Uint8Array} entropy 
 * @returns {Uint8Array} 
 */
-export function contribute(params: Uint8Array): Uint8Array;
+export function contribute(params: Uint8Array, entropy: Uint8Array): Uint8Array;
 
 /**
 * If `module_or_path` is {RequestInfo}, makes a request and
