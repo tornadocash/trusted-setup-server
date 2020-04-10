@@ -91,9 +91,7 @@ module.exports = {
         css: false,
         materialDesignIcons: false
       }
-    ],
-    // Doc: https://axios.nuxtjs.org/usage
-    '@nuxtjs/axios'
+    ]
   ],
   /*
    ** Axios module configuration
