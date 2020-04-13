@@ -180,12 +180,18 @@ export default {
         await timeout(100) // allow UI to update before freezing in wasm
         console.log('Source params', data)
 
-        const encoder = new TextEncoder(userInput)
-        const entropyFromUser = encoder.encode(userInput)
+        let msgBuffer = new TextEncoder('utf-8').encode(userInput)
+        let hashBuffer = await window.crypto.subtle.digest('SHA-256', msgBuffer)
+        const entropyFromUser = new Uint8Array(hashBuffer)
+        console.log('entropyFromUser', entropyFromUser.toString())
 
-        const entropy = new Uint8Array(userInput.length)
-        const entropyFromBrowser = window.crypto.getRandomValues(entropy)
+        msgBuffer = window.crypto.getRandomValues(new Uint8Array(1024))
+        hashBuffer = await window.crypto.subtle.digest('SHA-256', msgBuffer)
+        const entropyFromBrowser = new Uint8Array(hashBuffer)
+        console.log('entropyFromBrowser', entropyFromBrowser.toString())
+
         // suffle the browser and user random
+        const entropy = new Uint8Array(entropyFromBrowser.length)
         for (let i = 0; i < entropyFromBrowser.length; i++) {
           entropy[i] = entropyFromBrowser[i] + entropyFromUser[i]
         }
@@ -217,7 +223,7 @@ export default {
         } else if (resp.status === 422) {
           if (retry < 3) {
             console.log(`Looks like someone else uploaded contribution ahead of us, retrying`)
-            await this.makeContribution({ retry: retry++ })
+            await this.makeContribution({ userInput, retry: retry++ })
           } else {
             this.status.msg = `Failed to upload your contribution after ${retry} attempts`
             this.status.type = 'is-danger'

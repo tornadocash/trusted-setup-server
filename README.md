@@ -76,7 +76,7 @@ Example: `wasm-pack build --release --target web -- --no-default-features --feat
 
 
 ## Initialize REAL ceremony:
-1. Choose what contribition to use for the ceremony. Also choose what hash of future ethereum block we will use, tweet about it and calculate the VDF.
+1. Choose what contribition to use for the ceremony (it should already exist). Also choose what hash of future ethereum block we will use, tweet about it and calculate the VDF.
 1. Make sure your machine has at least 150 GB RAM and 200 GB SSD.
 1. Download the response file of the contribution. You can use `aria2c` accelerator for it.
 1. `git clone https://github.com/tornadocash/phase2-bn254 && cd phase2-bn254`
