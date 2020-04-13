@@ -10,6 +10,8 @@ services:
       nginx_proxy_read_timeout: 600s
       MYSQL_HOST: mysql
     env_file: .env.production
+    volumes:
+      - app:/app/server/snark_files
     depends_on:
       - mysql
 
@@ -23,6 +25,7 @@ services:
       - mysql:/var/lib/mysql
 
 volumes:
+  app:
   mysql:
 
 networks:

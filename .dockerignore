@@ -5,3 +5,4 @@ node_modules
 .git
 db.development.sqlite
 server/snark_files/response_*
+.DS_Store
