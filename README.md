@@ -113,4 +113,6 @@ Example: `wasm-pack build --release --target web -- --no-default-features --feat
 1. `npm run build:circuit:bin`
 1. That's it you can use `Verifier.sol`, `withdraw.json`, `withdraw_verification_key.json` and `withdraw_proving_key.bin` to deploy contract and the UI.
 
-Note. Your also need to use [special](https://github.com/tornadocash/websnark.git#4c0af6a8b65aabea3c09f377f63c44e7a58afa6d) version of websnark lib on the UI. 
+Note. 
+1. Your also need to use [special](https://github.com/tornadocash/websnark.git#4c0af6a8b65aabea3c09f377f63c44e7a58afa6d) version of websnark lib on the UI.
+2. update WASM module.
