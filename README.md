@@ -50,7 +50,7 @@ $ cd ..
 # Run the app and mysql database containers. It will use the MYSQL_USER, MYSQL_PASSWORD and MYSQL_DATABASE vars you specified in .env.production file.
 $ docker-compose up -d
 
-# Note. At start it builds client side stuff. It takes 30 seconds or so, during this time you will get 503 error.
+# Note. At start it builds client side stuff. It takes 30 seconds or so, during this time you will get 502 error.
 ```
 
 ## Initialize ceremony (`current.params` file creation):
@@ -87,13 +87,30 @@ Example: `wasm-pack build --release --target web -- --no-default-features --feat
 1. `cargo run --release --bin beacon_constrained <challenge_file> last_response 28 256 <VDF output>`
 1. `cargo run --release --bin prepare_phase2 last_response 28 256` it will generate `radix*` files. You can abort execution after `phase1radix2m15` calculation.
 1. `cd ../phase2`
-1. `wget https://github.com/tornadocash/tornado-core/releases/download/v2.0/withdraw.json`
+1. Make sure sure that withdraw.circom has additional constaints
+1. `wget https://github.com/tornadocash/tornado-core/releases/download/v2.0/withdraw.json -O circuit.json`
 1. `cp ../powersoftau/phase1radix2m15 .`
-1. `cargo run --release --bin new withdraw.json current.params`
+1. `cargo run --release --bin new circuit.json current.params`
 1. The `current.params` file is your initial challenge file.
-1. copy `current.params`, `withdraw.json` and `phase1radix*` to `./server/snark_files` folder.
-1. `mv withdraw.json circuit.json`
+1. copy `current.params`, `circuit.json` and `phase1radix*` to `./server/snark_files` folder.
 
 1. Then the phase2 goes. see [Production setup](#production-setup)
 
-1. 
+1. Before next step you can download all contributions and verify all of them localy.
+1. Copy last contribution to `phase2-bn254/phase2` folder as `result.params`
+1. `npx snarkjs setup --protocol groth`
+1. `cargo run --release --bin export_keys result.params vk.json pk.json`
+1. `cargo run --release --bin copy_json proving_key.json pk.json transformed_pk.json`
+1. `cargo run --release --bin generate_verifier result.params Verifier.sol`
+1. `git clone git@github.com:tornadocash/tornado-core.git`
+1. `cd tornado-core && git checkout phase2`
+1. Copy `transformed_pk.json`, `vk.json` and `Verifier.sol` to `tornado-core` project to the `build/circuits` folder.
+1. Change solidity version to 0.5.17 in `Verifier.sol`
+1. `npm run build:circuit:compile`
+1. `mv transformed_pk.json withdraw_proving_key.json`
+1. `mv vk.json withdraw_verification_key.json`
+1. `npm i`
+1. `npm run build:circuit:bin`
+1. That's it you can use `Verifier.sol`, `withdraw.json`, `withdraw_verification_key.json` and `withdraw_proving_key.bin` to deploy contract and the UI.
+
+Note. Your also need to use [special](https://github.com/tornadocash/websnark.git#4c0af6a8b65aabea3c09f377f63c44e7a58afa6d) version of websnark lib on the UI. 

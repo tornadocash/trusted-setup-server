@@ -197,6 +197,7 @@ export default {
         }
 
         console.log('entropy', entropy)
+        await this.sleep(100) // so browser can render the messages
         const result = contribute(data, entropy)
         console.log('Updated params', result)
 
@@ -254,6 +255,9 @@ export default {
           type: 'is-primary'
         })
       })
+    },
+    sleep(ms) {
+      return new Promise((resolve) => setTimeout(resolve, ms))
     }
   }
 }
