@@ -36,7 +36,7 @@ $ yarn dev
 ```
 
 ## Production setup
-Follow instructions in the [Initialize ceremony](#initialize-ceremony-currentparams-file-creation) section to generate `current.params` ceremony file.
+Follow instructions in the [Initialize ceremony](#initialize-real-ceremony) section to generate `current.params` ceremony file.
 ``` bash
 # Edit all necessary environment variables. See the explanation above.
 $ cp .env.example .env.production
@@ -49,6 +49,8 @@ $ cd ..
 # Set VIRTUAL_HOST and LETSENCRYPT_HOST variables in the app's docker-compose.yml file
 # Run the app and mysql database containers. It will use the MYSQL_USER, MYSQL_PASSWORD and MYSQL_DATABASE vars you specified in .env.production file.
 $ docker-compose up -d
+
+# Note. At start it builds client side stuff. It takes 30 seconds or so, during this time you will get 503 error.
 ```
 
 ## Initialize ceremony (`current.params` file creation):
@@ -75,7 +77,7 @@ $ docker-compose up -d
 Example: `wasm-pack build --release --target web -- --no-default-features --features wasm && cp -r pkg/* ../../trusted-setup-nuxt/lib/phase2 && cp pkg/phase2_bg.wasm ../../trusted-setup-nuxt/static/_nuxt/lib/phase2/`
 
 
-## Initialize REAL ceremony:
+## Initialize REAL ceremony
 1. Choose what contribition to use for the ceremony (it should already exist). Also choose what hash of future ethereum block we will use, tweet about it and calculate the VDF.
 1. Make sure your machine has at least 150 GB RAM and 200 GB SSD.
 1. Download the response file of the contribution. You can use `aria2c` accelerator for it.

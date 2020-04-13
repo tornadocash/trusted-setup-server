@@ -97,7 +97,7 @@ router.post('/response', upload.single('response'), async (req, res) => {
       }
 
       console.log('Committing changes')
-      await fs.rename(`/tmp/tornado/${req.file.filename}`, './server/snark_files/current.params')
+      await fs.copyFile(`/tmp/tornado/${req.file.filename}`, './server/snark_files/current.params')
       await fs.copyFile(
         './server/snark_files/current.params',
         `./server/snark_files/response_${contributionIndex}`
@@ -107,8 +107,9 @@ router.post('/response', upload.single('response'), async (req, res) => {
       res.json({ contributionIndex, token, hash })
     } catch (e) {
       console.error('Got error during save', e)
-      await fs.unlink(`/tmp/tornado/${req.file.filename}`)
       res.status(503).send(e.toString())
+    } finally {
+      await fs.unlink(`/tmp/tornado/${req.file.filename}`)
     }
   })
 })
