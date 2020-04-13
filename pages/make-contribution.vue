@@ -173,7 +173,10 @@ export default {
         let data = await fetch('api/challenge')
         data = new Uint8Array(await data.arrayBuffer())
 
-        this.$root.$emit('enableLoading', 'Generating random contribution')
+        this.$root.$emit(
+          'enableLoading',
+          'Generating random contribution. Your browser may appear unresponsive. It can take a minute or so'
+        )
         await timeout(100) // allow UI to update before freezing in wasm
         console.log('Source params', data)
 

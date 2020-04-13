@@ -73,3 +73,25 @@ $ docker-compose up -d
 1. `cp -r pkg/* <path_to_current_project>/lib/phase2 && cp pkg/phase2_bg.wasm <path_to_current_project>/static/_nuxt/lib/phase2/`
 
 Example: `wasm-pack build --release --target web -- --no-default-features --features wasm && cp -r pkg/* ../../trusted-setup-nuxt/lib/phase2 && cp pkg/phase2_bg.wasm ../../trusted-setup-nuxt/static/_nuxt/lib/phase2/`
+
+
+## Initialize REAL ceremony:
+1. Choose what contribition to use for the ceremony. Also choose what hash of future ethereum block we will use, tweet about it and calculate the VDF.
+1. Make sure your machine has at least 150 GB RAM and 200 GB SSD.
+1. Download the response file of the contribution. You can use `aria2c` accelerator for it.
+1. `git clone https://github.com/tornadocash/phase2-bn254 && cd phase2-bn254`
+1. `git checkout stable`
+1. `cd powersoftau`
+1. `cargo run --release --bin beacon_constrained <challenge_file> last_response 28 256 <VDF output>`
+1. `cargo run --release --bin prepare_phase2 last_response 28 256` it will generate `radix*` files. You can abort execution after `phase1radix2m15` calculation.
+1. `cd ../phase2`
+1. `wget https://github.com/tornadocash/tornado-core/releases/download/v2.0/withdraw.json`
+1. `cp ../powersoftau/phase1radix2m15 .`
+1. `cargo run --release --bin new withdraw.json current.params`
+1. The `current.params` file is your initial challenge file.
+1. copy `current.params`, `withdraw.json` and `phase1radix*` to `./server/snark_files` folder.
+1. `mv withdraw.json circuit.json`
+
+1. Then the phase2 goes. see [Production setup](#production-setup)
+
+1. 
