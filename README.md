@@ -53,21 +53,6 @@ $ docker-compose up -d
 # Note. At start it builds client side stuff. It takes 30 seconds or so, during this time you will get 502 error.
 ```
 
-## Initialize ceremony (`current.params` file creation):
-1. `git clone https://github.com/tornadocash/phase2-bn254 && cd phase2-bn254`
-1. `git checkout wasm`
-1. go to `./powersoftau/src/bn256/mod.rs` and change `REQUIRED_POWER` to 15 (it's going to fit 36k constaints snark)
-1. `cd powersoftau`
-1. run `./test.sh`. After this step you will get many `phase1radix*` files.
-1. Download [withdraw.json](https://github.com/tornadocash/tornado-core/releases/download/v2.0/withdraw.json) for required circuit to `./phase2` folder
-1. `cd ../phase2`
-1. `cp ../powersoftau/phase1radix* .`
-1. `cargo run --release --bin new withdraw.json current.params`
-1. The `current.params` file is your initial challenge file.
-1. copy `current.params`, `withdraw.json` and `phase1radix*` to `./server/snark_files` folder.
-1. `mv withdraw.json circuit.json`
-
-
 ## In case of WASM module changes
 1. go to `phase2` folder in [phase2-bn254](https://github.com/tornadocash/phase2-bn254) (ceremony branch for now) and run the following command:
 1. `wasm-pack build --release --target web -- --no-default-features --features wasm`
@@ -116,3 +101,18 @@ Example: `wasm-pack build --release --target web -- --no-default-features --feat
 Note. 
 1. Your also need to use [special](https://github.com/tornadocash/websnark.git#4c0af6a8b65aabea3c09f377f63c44e7a58afa6d) version of websnark lib on the UI.
 2. update WASM module.
+
+
+## Initialize ceremony (`current.params` file creation) OUTDATED:
+1. `git clone https://github.com/tornadocash/phase2-bn254 && cd phase2-bn254`
+1. `git checkout ceremony`
+1. go to `./powersoftau/src/bn256/mod.rs` and change `REQUIRED_POWER` to 15 (it's going to fit 36k constaints snark)
+1. `cd powersoftau`
+1. run `./test.sh`. After this step you will get many `phase1radix*` files.
+1. Download [withdraw.json](https://github.com/tornadocash/tornado-core/releases/download/v2.0/withdraw.json) for required circuit to `./phase2` folder
+1. `cd ../phase2`
+1. `cp ../powersoftau/phase1radix* .`
+1. `cargo run --release --bin new withdraw.json current.params`
+1. The `current.params` file is your initial challenge file.
+1. copy `current.params`, `withdraw.json` and `phase1radix*` to `./server/snark_files` folder.
+1. `mv withdraw.json circuit.json`
