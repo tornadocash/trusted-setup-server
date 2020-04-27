@@ -24,7 +24,6 @@ module.exports = (sequelize, DataTypes) => {
       company: DataTypes.STRING,
       handle: DataTypes.STRING,
       socialType: DataTypes.STRING,
-      hash: DataTypes.STRING,
       attestation: DataTypes.STRING
     },
     {

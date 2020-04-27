@@ -82,6 +82,12 @@ import { mapGetters, mapActions } from 'vuex'
 import Cloak from '@/components/Cloak'
 import Form from '@/components/Form'
 const timeout = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
+function buf2hex(buffer) {
+  // buffer is an ArrayBuffer
+  return Array.prototype.map
+    .call(new Uint8Array(buffer), (x) => ('00' + x.toString(16)).slice(-2))
+    .join('')
+}
 
 export default {
   components: {
@@ -183,12 +189,12 @@ export default {
         let msgBuffer = new TextEncoder('utf-8').encode(userInput)
         let hashBuffer = await window.crypto.subtle.digest('SHA-256', msgBuffer)
         const entropyFromUser = new Uint8Array(hashBuffer)
-        console.log('entropyFromUser', entropyFromUser.toString())
+        // console.log('entropyFromUser', entropyFromUser.toString())
 
         msgBuffer = window.crypto.getRandomValues(new Uint8Array(1024))
         hashBuffer = await window.crypto.subtle.digest('SHA-256', msgBuffer)
         const entropyFromBrowser = new Uint8Array(hashBuffer)
-        console.log('entropyFromBrowser', entropyFromBrowser.toString())
+        // console.log('entropyFromBrowser', entropyFromBrowser.toString())
 
         // suffle the browser and user random
         const entropy = new Uint8Array(entropyFromBrowser.length)
@@ -196,14 +202,19 @@ export default {
           entropy[i] = entropyFromBrowser[i] + entropyFromUser[i]
         }
 
-        console.log('entropy', entropy)
+        // console.log('entropy', entropy)
         await this.sleep(100) // so browser can render the messages
         const result = contribute(data, entropy)
         console.log('Updated params', result)
+        const hash = '0x' + buf2hex(result.slice(0, 64))
+        const contribution = result.slice(64)
+
+        console.log('hash', hash)
+        console.log('contribution', contribution)
 
         this.$root.$emit('enableLoading', 'Uploading and verifying your contribution')
         const formData = new FormData()
-        formData.append('response', new Blob([result], { type: 'application/octet-stream' }))
+        formData.append('response', new Blob([contribution], { type: 'application/octet-stream' }))
         if (this.contributionType !== 'anonymous') {
           formData.append('name', this.userName)
           formData.append('company', this.userCompany)
@@ -217,7 +228,7 @@ export default {
           this.$store.commit('user/SET_CONTRIBUTION_INDEX', responseData.contributionIndex)
           this.status.msg = 'Your contribution is verified and recorded.'
           this.status.type = 'is-success'
-          this.contributionHash = responseData.hash
+          this.contributionHash = hash
           if (this.contributionType === 'anonymous') {
             this.authorizeLink = `${window.location.origin}/authorize-contribution?token=${responseData.token}`
           }

@@ -84,12 +84,7 @@ router.post('/response', upload.single('response'), async (req, res) => {
         token = crypto.randomBytes(32).toString('hex')
       }
 
-      const contribution = await fs.readFile(`/tmp/tornado/${req.file.filename}`)
-      const blake2Instance = blake2.createHash('blake2b')
-      blake2Instance.update(contribution)
-      const hash = '0x' + blake2Instance.digest('hex')
-
-      await Contribution.create({ name, company, handle, socialType, token, hash })
+      await Contribution.create({ name, company, handle, socialType, token })
 
       console.log('Contribution is correct, uploading to storage')
       if (process.env.DISABLE_S3 !== 'true') {
@@ -103,8 +98,8 @@ router.post('/response', upload.single('response'), async (req, res) => {
         `./server/snark_files/response_${contributionIndex}`
       )
 
-      console.log('Finished. The hash of the contribution is', hash)
-      res.json({ contributionIndex, token, hash })
+      console.log('Contribution finished.')
+      res.json({ contributionIndex, token })
     } catch (e) {
       console.error('Got error during save', e)
       res.status(503).send(e.toString())
