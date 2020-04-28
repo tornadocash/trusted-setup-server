@@ -54,7 +54,7 @@ $ docker-compose up -d
 ```
 
 ## In case of WASM module changes
-1. go to `phase2` folder in [phase2-bn254](https://github.com/tornadocash/phase2-bn254) (ceremony branch for now) and run the following command:
+1. go to `phase2` folder in [phase2-bn254](https://github.com/tornadocash/phase2-bn254) and run the following command:
 1. `wasm-pack build --release --target web -- --no-default-features --features wasm`
 1. it will generate wasm modules in `pkg` folder, then you need to copy it to this project
 1. `cp -r pkg/* <path_to_current_project>/lib/phase2 && cp pkg/phase2_bg.wasm <path_to_current_project>/static/_nuxt/lib/phase2/`
@@ -67,7 +67,6 @@ Example: `wasm-pack build --release --target web -- --no-default-features --feat
 1. Make sure your machine has at least 150 GB RAM and 200 GB SSD.
 1. Download the response file of the contribution. You can use `aria2c` accelerator for it.
 1. `git clone https://github.com/tornadocash/phase2-bn254 && cd phase2-bn254`
-1. `git checkout stable`
 1. `cd powersoftau`
 1. `cargo run --release --bin beacon_constrained <challenge_file> last_response 28 256 <VDF output>`
 1. `cargo run --release --bin prepare_phase2 last_response 28 256` it will generate `radix*` files. You can abort execution after `phase1radix2m15` calculation.

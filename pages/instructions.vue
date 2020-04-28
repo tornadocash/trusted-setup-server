@@ -11,7 +11,7 @@
 curl -sSf https://sh.rustup.rs | sh
 
 # Clone the repository with ceremony code
-git clone -b ceremony https://github.com/tornadocash/phase2-bn254
+git clone https://github.com/tornadocash/phase2-bn254
 cd phase2-bn254/phase2
 
 # Run the ceremony
@@ -41,7 +41,7 @@ cargo run --release --bin tornado</code></pre>
 
     <figure class="highlight">
       <pre v-highlightjs><code class="bash"># Download dockerfile
-wget https://raw.githubusercontent.com/tornadocash/phase2-bn254/ceremony/Dockerfile
+wget https://raw.githubusercontent.com/tornadocash/phase2-bn254/master/Dockerfile
 
 # Build docker image
 docker build . -t ceremony
