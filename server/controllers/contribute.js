@@ -8,7 +8,6 @@ const aws = require('aws-sdk')
 const express = require('express')
 const { Mutex } = require('async-mutex')
 const multer = require('multer')
-const blake2 = require('blake2')
 
 const mutex = new Mutex()
 const s3 = new aws.S3()
@@ -88,13 +87,13 @@ router.post('/response', upload.single('response'), async (req, res) => {
         await uploadToS3({ filename: req.file.filename, contributionIndex })
       }
       console.log('Committing changes')
-      await Contribution.create({ name, company, handle, socialType, token })
-
       await fs.copyFile(`/tmp/tornado/${req.file.filename}`, './server/snark_files/current.params')
       await fs.copyFile(
         './server/snark_files/current.params',
         `./server/snark_files/response_${contributionIndex}`
       )
+
+      await Contribution.create({ name, company, handle, socialType, token })
 
       console.log('Contribution finished.')
       res.json({ contributionIndex, token })

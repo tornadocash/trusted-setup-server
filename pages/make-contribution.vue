@@ -187,14 +187,12 @@ export default {
         await timeout(100) // allow UI to update before freezing in wasm
         console.log('Source params', data)
 
-        let msgBuffer = new TextEncoder('utf-8').encode(userInput)
-        let hashBuffer = await window.crypto.subtle.digest('SHA-256', msgBuffer)
+        const msgBuffer = new TextEncoder('utf-8').encode(userInput)
+        const hashBuffer = await window.crypto.subtle.digest('SHA-256', msgBuffer)
         const entropyFromUser = new Uint8Array(hashBuffer)
         // console.log('entropyFromUser', entropyFromUser.toString())
 
-        msgBuffer = window.crypto.getRandomValues(new Uint8Array(1024))
-        hashBuffer = await window.crypto.subtle.digest('SHA-256', msgBuffer)
-        const entropyFromBrowser = new Uint8Array(hashBuffer)
+        const entropyFromBrowser = window.crypto.getRandomValues(new Uint8Array(32))
         // console.log('entropyFromBrowser', entropyFromBrowser.toString())
 
         // suffle the browser and user random
