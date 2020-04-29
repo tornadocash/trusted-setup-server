@@ -4,7 +4,7 @@
       Hello, <span>@{{ userHandle }}</span>
     </h1>
     <h2 class="subtitle">
-      What way do you want to contribute to the Tornado.cash Trusted Setup Ceremony?
+      How would you like to contribute to the Tornado.cash Trusted Setup Ceremony?
     </h2>
     <fieldset :disabled="status.type === 'is-success'">
       <div class="columns is-centered">
@@ -20,7 +20,7 @@
         </div>
         <div class="column is-one-third">
           <div :class="{ 'is-hovered': isLoggedIn }" class="box">
-            <div class="title is-5">Using a social account</div>
+            <div class="title is-5">By using social account</div>
             <Form />
           </div>
         </div>
@@ -44,7 +44,7 @@
         v-show="status.type === 'is-success' && contributionType !== 'anonymous'"
         class="status-message is-success"
       >
-        Now you can post attestation from your twitter account.
+        And now you can post your attestation to Twitter.
         <div class="buttons is-centered">
           <b-button @click="makeTweet" type="is-primary" tag="a" target="_blank" outlined>
             Post attestation
@@ -53,8 +53,8 @@
       </div>
     </div>
     <div v-show="authorizeLink" class="status">
-      You still can authorize your contribution by following this
-      <a :href="authorizeLink" class="has-text-primary">link</a>.
+      You can still provide identity for your contribution by following
+      <a :href="authorizeLink" class="has-text-primary">this link</a>.
     </div>
 
     <div class="buttons is-centered">
@@ -65,13 +65,13 @@
         type="is-primary"
         outlined
       >
-        Make the contribution
+        Contribute
       </b-button>
     </div>
     <p class="p">
-      If you don’t trust binaries, we encorage you to follow this
-      <router-link to="/instructions">instruction</router-link> to contribute by compiling from
-      source code. It is very easy!
+      If you don’t trust binaries, we encorage you to follow these
+      <router-link to="/instructions">instructions</router-link> to contribute by compiling from the
+      source code. It is fairly easy!
     </p>
   </div>
 </template>
@@ -159,10 +159,11 @@ export default {
     getUserRandom() {
       this.$buefy.dialog.prompt({
         title: 'Contribution',
-        message: `Please provide a random input. The input, along with browser randomness, will be used as a source of entropy for your contribution.`,
+        message: `Please provide your random input that will be used as a source of entropy for your contribution along with browser's RNG.`,
         inputAttrs: {
           maxlength: 300
         },
+        confirmText: 'Contribute',
         trapFocus: true,
         onConfirm: (userInput) => {
           this.makeContribution({ userInput })
@@ -181,7 +182,7 @@ export default {
 
         this.$root.$emit(
           'enableLoading',
-          'Generating random contribution. Your browser may appear unresponsive. It can take a minute or so'
+          'Generating random contribution. Your browser may appear unresponsive. It can take a minute or so to complete'
         )
         await timeout(100) // allow UI to update before freezing in wasm
         console.log('Source params', data)
@@ -226,7 +227,7 @@ export default {
         if (resp.ok) {
           const responseData = await resp.json()
           this.$store.commit('user/SET_CONTRIBUTION_INDEX', responseData.contributionIndex)
-          this.status.msg = 'Your contribution is verified and recorded.'
+          this.status.msg = 'Your contribution has been verified and recorded.'
           this.status.type = 'is-success'
           this.contributionHash = hash
           if (this.contributionType === 'anonymous') {

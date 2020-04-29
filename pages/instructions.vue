@@ -7,10 +7,10 @@
       Using pure Rust implementation:
     </h2>
     <figure class="highlight">
-      <pre v-highlightjs><code class="bash"># Install rust
+      <pre v-highlightjs><code class="bash"># Install Rust
 curl -sSf https://sh.rustup.rs | sh
 
-# Clone the repository with ceremony code
+# Clone the repository with the ceremony code
 git clone https://github.com/tornadocash/phase2-bn254
 cd phase2-bn254/phase2
 
@@ -24,11 +24,11 @@ cargo run --release --bin tornado</code></pre>
 
     <div class="content p">
       <p>
-        Using this method you will download and compile ceremony source code from our git repo in a
-        stock Rust container. This is not a prebuilt container distribution.
+        Using this method, you will download and compile the ceremony source code from our git repo
+        in a stock Rust container. This is not a prebuilt container distribution.
       </p>
       <p>
-        First you need to install the docker on your system:
+        Start by installing Docker on your system:
         <a
           href="https://download.docker.com/win/stable/Docker%20Desktop%20Installer.exe"
           target="_blank"
@@ -40,7 +40,7 @@ cargo run --release --bin tornado</code></pre>
     </div>
 
     <figure class="highlight">
-      <pre v-highlightjs><code class="bash"># Download dockerfile
+      <pre v-highlightjs><code class="bash"># Download Dockerfile
 wget https://raw.githubusercontent.com/tornadocash/phase2-bn254/master/Dockerfile
 
 # Build docker image

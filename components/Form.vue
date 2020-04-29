@@ -16,7 +16,7 @@
       >
         <b-input v-model="userName" @blur="restrictSymbols('userName')" maxlength="35"></b-input>
       </b-field>
-      <b-field label="Company">
+      <b-field label="Project">
         <b-input
           v-model="userCompany"
           @blur="restrictSymbols('userCompany')"

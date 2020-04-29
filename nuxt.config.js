@@ -4,7 +4,7 @@ module.exports = {
    ** Headers of the page
    */
   head: {
-    title: 'Tornado Trusted Setup Ceremony',
+    title: 'Tornado.cash Trusted Setup Ceremony',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1, shrink-to-fit=no' },
@@ -22,7 +22,8 @@ module.exports = {
       {
         hid: 'og:description',
         property: 'og:description',
-        content: 'Non-custodial, trustless, serverless, private transactions on Ethereum network'
+        content:
+          "Improve security of tornado.cash by contributing to Trusted Setup Ceremony. Let's make it fully trustless!"
       },
       {
         hid: 'og:url',
@@ -42,7 +43,8 @@ module.exports = {
       {
         hid: 'description',
         name: 'description',
-        content: 'Non-custodial, trustless, serverless, private transactions on Ethereum network'
+        content:
+          "Improve security of tornado.cash by contributing to Trusted Setup Ceremony. Let's make it fully trustless!"
       },
       {
         hid: 'keywords',

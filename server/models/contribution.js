@@ -8,10 +8,10 @@ function isValidName(value, minLength = 4) {
 const validate = (contribution, options) => {
   const { name, company, socialType } = contribution.dataValues
   if (socialType !== 'anonymous' && !isValidName(name)) {
-    throw new Error('Wrong name')
+    throw new Error('Invalid user name')
   }
   if (company && !isValidName(company, 0)) {
-    throw new Error('Wrong company')
+    throw new Error('Invalid company name')
   }
 }
 
@@ -33,12 +33,12 @@ module.exports = (sequelize, DataTypes) => {
       }
     }
   )
-  Contribution.nextContributionIndex = async function() {
+  Contribution.nextContributionIndex = async function () {
     const rowsCount = await this.count()
     return rowsCount + 1
   }
 
-  Contribution.associate = function(models) {
+  Contribution.associate = function (models) {
     // associations can be defined here
   }
   return Contribution

@@ -4,13 +4,13 @@
       Tornado.cash <span>Trusted Setup Ceremony</span>
     </h1>
     <p class="p is-size-6">
-      zk-SNARKs require a pre-existing setup between the prover and verifier. A set of public
-      parameters define the “rules of the game” for the construction of zk-SNARKs. Please contribute
-      with your source of entropy, so that tornado.cash can be trustless.
+      zk-SNARKs require a pre-existing setup between Prover and Verifier. A set of public parameters
+      defines the “rules of the game” for the construction of zk-SNARKs. Please contribute with your
+      source of entropy, so that Tornado.cash can become fully trustless.
     </p>
     <div class="buttons is-centered">
       <b-button type="is-primary" outlined tag="router-link" to="/make-contribution">
-        Make the contribution
+        Contribute
       </b-button>
     </div>
     <div class="currently">
@@ -50,7 +50,7 @@
           {{ props.row.name }}
         </b-table-column>
 
-        <b-table-column field="company" label="Company">
+        <b-table-column field="company" label="Project">
           {{ props.row.company }}
         </b-table-column>
 

@@ -83,15 +83,13 @@ router.post('/response', upload.single('response'), async (req, res) => {
       } else {
         token = crypto.randomBytes(32).toString('hex')
       }
-
-      await Contribution.create({ name, company, handle, socialType, token })
-
       console.log('Contribution is correct, uploading to storage')
       if (process.env.DISABLE_S3 !== 'true') {
         await uploadToS3({ filename: req.file.filename, contributionIndex })
       }
-
       console.log('Committing changes')
+      await Contribution.create({ name, company, handle, socialType, token })
+
       await fs.copyFile(`/tmp/tornado/${req.file.filename}`, './server/snark_files/current.params')
       await fs.copyFile(
         './server/snark_files/current.params',
@@ -111,7 +109,7 @@ router.post('/response', upload.single('response'), async (req, res) => {
 
 router.post('/authorize_contribution', async (req, res) => {
   if (!req.body || !req.body.name || !req.body.token) {
-    res.status(404).send('Wrong request params')
+    res.status(404).send('Invalid request params')
   }
 
   const contribution = await Contribution.findOne({ where: { token: req.body.token } })
@@ -121,7 +119,7 @@ router.post('/authorize_contribution', async (req, res) => {
   }
 
   if (contribution.dataValues.socialType !== 'anonymous') {
-    res.status(404).send('The contribution is already authorized')
+    res.status(404).send('Your contribution is already identified.')
     return
   }
 
