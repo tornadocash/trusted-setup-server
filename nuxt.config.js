@@ -17,7 +17,7 @@ module.exports = {
       {
         hid: 'og:title',
         property: 'og:title',
-        content: 'Tornado Trusted Setup Ceremony'
+        content: 'Tornado.cash Trusted Setup Ceremony'
       },
       {
         hid: 'og:description',
