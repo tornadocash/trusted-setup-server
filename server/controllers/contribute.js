@@ -84,8 +84,6 @@ router.post('/response', upload.single('response'), async (req, res) => {
         token = crypto.randomBytes(32).toString('hex')
       }
 
-      await Contribution.create({ name, company, handle, socialType, token })
-
       console.log('Contribution is correct, uploading to storage')
       if (process.env.DISABLE_S3 !== 'true') {
         await uploadToS3({ filename: req.file.filename, contributionIndex })
@@ -97,6 +95,8 @@ router.post('/response', upload.single('response'), async (req, res) => {
         './server/snark_files/current.params',
         `./server/snark_files/response_${contributionIndex}`
       )
+
+      await Contribution.create({ name, company, handle, socialType, token })
 
       console.log('Contribution finished.')
       res.json({ contributionIndex, token })
