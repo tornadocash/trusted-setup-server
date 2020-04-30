@@ -30,7 +30,7 @@ async function uploadToS3({ filename, contributionIndex }) {
 async function verifyResponse({ filename }) {
   console.log('Running verifier')
   const { stdout, stderr } = await exec(
-    `../bin/phase2_verify_contribution circuit.json current.params /tmp/tornado/${filename}`,
+    `../bin/verify_contribution circuit.json current.params /tmp/tornado/${filename}`,
     {
       cwd: './server/snark_files/',
       env: { RUST_BACKTRACE: 1 }
