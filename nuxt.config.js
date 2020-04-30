@@ -125,6 +125,7 @@ module.exports = {
     host: '0.0.0.0' // default: localhost
   },
   env: {
-    hashtag: process.env.TWITTER_HASHTAG
+    hashtag: process.env.TWITTER_HASHTAG,
+    downloadUrl: process.env.AWS_CONTRIBUTION_URL
   }
 }
