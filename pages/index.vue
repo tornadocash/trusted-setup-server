@@ -66,6 +66,12 @@
             <span class="icon icon-link"></span>
           </a>
         </b-table-column>
+
+        <b-table-column>
+          <a :href="`${downloadUrl}_${props.row.id}`" class="button is-icon" download>
+            <span class="icon icon-save"></span>
+          </a>
+        </b-table-column>
       </template>
 
       <template slot="empty">
@@ -130,7 +136,8 @@ export default {
       //   }
       // ],
       rowsPerPage: 10,
-      contributionSearch: ''
+      contributionSearch: '',
+      downloadUrl: process.env.downloadUrl
     }
   },
   computed: {
