@@ -105,7 +105,7 @@
               </div>
             </div>
             <b-dropdown-item
-              v-for="(rows, index) in [10, 25, 50, 100]"
+              v-for="(rows, index) in [10, 25, 50, 100, 1000]"
               :key="index"
               :value="rows"
               aria-role="listitem"
@@ -135,17 +135,19 @@ export default {
       //     contribution: '#'
       //   }
       // ],
-      rowsPerPage: 10,
+      rowsPerPage: 100,
       contributionSearch: '',
       downloadUrl: process.env.downloadUrl
     }
   },
   computed: {
     filteredContributions() {
-      return this.contributions.filter((contribution) => {
-        const name = contribution.name || 'anonymous'
-        return name.toLowerCase().includes(this.contributionSearch.toLowerCase())
-      })
+      return this.contributions
+        .filter((contribution) => {
+          const name = contribution.name || 'anonymous'
+          return name.toLowerCase().includes(this.contributionSearch.toLowerCase())
+        })
+        .reverse()
     }
   },
   async mounted() {
