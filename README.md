@@ -88,11 +88,10 @@ Example: `wasm-pack build --release --target web -- --no-default-features --feat
 1. `cargo run --release --bin generate_verifier result.params Verifier.sol`
 1. `git clone git@github.com:tornadocash/tornado-core.git`
 1. `cd tornado-core && git checkout phase2`
-1. Copy `transformed_pk.json`, `vk.json` and `Verifier.sol` to `tornado-core` project to the `build/circuits` folder.
-1. Change solidity version to 0.5.17 in `Verifier.sol`
-1. `npm run build:circuit:compile`
+1. Copy `transformed_pk.json`, `vk.json`, `circuit.json` and `Verifier.sol` to `tornado-core` project to the `build/circuits` folder.
 1. `mv transformed_pk.json withdraw_proving_key.json`
 1. `mv vk.json withdraw_verification_key.json`
+1. `mv circuit.json withdraw.json`
 1. `npm i`
 1. `npm run build:circuit:bin`
 1. That's it you can use `Verifier.sol`, `withdraw.json`, `withdraw_verification_key.json` and `withdraw_proving_key.bin` to deploy contract and the UI.
