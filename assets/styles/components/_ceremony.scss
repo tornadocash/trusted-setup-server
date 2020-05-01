@@ -14,6 +14,10 @@
     max-width: 66.6666%;
     margin: 0 auto;
 
+    &.afterwords {
+      margin-top: -1rem;
+    }
+
     &:not(:last-child) {
       margin-bottom: $block-spacing;
     }

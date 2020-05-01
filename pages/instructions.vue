@@ -15,8 +15,14 @@ git clone https://github.com/tornadocash/phase2-bn254
 cd phase2-bn254/phase2
 
 # Run the ceremony
-cargo run --release --bin tornado</code></pre>
+cargo run --release --bin tornado
+</code></pre>
     </figure>
+    <div class="content afterwords p">
+      <p>
+        After the contribution, we recommend you to reboot your machine to clear your RAM.
+      </p>
+    </div>
 
     <h2 class="subtitle">
       Using Docker container:
@@ -49,5 +55,10 @@ docker build . -t ceremony
 # Run the ceremony
 docker run -ti ceremony</code></pre>
     </figure>
+    <div class="content afterwords p">
+      <p>
+        After the contribution, we recommend you to reboot your machine to clear your RAM.
+      </p>
+    </div>
   </div>
 </template>
