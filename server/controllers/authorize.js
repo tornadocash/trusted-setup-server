@@ -63,8 +63,12 @@ function validateRefferer(req, res, next) {
 }
 
 function restrictSymbols(value) {
-  const regExpression = new RegExp('[^0-9a-zA-Z\\x20]', 'g')
-  return value.replace(regExpression, '')
+  if (value) {
+    const regExpression = new RegExp('[^0-9a-zA-Z\\x20]', 'g')
+    return value.toString().replace(regExpression, '')
+  } else {
+    return ''
+  }
 }
 
 router.get('/connect/:provider', validateProvider, validateRefferer, (req, res) => {
