@@ -18,7 +18,7 @@
       Thank you for your participation!
     </h2>
     <div class="currently">
-      Currently there are <span>{{ contributions.length }}</span> contributions
+      There are <span>{{ contributions.length }}</span> contributions
     </div>
 
     <b-table
