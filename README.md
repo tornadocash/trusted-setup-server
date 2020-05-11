@@ -15,6 +15,7 @@ For command `yarn dev` the `.env.development` is used. The `yarn start` uses `.e
 | MYSQL_USER | Mysql user the app uses. Notice, you don't need mysql db for development. The app will use local sqlite db in dev mode. Local db is stored in `db.development.sqlite` file. |
 | MYSQL_PASSWORD | Mysql password for MYSQL_USER |
 | MYSQL_DATABASE | Mysql database |
+| DISABLE_ATTESTATION_WATCHER | Disable attestation watcher. `true` or `false` |
 | TWITTER_CONSUMER_KEY | Twitter consumer API key. [Twitter app](https://developer.twitter.com/en/apps) |
 | TWITTER_CONSUMER_SECRET | Twitter consumer API secret |
 | TWITTER_CALLBACK_URL | Twitter callback URL. The app handles the `/api/oauth_callback/twitter` endpoint. Feel free to change domain name and protocol though |
@@ -42,7 +43,7 @@ Follow instructions in the [Initialize ceremony](#initialize-real-ceremony) sect
 $ cp .env.example .env.production
 
 # Run Nginx + Letsencrypt containers to serve https requests to the app
-$ cd frontend 
+$ cd frontend
 $ docker-compose up -d
 $ cd ..
 
@@ -96,7 +97,7 @@ Example: `wasm-pack build --release --target web -- --no-default-features --feat
 1. `npm run build:circuit:bin`
 1. That's it you can use `Verifier.sol`, `withdraw.json`, `withdraw_verification_key.json` and `withdraw_proving_key.bin` to deploy contract and the UI.
 
-Note. 
+Note.
 1. Your also need to use [special](https://github.com/tornadocash/websnark.git#4c0af6a8b65aabea3c09f377f63c44e7a58afa6d) version of websnark lib on the UI.
 2. update WASM module.
 

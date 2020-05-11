@@ -8,11 +8,15 @@
       defines the “rules of the game” for the construction of zk-SNARKs. Please contribute with your
       source of entropy, so that Tornado.cash can become fully trustless.
     </p>
-    <div class="buttons is-centered">
+    <!-- <div class="buttons is-centered">
       <b-button type="is-primary" outlined tag="router-link" to="/make-contribution">
         Contribute
       </b-button>
-    </div>
+    </div> -->
+    <h2 class="title">
+      Tornado.cash <span>Trusted Setup Ceremony</span> is completed.<br />
+      Thank you for your participation!
+    </h2>
     <div class="currently">
       Currently there are <span>{{ contributions.length }}</span> contributions
     </div>
@@ -55,9 +59,10 @@
         </b-table-column>
 
         <b-table-column :centered="true" label="Attestation">
+          <!-- :href="`https://twitter.com/${props.row.handle}/status/${props.row.attestation}`" -->
           <a
             v-if="props.row.attestation"
-            :href="`https://twitter.com/${props.row.handle}/status/${props.row.attestation}`"
+            :href="props.row.attestation"
             target="_blank"
             class="button is-icon"
           >
@@ -118,10 +123,13 @@
 </template>
 
 <script>
+import contributions from '@/store/contributions'
+
 export default {
   data() {
     return {
-      contributions: [],
+      contributions,
+      // contributions: [],
       // contributions: [
       //   {
       //     id: 1,
@@ -147,15 +155,15 @@ export default {
         })
         .reverse()
     }
-  },
-  async mounted() {
-    try {
-      const response = await fetch('/api/contributions')
-      const data = await response.json()
-      this.contributions = data
-    } catch (e) {
-      console.error('e', e)
-    }
   }
+  // async mounted() {
+  //   try {
+  //     const response = await fetch('/api/contributions')
+  //     const data = await response.json()
+  //     this.contributions = data
+  //   } catch (e) {
+  //     console.error('e', e)
+  //   }
+  // }
 }
 </script>

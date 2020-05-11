@@ -46,7 +46,9 @@ async function start() {
     console.log(`Server is running on port ${port}.`)
   })
 
-  attestationWatcher()
-  console.log('attestationWatcher started')
+  if (process.env.DISABLE_ATTESTATION_WATCHER !== 'true') {
+    attestationWatcher()
+    console.log('attestationWatcher started')
+  }
 }
 start()
