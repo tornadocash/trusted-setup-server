@@ -18,6 +18,22 @@
 
     th {
       font-weight: $weight-normal;
+
+      &.is-current-sort, &.is-sortable {
+        border-color: $primary;
+
+        &:hover {
+          border-color: #518e6a;
+        }
+      }
+
+      &.is-sortable {
+        .icon {
+          height: 1.071rem;
+          width: 1.071rem;
+          background-image: url('../img/chevron-up.svg')
+        }
+      }
     }
 
     td {

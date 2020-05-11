@@ -28,9 +28,11 @@
       :per-page="rowsPerPage"
       paginated
       pagination-position="both"
+      default-sort="followersCount"
+      default-sort-direction="desc"
     >
       <template slot-scope="props">
-        <b-table-column field="id" label="#" width="40" numeric>
+        <b-table-column field="id" label="#" width="40" sortable numeric>
           {{ props.row.id }}
         </b-table-column>
 
@@ -48,6 +50,10 @@
             <span :class="`icon-${props.row.socialType}`" class="icon"></span>
             Anonymous
           </div>
+        </b-table-column>
+
+        <b-table-column :centered="true" field="followersCount" label="Followers" sortable>
+          {{ props.row.followersCount > 0 ? numberFormater(props.row.followersCount) : '' }}
         </b-table-column>
 
         <b-table-column field="name" label="Name">
@@ -148,12 +154,19 @@ export default {
   },
   computed: {
     filteredContributions() {
-      return this.contributions
-        .filter((contribution) => {
-          const name = contribution.name || 'anonymous'
-          return name.toLowerCase().includes(this.contributionSearch.toLowerCase())
-        })
-        .reverse()
+      return this.contributions.filter((contribution) => {
+        const name = contribution.name || 'anonymous'
+        const company = contribution.company ?? ''
+        return (
+          name.toLowerCase().includes(this.contributionSearch.toLowerCase()) ||
+          company.toLowerCase().includes(this.contributionSearch.toLowerCase())
+        )
+      })
+    }
+  },
+  methods: {
+    numberFormater(num) {
+      return num > 999 ? ~~(num / 1000) + 'k' : num
     }
   }
   // async mounted() {
