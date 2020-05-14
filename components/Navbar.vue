@@ -6,9 +6,13 @@
       </b-navbar-item>
     </template>
     <template slot="end">
-      <b-navbar-item tag="router-link" to="/instructions">
+      <a
+        class="navbar-item"
+        target="_blank"
+        href="https://medium.com/@tornado.cash/the-biggest-trusted-setup-ceremony-in-the-world-3c6ab9c8fffa#43d9"
+      >
         Instructions
-      </b-navbar-item>
+      </a>
     </template>
   </b-navbar>
 </template>

@@ -3,22 +3,19 @@
     <h1 class="title is-size-1 is-size-2-mobile is-spaced">
       Tornado.cash <span>Trusted Setup Ceremony</span>
     </h1>
-    <p class="p is-size-6">
-      zk-SNARKs require a pre-existing setup between Prover and Verifier. A set of public parameters
-      defines the “rules of the game” for the construction of zk-SNARKs. Please contribute with your
-      source of entropy, so that Tornado.cash can become fully trustless.
-    </p>
-    <!-- <div class="buttons is-centered">
-      <b-button type="is-primary" outlined tag="router-link" to="/make-contribution">
-        Contribute
-      </b-button>
-    </div> -->
     <h2 class="title">
-      Tornado.cash <span>Trusted Setup Ceremony</span> is completed.<br />
-      Thank you for your participation!
+      The Ceremony is completed. Thank you for your participation!
     </h2>
     <div class="currently">
-      There are <span>{{ contributions.length }}</span> contributions
+      There were <span>{{ contributions.length }}</span> contributions
+    </div>
+    <div class="buttons is-centered">
+      <a
+        class="button is-primary is-outlined"
+        href="https://tornado-cash-ceremony.s3-us-west-2.amazonaws.com/phase2.tar.gz"
+      >
+        Download ceremony archive (10 Gb)
+      </a>
     </div>
 
     <b-table
@@ -73,12 +70,6 @@
             class="button is-icon"
           >
             <span class="icon icon-link"></span>
-          </a>
-        </b-table-column>
-
-        <b-table-column>
-          <a :href="`${downloadUrl}/response_${props.row.id}`" class="button is-icon" download>
-            <span class="icon icon-save"></span>
           </a>
         </b-table-column>
       </template>
