@@ -4,11 +4,11 @@ $control-padding-vertical: calc(0.429em - #{$control-border-width});
 $control-padding-horizontal: calc(1.25em - #{$control-border-width});
 
 $white: #eee;
-$primary: #94febf;
-$primary-invert: #000403;
-$warning: #ff8a00;
-$black: #2c4538;
-$danger: #FF0658;
+$primary: #138198;
+$primary-invert: #03283d;
+$warning: #FF8F50;
+$black: #08252b;
+$danger: #F44C6A;
 $dark: #242424;
 $pre: $white;
 $info: $primary-invert;
@@ -19,7 +19,7 @@ $block-spacing: 2rem;
 
 @import '~bulma/sass/utilities/_all';
 
-$body-family: 'PT Mono', monospace;
+$body-family: 'Arial', monospace;
 $body-background-color: $primary-invert;
 $body-color: $white;
 $body-size: 14px;

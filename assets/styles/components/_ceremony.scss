@@ -1,5 +1,11 @@
 .ceremony {
   text-align: center;
+  backdrop-filter: blur( 13.5px );
+  -webkit-backdrop-filter: blur( 13.5px );
+  background: rgba( 74, 144, 226, 0.20 );
+  margin:10px;
+  padding: 20px;
+  border-radius: 10px;
 
   .title {
     color: $white;
@@ -47,7 +53,7 @@
 
     &:hover, &.is-hovered {
       color: $primary;
-      border-color: #94febf;
+      border-color: $primary-invert;
 
       .title {
         color: $primary;

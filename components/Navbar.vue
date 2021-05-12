@@ -2,7 +2,8 @@
   <b-navbar wrapper-class="container" class="header">
     <template slot="brand">
       <b-navbar-item :to="{ path: '/' }" tag="router-link">
-        <Logo />
+        <img src="../assets/img/sherpalogo.png" />
+        <div class="sherpa-header-label">Sherpa</div>
       </b-navbar-item>
     </template>
     <template slot="end">
@@ -12,13 +13,3 @@
     </template>
   </b-navbar>
 </template>
-
-<script>
-import Logo from '@/components/Logo'
-
-export default {
-  components: {
-    Logo
-  }
-}
-</script>
