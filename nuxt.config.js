@@ -66,7 +66,7 @@ module.exports = {
   /*
    ** Customize the progress-bar color
    */
-  loading: { color: '#94febf', height: '5px', duration: 5000 },
+  loading: { color: '#138198', height: '5px', duration: 5000 },
   /*
    ** Global CSS
    */
@@ -74,7 +74,7 @@ module.exports = {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [{ src: '~plugins/phase2', ssr: false }, '~plugins/highlight'],
+  plugins: [{ src: '~plugins/phase2', ssr: false }, '~plugins/highlight', '~plugins/i18n.js'],
   /*
    ** Nuxt.js dev-modules
    */

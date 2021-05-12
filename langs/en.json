@@ -1,0 +1,16 @@
+{
+  "common": {
+    "loading": "Loading",
+    "error": "error",
+    "close": "close"
+  },
+  "pages": {
+    "header": {
+      "instructions": "Gidelins"
+    },
+    "ceremony": {
+      "titleSherpa": "Sherpa Cash",
+      "titleCeremony": "Trusted Setup Ceremony"
+    }
+  }
+}

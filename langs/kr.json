@@ -1,0 +1,16 @@
+{
+  "common": {
+    "loading": "Loading",
+    "error": "error",
+    "close": "close"
+  },
+  "pages": {
+    "header": {
+      "instructions": "안내사항"
+    },
+    "ceremony": {
+      "titleSherpa": "Sherpa Cash",
+      "titleCeremony": "Trusted Setup Ceremony"
+    }
+  }
+}
