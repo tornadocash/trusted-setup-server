@@ -15,7 +15,7 @@
           v-model="$i18n.locale"
           @change="langChange"
           class="dropdown-langs"
-          position="is-top-left"
+          position="is-bottom-right"
           aria-role="list"
         >
           <b-button slot="trigger" type="is-icon">
