@@ -4,7 +4,7 @@ module.exports = {
    ** Headers of the page
    */
   head: {
-    title: 'Tornado.cash Trusted Setup Ceremony',
+    title: 'Sherpa.cash Trusted Setup Ceremony',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1, shrink-to-fit=no' },
@@ -12,18 +12,18 @@ module.exports = {
       {
         hid: 'description',
         name: 'description',
-        content: 'Non-custodial Ethereum Privacy solution.'
+        content: 'Non-custodial Privacy solution on Avalanche.'
       },
       {
         hid: 'og:title',
         property: 'og:title',
-        content: 'Tornado.cash Trusted Setup Ceremony'
+        content: 'Sherpa.cash Trusted Setup Ceremony'
       },
       {
         hid: 'og:description',
         property: 'og:description',
         content:
-          "Improve security of tornado.cash by contributing to Trusted Setup Ceremony. Let's make it fully trustless!"
+          "Improve security of sherpa.cash by contributing to Trusted Setup Ceremony. Let's make it fully trustless!"
       },
       {
         hid: 'og:url',
@@ -44,13 +44,13 @@ module.exports = {
         hid: 'description',
         name: 'description',
         content:
-          "Improve security of tornado.cash by contributing to Trusted Setup Ceremony. Let's make it fully trustless!"
+          "Improve security of sherpa.cash by contributing to Trusted Setup Ceremony. Let's make it fully trustless!"
       },
       {
         hid: 'keywords',
         name: 'keywords',
         content:
-          'Mixer, Ethereum, ERC20, dapp, smart contract, decentralized, metamask, zksnark, zero knowledge'
+          'Mixer, Avalanche, dapp, smart contract, decentralized, metamask, zksnark, zero knowledge'
       }
     ],
     link: [
