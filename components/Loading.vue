@@ -11,11 +11,11 @@ export default {
   data() {
     return {
       loading: false,
-      message: 'Loading'
+      message: this.$t('common.loading')
     }
   },
   created() {
-    this.$root.$on('enableLoading', (msg = 'Loading') => {
+    this.$root.$on('enableLoading', (msg = this.$t('common.loading')) => {
       this.loading = true
       this.message = msg
     })

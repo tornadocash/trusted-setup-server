@@ -17,16 +17,16 @@
         type="is-primary"
         outlined
       >
-        Save information
+        {{ $t('pages.index.saveInformation') }}
       </b-button>
     </div>
     <div v-show="status.type !== ''" class="status">
       <div :class="status.type" class="status-message">{{ status.msg }}</div>
       <div v-show="status.type === 'is-success'" class="status-message is-success">
-        Now you can post your attestation to Twitter.
+        {{ $t('pages.index.postAttestationTwitter') }}
         <div class="buttons is-centered">
           <b-button @click="makeTweet" type="is-primary" tag="a" target="_blank" outlined>
-            Post attestation
+            {{ $t('pages.index.postAttestation') }}
           </b-button>
         </div>
       </div>
@@ -60,9 +60,9 @@ export default {
         return null
       }
       if (!this.isLoggedIn) {
-        return `Would you like to provide identity for your contribution #${this.contributionIndex}?`
+        return this.$t('pages.authorize.contributeIdentity') + `#${this.contributionIndex}?`
       } else {
-        return `Please, specify your name and project.`
+        return this.$t('pages.authorize.specifyName')
       }
     }
   },
@@ -97,7 +97,7 @@ export default {
           body: JSON.stringify(body)
         })
         if (response.ok) {
-          this.status.msg = `Your contribution has been updated.`
+          this.status.msg = this.$t('pages.authorize.contributionUpdated')
           this.status.type = 'is-success'
           this.hideSaveBtn = true
         } else {
@@ -106,7 +106,7 @@ export default {
           this.status.type = 'is-danger'
         }
       } catch (e) {
-        this.status.msg = 'Something went wrong. Please contact support'
+        this.status.msg = this.$t('pages.authorize.somethingWrong')
         this.status.type = 'is-danger'
       }
     },
@@ -133,7 +133,7 @@ export default {
           this.hideSaveBtn = true
         }
       } catch (e) {
-        this.status.msg = 'Something went wrong. Please contact support'
+        this.status.msg = this.$t('pages.authorize.somethingWrong')
         this.status.type = 'is-danger'
       }
     }

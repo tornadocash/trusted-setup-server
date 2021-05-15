@@ -26,10 +26,10 @@
     </div>
     <div v-else class="buttons">
       <b-button @click="logInVia('twitter')" type="is-primary" outlined expanded>
-        Sign in with Twitter
+        {{ $t('pages.form.twitterSignIn') }}
       </b-button>
       <b-button @click="logInVia('github')" type="is-primary" outlined expanded>
-        Sign in with Github
+        {{ $t('pages.form.githubSignIn') }}
       </b-button>
     </div>
   </div>

@@ -1,10 +1,10 @@
 <template>
   <div class="ceremony">
     <h1 class="title is-size-1 is-size-2-mobile is-spaced">
-      Hello, <span>@{{ userHandle }}</span>
+      {{ $t('pages.contribution.hello') }} <span>@{{ userHandle }}</span>
     </h1>
     <h2 class="subtitle">
-      How would you like to contribute to the Tornado.cash Trusted Setup Ceremony?
+      {{ $t('pages.contribution.contributeHow') }}
     </h2>
     <fieldset :disabled="status.type === 'is-success'">
       <div class="columns is-centered">
@@ -14,13 +14,13 @@
             @click="onAnonymousHandler"
             class="box box-anonymous"
           >
-            <div class="title is-5">Anonymously</div>
+            <div class="title is-5">{{ $t('pages.contribution.anonymously') }}</div>
             <Cloak />
           </button>
         </div>
         <div class="column is-one-third">
           <div :class="{ 'is-hovered': isLoggedIn }" class="box">
-            <div class="title is-5">By using social account</div>
+            <div class="title is-5">{{ $t('pages.contribution.socialAccount') }}</div>
             <Form />
           </div>
         </div>
@@ -28,7 +28,7 @@
     </fieldset>
 
     <div v-show="contributionHash" class="status">
-      <div class="label">Your contribution hash (Blake2b)</div>
+      <div class="label">{{ $t('pages.contribution.contributionHash') }}</div>
       <b-field position="is-centered" class="has-addons contribution-hash">
         <b-input
           @click.native="copyContributionHash"
@@ -44,17 +44,18 @@
         v-show="status.type === 'is-success' && contributionType !== 'anonymous'"
         class="status-message is-success"
       >
-        And now you can post your attestation to Twitter.
+        {{ $t('pages.contribution.postAttestationTwitter') }}
         <div class="buttons is-centered">
           <b-button @click="makeTweet" type="is-primary" tag="a" target="_blank" outlined>
-            Post attestation
+            {{ $t('pages.contribution.postAttestation') }}
           </b-button>
         </div>
       </div>
     </div>
     <div v-show="authorizeLink" class="status">
-      You can still provide identity for your contribution by following
-      <a :href="authorizeLink" class="has-text-primary">this link</a>.
+      {{ $t('pages.contribution.provideIdentity') }}
+      <a :href="authorizeLink" class="has-text-primary">{{ $t('pages.contribution.thisLink') }}</a
+      >.
     </div>
 
     <div class="buttons is-centered">
@@ -69,9 +70,9 @@
       </b-button>
     </div>
     <p class="p">
-      If you don’t trust binaries, we encorage you to follow these
-      <router-link to="/instructions">instructions</router-link> to contribute by compiling from the
-      source code. It is fairly easy!
+      {{ $t('pages.contribution.trustBinaries') }}
+      <router-link to="/instructions">{{ $t('pages.contribution.instructions') }}</router-link>
+      {{ $t('pages.contribution.easyCompile') }}
     </p>
   </div>
 </template>
@@ -158,12 +159,12 @@ export default {
     ...mapActions('user', ['makeTweet', 'logOut', 'getUserData']),
     getUserRandom() {
       this.$buefy.dialog.prompt({
-        title: 'Contribution',
-        message: `Please provide your random input that will be used as a source of entropy for your contribution along with browser's RNG.`,
+        title: this.$t('pages.contribution.contribution'),
+        message: this.$t('pages.contribution.provideRandom'),
         inputAttrs: {
           maxlength: 300
         },
-        confirmText: 'Contribute',
+        confirmText: this.$t('pages.contribution.contribute'),
         trapFocus: true,
         onConfirm: (userInput) => {
           this.makeContribution({ userInput })
@@ -176,14 +177,11 @@ export default {
         this.isContributeBtnSnown = true
         this.status.msg = ''
         this.status.type = ''
-        this.$root.$emit('enableLoading', 'Downloading last contribution')
+        this.$root.$emit('enableLoading', this.$t('pages.contribution.downloadingLast'))
         let data = await fetch('api/challenge')
         data = new Uint8Array(await data.arrayBuffer())
 
-        this.$root.$emit(
-          'enableLoading',
-          'Generating random contribution. Your browser may appear unresponsive. It can take a minute or so to complete'
-        )
+        this.$root.$emit('enableLoading', this.$t('pages.contribution.generatingRandom'))
         await timeout(100) // allow UI to update before freezing in wasm
         console.log('Source params', data)
 
@@ -211,7 +209,7 @@ export default {
         console.log('hash', hash)
         console.log('contribution', contribution)
 
-        this.$root.$emit('enableLoading', 'Uploading and verifying your contribution')
+        this.$root.$emit('enableLoading', this.$t('pages.contribution.uploadingContribution'))
         const formData = new FormData()
         formData.append('response', new Blob([contribution], { type: 'application/octet-stream' }))
         if (this.contributionType !== 'anonymous') {
@@ -225,7 +223,7 @@ export default {
         if (resp.ok) {
           const responseData = await resp.json()
           this.$store.commit('user/SET_CONTRIBUTION_INDEX', responseData.contributionIndex)
-          this.status.msg = 'Your contribution has been verified and recorded.'
+          this.status.msg = this.$t('pages.contribution.contributionVerified')
           this.status.type = 'is-success'
           this.contributionHash = hash
           if (this.contributionType === 'anonymous') {
@@ -236,12 +234,15 @@ export default {
             console.log(`Looks like someone else uploaded contribution ahead of us, retrying`)
             await this.makeContribution({ userInput, retry: retry++ })
           } else {
-            this.status.msg = `Failed to upload your contribution after ${retry} attempts`
+            this.status.msg =
+              this.$t('pages.contribution.failedUpload') +
+              retry +
+              this.$t('pages.contribution.attempts')
             this.status.type = 'is-danger'
             this.isContributeBtnSnown = false
           }
         } else {
-          this.status.msg = 'Error uploading your contribution'
+          this.status.msg = this.$t('pages.contribution.uploadError')
           this.status.type = 'is-danger'
           this.isContributeBtnSnown = false
         }
@@ -261,7 +262,7 @@ export default {
     copyContributionHash() {
       navigator.clipboard.writeText(this.contributionHash).then(() => {
         this.$buefy.toast.open({
-          message: 'Copied!',
+          message: this.$t('pages.contribution.copied'),
           type: 'is-primary'
         })
       })
