@@ -1,0 +1,82 @@
+{
+  "common": {
+    "loading": "Loading",
+    "error": "Fehler",
+    "close": "schließen"
+  },
+  "pages": {
+    "header": {
+      "instructions": "Anweisung"
+    },
+    "form": {
+      "twitterSignIn": "Mit Twitter anmelden",
+      "githubSignIn": "Mit Github anmelden"
+    },
+    "index": {
+      "sherpaCash": "Sherpa.cash",
+      "trustedSetupCeremonyTitle": "Vertrauenswürdige Einrichtungszeremonie",
+      "zkSnarks": "zk-SNARKs erfordern eine bereits vorhandene Einrichtung zwischen einem Beweisführer (Prover) und einem Prüfer (Verifier). Eine Reihe öffentlicher Parameter definiert die\" Spielregeln \"für die Erstellung von zk-SNARKs. Bitte tragen Sie mit Ihrer Entropiequelle bei, so dass Sherpa.cash völlig vertrauenslos werden kann.",
+      "contribute": "Beitragen",
+      "currently": "Jetzt gibt es",
+      "contributions": "Beiträge",
+      "account": "Konto",
+      "name": "Name",
+      "project": "Projekt",
+      "attestation": "Bescheinigung",
+      "nothingHere": "Hier gibts nichts zu sehen.",
+      "search": "Suche..."
+    },
+    "authorize": {
+      "saveInformation": "Speichern",
+      "postAttestationTwitter": "Jetzt können Sie Ihre Bescheinigung auf Twitter veröffentlichen",
+      "postAttestation": "Bescheinigung veröffentlichen",
+      "contributeIdentity": "Möchten Sie ihre Identität veröffentlichen für Ihre Beitrag #",
+      "specifyName": "Bitte geben Sie Ihren Namen und Ihr Projekt an.",
+      "contributionUpdated": "Ihr Beitrag wurde aktualisiert",
+      "somethingWrong": "Fehler. Bitte wenden Sie sich an den Support."
+    },
+    "contribution": {
+      "hello": "Bonjour, ",
+      "contributeHow": "Wie möchten Sie zur vertrauenswürdigen Einrichtungszeremonie von Sherpa.cash beitragen?",
+      "anonymously": "Anonym",
+      "socialAccount": "Soziale Netzwerke",
+      "contributionHash": "Ihr Beitrags-Hash (Blake2b) ist",
+      "postAttestationTwitter": "Jetzt können Sie Ihre Bescheinigung auf Twitter veröffentlichen",
+      "postAttestation": "Bescheinigung veröffentlichen",
+      "provideIdentity": "Sie können Ihre Identität für Ihren Beitrag veröffentlichen durch ",
+      "thisLink": "diesen Link",
+      "trustBinaries": "Wenn Sie unsere Binärdateien nicht vertrauen, empfehlen wir Ihnen, die",
+      "instructions": "Anweisung",
+      "easyCompile": " zu befolgen. Sie können einen Beitrag leisten, indem Sie aus dem Quellcode kompilieren. Es ist ziemlich einfach!",
+      "contribution": "Beitrag",
+      "provideRandom": "Bitte geben Sie zufällige Zeichen ein. Sie werden zusammen mit dem RNG des Browsers als Entropiequelle für Ihren Beitrag verwendet.",
+      "contribute": "Beitragen",
+      "downloadingLast": "Letzter Beitrag herunterladen",
+      "generatingRandom": "Generieren eines zufälligen Beitrags. Dies kann dazu führen, dass ihr Browser nicht mehr reagiert. Der Vorgang kann ungefähr eine Minute dauern.",
+      "uploadingContribution": "Hochladen und Überprüfen Ihres Beitrags",
+      "contributionVerified": "Ihr Beitrag wurde überprüft und aufgezeichnet.",
+      "failedUpload": "Fehler beim Hochladen Ihres Beitrags nach ",
+      "attempts": " Versuche",
+      "uploadError": "Fehler beim Hochladen Ihres Beitrags",
+      "copied": "Kopiert!"
+    },
+    "instructions": {
+      "instructions" : "Anweisung",
+      "pureRust": "Reinen Rust-Implementierung:",
+      "installRust": "# Rust installieren",
+      "cloneRepo": "# Klonen des Repositories mit dem Zeremoniecode",
+      "runCeremony": "# Zeremonie",
+      "afterContribution": "Nach dem Beitrag empfehlen wir Ihnen, Ihren Computer neu zu starten, um den RAM zu löschen.",
+      "usingDocker": "Mit einem Docker-Container:",
+      "downloadRustContainer": "Mit dieser Methode laden Sie den Zeremonien-Quellcode von unserem Git-Repo herunter und kompilieren ihn in einem Rust Container. Diese Methode verwendet keine Prebuilt-Container.",
+      "installDocker": "Installieren Sie zuerst Docker auf Ihrem System:",
+      "windows": "Windows",
+      "mac": "Mac",
+      "linux": "Linux",
+      "downloadDockerfile": "# Dockerfile herunterladen",
+      "buildDockerImage": "# Docker-Image erstellen",
+      "runCeremony": "# Zeremonie"
+
+    }
+  }
+}
