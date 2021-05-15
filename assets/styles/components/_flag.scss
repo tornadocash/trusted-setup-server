@@ -18,7 +18,7 @@
     background-image: url('../img/flags/#{$country}.svg');
   }
 }
-$countries: gb fr tr kr jp;
+$countries: gb fr tr kr jp de;
 @each $country in $countries {
   @include flag-icon($country);
 }
