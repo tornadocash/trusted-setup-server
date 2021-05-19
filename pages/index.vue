@@ -122,7 +122,7 @@
 <script>
 export default {
   data() {
-    const contributor = {
+    /*    const contributor = {
       id: 1,
       socialType: 'twitter',
       account: '@VitalikButerin',
@@ -130,10 +130,10 @@ export default {
       company: 'Ethereum',
       attestation: 'https://twitter.com/VitalikButerin/status/1220158987456237568',
       contribution: '#'
-    }
+    } */
     return {
-      // contributions: [],
-      contributions: [...Array(20).keys()].map((i) => contributor),
+      contributions: [],
+      // contributions: [...Array(20).keys()].map((i) => contributor),
       rowsPerPage: 100,
       contributionSearch: '',
       downloadUrl: process.env.downloadUrl
@@ -153,8 +153,7 @@ export default {
     try {
       const response = await fetch('/api/contributions')
       const data = await response.json()
-      this.temp = data
-      // this.contributions = data
+      this.contributions = data
     } catch (e) {
       console.error('e', e)
     }
