@@ -1,4 +1,4 @@
-# Tornado.cash Trusted Setup Ceremony app
+# Sherpa.cash Trusted Setup Ceremony app
 
 > zk-SNARKs require a pre-existing setup between the prover and verifier. A set of public parameters define the “rules of the game” for the construction of zk-SNARKs. This app allows everyone to contribute with your source of entropy so that tornado.cash can be trustless.
 
