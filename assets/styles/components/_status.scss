@@ -3,8 +3,12 @@
     margin-bottom: $block-spacing;
   }
 
+  .a {
+    color: $primary-invert;
+  }
+
   .status-message {
-    color: $primary;
+    color: $primary-invert;
     text-align: center;
 
     &.is-danger {
