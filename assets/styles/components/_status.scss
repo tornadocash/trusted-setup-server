@@ -7,8 +7,12 @@
     color: $primary-invert;
   }
 
+  .input {
+    border-color: $white;
+  }
+
   .status-message {
-    color: $primary-invert;
+    color: $white;
     text-align: center;
 
     &.is-danger {
