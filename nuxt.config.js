@@ -28,7 +28,7 @@ module.exports = {
       {
         hid: 'og:url',
         property: 'og:url',
-        content: 'https://ceremony.tornado.cash'
+        content: 'https://ceremony.sherpa.cash'
       },
       {
         hid: 'og:type',
@@ -38,7 +38,7 @@ module.exports = {
       {
         hid: 'og:image',
         property: 'og:image',
-        content: 'https://tornado.cash/tw.png'
+        content: 'https://raw.githubusercontent.com/Sherpa-Cash/assets/main/1500x500.jpeg'
       },
       {
         hid: 'description',
