@@ -54,7 +54,7 @@
     </div>
     <div v-show="authorizeLink" class="status">
       {{ $t('pages.contribution.provideIdentity') }}
-      <a :href="authorizeLink" class="has-text-primary">{{ $t('pages.contribution.thisLink') }}</a
+      <a :href="authorizeLink">{{ $t('pages.contribution.thisLink') }}</a
       >.
     </div>
 
