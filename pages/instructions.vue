@@ -11,7 +11,7 @@
 curl -sSf https://sh.rustup.rs | sh
 
 {{ $t('pages.instructions.cloneRepo') }}
-git clone https://github.com/tornadocash/phase2-bn254
+git clone https://github.com/sherpacash/phase2-bn254
 cd phase2-bn254/phase2
 
 {{ $t('pages.instructions.runCeremony') }}
@@ -50,7 +50,7 @@ cargo run --release --bin tornado
 
     <figure class="highlight">
       <pre v-highlightjs><code class="bash">{{ $t('pages.instructions.downloadDockerfile') }}
-wget https://raw.githubusercontent.com/tornadocash/phase2-bn254/master/Dockerfile
+wget https://raw.githubusercontent.com/Sherpa-Cash/phase2-bn254/master/Dockerfile
 
 {{ $t('pages.instructions.buildDockerImage') }}
 docker build . -t ceremony
