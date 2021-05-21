@@ -3,8 +3,12 @@
     margin-bottom: $block-spacing;
   }
 
-  .a {
+  a {
     color: $primary-invert;
+
+    &:hover {
+      text-decoration: underline;
+    }
   }
 
   .input {
