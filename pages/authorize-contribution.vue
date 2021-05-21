@@ -60,7 +60,7 @@ export default {
         return null
       }
       if (!this.isLoggedIn) {
-        return this.$t('pages.authorize.contributeIdentity') + `#${this.contributionIndex}?`
+        return this.$t('pages.authorize.contributeIdentity') + `(#${this.contributionIndex})?`
       } else {
         return this.$t('pages.authorize.specifyName')
       }
