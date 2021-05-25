@@ -51,13 +51,13 @@ const getters = {
       return { invalid: false, msg: '' }
     }
     if (name === '') {
-      return { invalid: true, msg: this.$t('pages.userError.empty') }
+      return { invalid: true, msg: 'enter a name' }
     }
     if (name.length < 4) {
-      return { invalid: true, msg: this.$t('pages.userError.tooShort') }
+      return { invalid: true, msg: 'name too short' }
     }
     if (name.length > 35) {
-      return { invalid: true, msg: this.$t('pages.userError.tooLong') }
+      return { invalid: true, msg: 'name too long' }
     }
     return { invalid: false, msg: '' }
   }
