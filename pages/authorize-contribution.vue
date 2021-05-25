@@ -23,10 +23,10 @@
     <div v-show="status.type !== ''" class="status">
       <div :class="status.type" class="status-message">{{ status.msg }}</div>
       <div v-show="status.type === 'is-success'" class="status-message is-success">
-        {{ $t('pages.index.postAttestationTwitter') }}
+        {{ $t('pages.authorize.postAttestationTwitter') }}
         <div class="buttons is-centered">
           <b-button @click="makeTweet" type="is-primary" tag="a" target="_blank" outlined>
-            {{ $t('pages.index.postAttestation') }}
+            {{ $t('pages.authorize.postAttestation') }}
           </b-button>
         </div>
       </div>
