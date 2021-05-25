@@ -60,6 +60,11 @@
       "uploadError": "あなたのコントリビューション（貢献）のアップロードにエラーが生じました",
       "copied": "コピーされました!"
     },
+    "userError": {
+      "tooShort": "35文字以下入力してください.",
+      "tooLong":  "5文字以上入力してください.",
+      "empty" : "名前を入力してください."
+    },
     "instructions": {
       "instructions" : "説明書",
       "pureRust": "純粋なRustインプリメンテーション（実装）を使用:",

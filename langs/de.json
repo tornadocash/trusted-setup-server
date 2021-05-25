@@ -60,6 +60,11 @@
       "uploadError": "Fehler beim Hochladen Ihres Beitrags",
       "copied": "Kopiert!"
     },
+    "userError": {
+      "tooShort": "Name ist zu kurz.",
+      "tooLong":  "Name ist zu lang.",
+      "empty" : "Bitte geben Sie Ihren Namen ein."
+    },
     "instructions": {
       "instructions" : "Anweisung",
       "pureRust": "Reinen Rust-Implementierung:",

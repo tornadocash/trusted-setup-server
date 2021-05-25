@@ -60,6 +60,11 @@
       "uploadError": "기여물을 업로드하는 중 오류가 발생했습니다.",
       "copied": "복사되었습니다!"
     },
+    "userError": {
+      "tooShort": "5~35자의 영문 소문자와 숫자만 사용 가능합니다.",
+      "tooLong":  "5~35자의 영문 소문자와 숫자만 사용 가능합니다.",
+      "empty" : "성함 입력해 주십시오"
+    },
     "instructions": {
       "instructions" : "사용 설명서",
       "pureRust": "순수한 러스트 구현:",

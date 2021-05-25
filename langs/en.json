@@ -60,6 +60,11 @@
       "uploadError": "Error uploading your contribution",
       "copied": "Copied!"
     },
+    "userError": {
+      "tooShort": "Name is too short.",
+      "tooLong":  "Name is too long.",
+      "empty" : "Please enter your name."
+    },
     "instructions": {
       "instructions" : "Instructions",
       "pureRust": "Using pure Rust implementation:",

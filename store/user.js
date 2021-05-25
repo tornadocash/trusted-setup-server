@@ -36,13 +36,13 @@ const getters = {
       return { invalid: false, msg: '' }
     }
     if (name === '') {
-      return { invalid: true, msg: 'Name is empty' }
+      return { invalid: true, msg: this.$t('pages.userError.empty') }
     }
     if (name.length < 4) {
-      return { invalid: true, msg: 'Name is too short' }
+      return { invalid: true, msg: this.$t('pages.userError.tooShort') }
     }
     if (name.length > 35) {
-      return { invalid: true, msg: 'Name is too long' }
+      return { invalid: true, msg: this.$t('pages.userError.tooLong') }
     }
     return { invalid: false, msg: '' }
   }
