@@ -3,6 +3,7 @@ const state = () => {
     name: null,
     handle: 'Anonymous',
     company: '',
+    wallet: null,
     contributionType: null,
     contributionIndex: null
   }
@@ -14,6 +15,9 @@ const mutations = {
   },
   SET_HANDLE(state, handle) {
     state.handle = handle
+  },
+  SET_WALLET(state, wallet) {
+    state.wallet = wallet
   },
   SET_COMPANY(state, company) {
     state.company = company
@@ -29,6 +33,17 @@ const mutations = {
 const getters = {
   isLoggedIn: (state) => {
     return state.name !== null && state.name !== 'Anonymous'
+  },
+  hasErrorWallet: (state) => {
+    const ADDRESS_REGEX = /^0x[a-fA-F0-9]{40}$/
+    const wallet = state.wallet
+    if (wallet === null || wallet === '') {
+      return { invalid: false, msg: '' }
+    }
+    if (!ADDRESS_REGEX.test(wallet)) {
+      return { invalid: true, msg: 'invalid address' }
+    }
+    return { invalid: false, msg: '' }
   },
   hasErrorName: (state) => {
     const name = state.name
@@ -84,6 +99,7 @@ https://ceremony.sherpa.cash`
   async logOut({ commit }) {
     commit('SET_HANDLE', 'Anonymous')
     commit('SET_CONTRIBUTION_TYPE', null)
+    commit('SET_WALLET', null)
     commit('SET_NAME', null)
     commit('SET_COMPANY', '')
     await fetch('/api/logout')
@@ -96,6 +112,7 @@ https://ceremony.sherpa.cash`
       if (data.name !== 'Anonymous') {
         commit('SET_HANDLE', data.handle)
         commit('SET_NAME', data.name)
+        commit('SET_WALLET', data.wallet)
         commit('SET_CONTRIBUTION_TYPE', data.socialType)
       }
     } catch (e) {

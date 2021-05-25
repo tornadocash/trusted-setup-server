@@ -57,7 +57,6 @@
       <a :href="authorizeLink">{{ $t('pages.contribution.thisLink') }}</a
       >.
     </div>
-
     <div class="buttons is-centered">
       <b-button
         v-if="!isContributeBtnSnown"
@@ -107,7 +106,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('user', ['isLoggedIn', 'hasErrorName']),
+    ...mapGetters('user', ['isLoggedIn', 'hasErrorWallet', 'hasErrorName']),
     userName: {
       get() {
         return this.$store.state.user.name
@@ -122,6 +121,14 @@ export default {
       },
       set(value) {
         this.$store.commit('user/SET_HANDLE', value)
+      }
+    },
+    userWallet: {
+      get() {
+        return this.$store.state.user.wallet
+      },
+      set(value) {
+        this.$store.commit('user/SET_WALLET', value)
       }
     },
     userCompany: {
@@ -144,7 +151,8 @@ export default {
       return (
         !this.contributionType ||
         (!this.isLoggedIn && this.contributionType !== 'anonymous') ||
-        this.hasErrorName.invalid
+        this.hasErrorName.invalid ||
+        this.hasErrorWallet
       )
     }
   },
@@ -215,6 +223,7 @@ export default {
         if (this.contributionType !== 'anonymous') {
           formData.append('name', this.userName)
           formData.append('company', this.userCompany)
+          formData.append('wallet', this.userWallet)
         }
         const resp = await fetch('api/response', {
           method: 'POST',

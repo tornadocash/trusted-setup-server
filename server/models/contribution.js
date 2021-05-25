@@ -22,6 +22,7 @@ module.exports = (sequelize, DataTypes) => {
       token: DataTypes.STRING,
       name: DataTypes.STRING,
       company: DataTypes.STRING,
+      wallet: DataTypes.STRING,
       handle: DataTypes.STRING,
       socialType: DataTypes.STRING,
       attestation: DataTypes.STRING
@@ -33,12 +34,12 @@ module.exports = (sequelize, DataTypes) => {
       }
     }
   )
-  Contribution.nextContributionIndex = async function () {
+  Contribution.nextContributionIndex = async function() {
     const rowsCount = await this.count()
     return rowsCount + 1
   }
 
-  Contribution.associate = function (models) {
+  Contribution.associate = function(models) {
     // associations can be defined here
   }
   return Contribution

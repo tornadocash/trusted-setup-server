@@ -12,16 +12,25 @@
       <b-field
         :type="{ 'is-danger': hasErrorName.invalid }"
         :message="{ [hasErrorName.msg]: hasErrorName.invalid }"
+        :label-position="'inside'"
         label="Name"
       >
         <b-input v-model="userName" @blur="restrictSymbols('userName')" maxlength="35"></b-input>
       </b-field>
-      <b-field label="Project">
+      <b-field :label-position="'inside'" label="Project">
         <b-input
           v-model="userCompany"
           @blur="restrictSymbols('userCompany')"
           maxlength="35"
         ></b-input>
+      </b-field>
+      <b-field
+        :type="{ 'is-danger': hasErrorWallet.invalid }"
+        :message="{ [hasErrorWallet.msg]: hasErrorWallet.invalid }"
+        :label-position="'inside'"
+        label="C-Chain Wallet (Optional)"
+      >
+        <b-input v-model="userWallet"></b-input>
       </b-field>
     </div>
     <div v-else class="buttons">
@@ -40,7 +49,7 @@ import { mapGetters, mapActions } from 'vuex'
 
 export default {
   computed: {
-    ...mapGetters('user', ['isLoggedIn', 'hasErrorName']),
+    ...mapGetters('user', ['isLoggedIn', 'hasErrorWallet', 'hasErrorName']),
     userName: {
       get() {
         return this.$store.state.user.name
