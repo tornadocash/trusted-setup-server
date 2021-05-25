@@ -1,4 +1,4 @@
-FROM sherpacash/phase2-bn254/ as bin
+FROM tornadocash/phase2-bn254:phase2 as bin
 
 FROM node:12-buster
 WORKDIR /app
