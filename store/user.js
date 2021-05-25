@@ -37,7 +37,7 @@ const getters = {
   hasErrorWallet: (state) => {
     const ADDRESS_REGEX = /^0x[a-fA-F0-9]{40}$/
     const wallet = state.wallet
-    if (wallet === null || wallet === '') {
+    if (wallet === null || wallet === '' || wallet === undefined) {
       return { invalid: false, msg: '' }
     }
     if (!ADDRESS_REGEX.test(wallet)) {

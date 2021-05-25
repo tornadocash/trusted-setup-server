@@ -152,7 +152,7 @@ export default {
         !this.contributionType ||
         (!this.isLoggedIn && this.contributionType !== 'anonymous') ||
         this.hasErrorName.invalid ||
-        this.hasErrorWallet
+        this.hasErrorWallet.invalid
       )
     }
   },
