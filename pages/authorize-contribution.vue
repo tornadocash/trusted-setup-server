@@ -13,7 +13,7 @@
       <b-button
         v-if="isLoggedIn && !hideSaveBtn"
         @click="authorize"
-        :disabled="hasErrorName.invalid"
+        :disabled="hasErrorName.invalid || hasErrorWallet.invalid"
         type="is-primary"
         outlined
       >
@@ -53,8 +53,8 @@ export default {
     }
   },
   computed: {
-    ...mapState('user', ['name', 'handle', 'company', 'contributionIndex']),
-    ...mapGetters('user', ['isLoggedIn', 'hasErrorName']),
+    ...mapState('user', ['name', 'handle', 'company', 'wallet', 'contributionIndex']),
+    ...mapGetters('user', ['isLoggedIn', 'hasErrorName', 'hasErrorWallet']),
     title() {
       if (this.status.type === 'is-danger' || !this.contributionIndex) {
         return null
@@ -85,7 +85,8 @@ export default {
       const body = {
         token: this.token,
         name: this.name,
-        company: this.company
+        company: this.company,
+        wallet: this.wallet
       }
       try {
         const response = await fetch('/api/authorize_contribution', {

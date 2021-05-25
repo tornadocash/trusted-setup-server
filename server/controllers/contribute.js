@@ -134,6 +134,7 @@ router.post('/authorize_contribution', async (req, res) => {
       {
         name: req.body.name,
         company: req.body.company,
+        wallet: req.body.wallet,
         handle: req.session.handle,
         socialType: req.session.socialType
       },
