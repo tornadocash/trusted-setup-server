@@ -11,7 +11,7 @@
 curl -sSf https://sh.rustup.rs | sh
 
 {{ $t('pages.instructions.cloneRepo') }}
-git clone https://github.com/sherpacash/phase2-bn254
+git clone https://github.com/Sherpa-Cash/phase2-bn254
 cd phase2-bn254/phase2
 
 {{ $t('pages.instructions.runCeremony') }}
