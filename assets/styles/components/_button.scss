@@ -3,13 +3,15 @@
   font-weight: $weight-bold;
 
   &.is-primary.is-outlined {
-    background-color: rgba($primary, .104);
+    color: $white;
+    border-color: $white;
+    background-color: rgba($primary-invert, .104);
 
     &.is-loading:focus {
-      background-color: rgba($primary, .104);
+      background-color: rgba($primary-invert, .104);
 
       &::after {
-        border-color: transparent transparent $primary $primary !important;
+        border-color: transparent transparent $white $white !important;
       }
     }
   }

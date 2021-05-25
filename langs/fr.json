@@ -1,0 +1,82 @@
+{
+  "common": {
+    "loading": "Chargement",
+    "error": "erreur",
+    "close": "fermer"
+  },
+  "pages": {
+    "header": {
+      "instructions": "Instructions"
+    },
+    "form": {
+      "twitterSignIn": "Connectez-vous avec Twitter",
+      "githubSignIn": "Connectez-vous avec Github"
+    },
+    "index": {
+      "sherpaCash": "Sherpa.cash",
+      "trustedSetupCeremonyTitle": "Cérémonie de Trusted Setup",
+      "zkSnarks": "Les zk-SNARKs nécessitent une configuration préexistante entre un Prover et un Verifier. Un ensemble de paramètres publics définit les\" règles du jeu \"pour la construction des zk-SNARK. Merci de contribuer avec votre source de entropie, pour que Sherpa.cash devienne totalement trustless.",
+      "contribute": "Contribuer",
+      "currently": "Il y en a actuellement",
+      "contributions": "contributions",
+      "account": "Compte",
+      "name": "Nom",
+      "project": "Projet",
+      "attestation": "Attestation",
+      "nothingHere": "Il n'y a rien ici.",
+      "search": "Recherche..."
+    },
+    "authorize": {
+      "saveInformation": "Enregistrer les informations",
+      "postAttestationTwitter": "Vous pouvez désormais publier votre attestation sur Twitter",
+      "postAttestation": "Poster l'attestation",
+      "contributeIdentity": "Souhaitez-vous rendre votre identité publique pour votre contribution ",
+      "specifyName": "Veuillez renseigner votre nom et organisation.",
+      "contributionUpdated": "Votre contribution a été mise à jour",
+      "somethingWrong": "Erreur. Veuillez contacter notre service d'aide."
+    },
+    "contribution": {
+      "hello": "Bonjour, ",
+      "contributeHow": "Comment souhaitez-vous contribuer à la cérémonie Trusted Setup de Sherpa.cash?",
+      "anonymously": "Anonymement",
+      "socialAccount": "Avec mon compte SNS",
+      "contributionHash": "Le hash (Blake2b) de votre contribution",
+      "postAttestationTwitter": "Vous pouvez désormais publier votre attestation sur Twitter",
+      "postAttestation": "Poster l'attestation",
+      "provideIdentity": "Vous pouvez toujours publier votre identité pour votre contribution plus tard en suivant",
+      "thisLink": "ce lien",
+      "trustBinaries": "Si vous n'avez pas confiance dans nos exécutables, vous pouvez suivre les",
+      "instructions": "instructions",
+      "easyCompile": "contribuer en compilant à partir du code source. C'est assez simple!",
+      "contribution": "Contribution",
+      "provideRandom": "Veuillez taper des caracteres aléatoires qui seront utilisés comme source d'entropie pour votre contribution avec le RNG de votre navigateur.",
+      "contribute": "Contribuer",
+      "downloadingLast": "Télécharger la dernière contribution",
+      "generatingRandom": "Génération d'une contribution aléatoire. Il est possible que votre navigateur ne réponde momentanénent plus. L'exécution peut prendre une minute environ",
+      "uploadingContribution": "Upload et vérification de votre contribution",
+      "contributionVerified": "Votre contribution a été vérifiée et enregistrée.",
+      "failedUpload": "Impossible d'uploader votre contribution après ",
+      "attempts": " essais",
+      "uploadError": "Erreur lors de l'upload de votre contribution",
+      "copied": "Copié dans le presse-papier!"
+    },
+    "instructions": {
+      "instructions" : "Instructions",
+      "pureRust": "Avec une implémentation en Rust pur:",
+      "installRust": "# Installer Rust",
+      "cloneRepo": "# Cloner le repo avec le code de la cérémonie",
+      "runCeremony": "# Lancer la cérémonie",
+      "afterContribution": "Après avoir contribué, nous vous recommandons de redémarrer votre machine pour vider votre RAM.",
+      "usingDocker": "Avec un container Docker:",
+      "downloadRustContainer": "En utilisant cette méthode, vous allez télécharger et compiler le code source de la cérémonie à partir de notre dépôt git dans un stock Rust container. Cette méthode n'utilise pas de container pré-construit.",
+      "installDocker": "Commencez par installer Docker sur votre système:",
+      "windows": "Windows",
+      "mac": "Mac",
+      "linux": "Linux",
+      "downloadDockerfile": "# Télécharger le Dockerfile",
+      "buildDockerImage": "# Construire une image docker",
+      "runCeremony": "# Lancer la cérémonie"
+
+    }
+  }
+}

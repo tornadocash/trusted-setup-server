@@ -85,3 +85,36 @@
     }
   }
 }
+
+.dropdown-langs {
+  margin-bottom: -0.5rem;
+
+  .dropdown-menu {
+    min-width: auto;
+    padding-top: 0;
+    padding-bottom: .5rem;
+  }
+
+  &.is-mobile-modal {
+    .dropdown-menu {
+      max-width: 100px;
+    }
+  }
+
+  a.dropdown-item {
+    padding-right: 1rem;
+    line-height: 28px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 400;
+
+    .flag-icon {
+      margin-right: .5rem;
+    }
+  }
+
+  .button {
+    margin-bottom: 0;
+  }
+}

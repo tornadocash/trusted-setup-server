@@ -25,10 +25,21 @@
     height: 40px;
   }
 
-  .navbar-menu {
-    .navbar-item {
-      padding-left: 1.25rem;
-      padding-right: 1.25rem;
-    }
+  .navbar-item {
+    font-size: 20px;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    line-height: 30px;
+    font-weight: bold;
+  }
+
+  img {
+    max-height: 75px;
+  }
+
+  .sherpa-header-label {
+    padding-right: 1.5rem;
+    color: $sherpa;
+    font-size: 50px;
   }
 }

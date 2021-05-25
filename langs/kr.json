@@ -1,0 +1,82 @@
+{
+  "common": {
+    "loading": "로드하는 중",
+    "error": "오류",
+    "close": "닫기"
+  },
+  "pages": {
+    "header": {
+      "instructions": "사용 설명서"
+    },
+    "form": {
+      "twitterSignIn": "트위터로 로그인",
+      "githubSignIn": "깃허브으로 로그인"
+    },
+    "index": {
+      "sherpaCash": "셰르파 캐시",
+      "trustedSetupCeremonyTitle": "신뢰할 수있는 설정 행사",
+      "zkSnarks": "zk-SNARKs를 사용하는 시스템에는 신뢰할 수있는 설정이 필요합니다. 신뢰할 수있는 설정 행사 참가자 수가 많을수록 시스템이 더 안전합니다. 셰르파 캐시 더욱 안전하게 만들려면 기여하십시오.",
+      "contribute": "기여합니다",
+      "currently": "지금은 ",
+      "contributions": "개의 기여물이 있습니다",
+      "account": "계좌",
+      "name": "성함",
+      "project": "회사",
+      "attestation": "증거",
+      "nothingHere": "여기는 아무것도 없습니다. ",
+      "search": "검색..."
+    },
+    "authorize": {
+      "saveInformation": "정보 저장",
+      "postAttestationTwitter": "지금 증거를 트위터에서 공유할 수 있습니다.",
+      "postAttestation": "증거를 고유",
+      "contributeIdentity": "신분을 공개하시겠어요? 기여",
+      "specifyName": "성함과 회사를 입력해 주십시오.",
+      "contributionUpdated": "기여가 업데이트되었습니다",
+      "somethingWrong": "오류가 발생했습니다. 우리 지원 팀에 문의하십시오."
+    },
+    "contribution": {
+      "hello": "안녕하세요, ",
+      "contributeHow": "셰르파 개시 신뢰할 수 있는 설정 행사에 어떻게 기여하시겠어요?",
+      "anonymously": "익명으로",
+      "socialAccount": "SNS로",
+      "contributionHash": "기여물의 해시값 (Blake2b)",
+      "postAttestationTwitter": "금 증거를 트위터에서 공유할 수 있습니다.",
+      "postAttestation": "증거를 고유",
+      "provideIdentity": "나중에 신분을 공개하시려면 ",
+      "thisLink": "이 링크를 클릭하십시오",
+      "trustBinaries": "이진 파일을 신뢰하지 않을 경우",
+      "instructions": "사용 설명서를 참조하며 ",
+      "easyCompile": "쉽게 소스컴파일할 수도 있습니다",
+      "contribution": "기여",
+      "provideRandom": "임의의 문자열을 입력하십시오.",
+      "contribute": "기여하기",
+      "downloadingLast": "마지막 기여물 다운받기",
+      "generatingRandom": "랜돔 기여물을 생성하기. 브라우저가 잠시 동안 응답하지 않을 수 있습니다. 약 1분 기다려 주십시오",
+      "uploadingContribution": "기여물을 확인하고 업로드 중입니다.",
+      "contributionVerified": "기여물이 확인되고 등록되었습니다.",
+      "failedUpload": "기여물을 업롣하지 못 했습니다.",
+      "attempts": " 번 시도했습니다.",
+      "uploadError": "기여물을 업로드하는 중 오류가 발생했습니다.",
+      "copied": "복사되었습니다!"
+    },
+    "instructions": {
+      "instructions" : "사용 설명서",
+      "pureRust": "순수한 러스트 구현:",
+      "installRust": "# 러스트 설치",
+      "cloneRepo": "# 신뢰할 수있는 설정 행사 리포지토리를 clone하기",
+      "runCeremony": "# 신뢰할 수있는 설정 행사를 실행하기",
+      "afterContribution": "기여하신 다음에, RAM을 지우기 위해 시스템을 다시 시작하십시오.",
+      "usingDocker": "도커 컨테이너:",
+      "downloadRustContainer": "본 방벙이 도커 컨테이너 안에서 우리 깃허브 리포지토리에서 신뢰할 수있는 설정 행사 소스를 다운받고 컴파일합니다. 사전 빌드된 컨테이너가 아닙니다.",
+      "installDocker": "먼저 도커를 설치하십시오:",
+      "windows": "윈도우",
+      "mac": "맥OS",
+      "linux": "리눅스",
+      "downloadDockerfile": "# 도커파일을 다운받기",
+      "buildDockerImage": "# 도거 이미지 빌드하기",
+      "runCeremony": "# 신뢰할 수있는 설정 행사를 실행하기"
+
+    }
+  }
+}

@@ -4,11 +4,14 @@ $control-padding-vertical: calc(0.429em - #{$control-border-width});
 $control-padding-horizontal: calc(1.25em - #{$control-border-width});
 
 $white: #eee;
-$primary: #94febf;
-$primary-invert: #000403;
-$warning: #ff8a00;
-$black: #2c4538;
-$danger: #FF0658;
+$primary: #138198;
+$primary-invert: #03283d;
+$warning: #FF8F50;
+$primary-complement: #FF8F50;
+$sherpa: #ff3a44;
+$black: #08252b;
+$deep-black: #08070c;
+$danger: #F44C6A;
 $dark: #242424;
 $pre: $white;
 $info: $primary-invert;
@@ -19,7 +22,7 @@ $block-spacing: 2rem;
 
 @import '~bulma/sass/utilities/_all';
 
-$body-family: 'PT Mono', monospace;
+$body-family: 'Arial', monospace;
 $body-background-color: $primary-invert;
 $body-color: $white;
 $body-size: 14px;
@@ -55,11 +58,11 @@ $button-disabled-border-color: #393939;
 
 $input-color: $white;
 $input-background-color: transparent;
-$input-border-color: #393939;
+$input-border-color: $primary;
 $input-hover-border-color: $white;
 $input-hover-color: $white;
-$input-focus-border-color: $primary;
-$input-placeholder-color: #393939;
+$input-focus-border-color: $white;
+$input-placeholder-color: $primary;
 $input-focus-box-shadow-size: 0 0 0;
 
 $input-disabled-background-color: #181818;
@@ -160,7 +163,11 @@ $pagination-current-color: $primary-invert;
 $pagination-current-background-color: $primary;
 $pagination-current-border-color: $primary;
 
-$pre-background: rgba($primary, 0.104);
+$pre-background: rgba($deep-black, 0.404);
+
+.highlight {
+  border-radius: 10px;
+}
 
 .columns {
   @include from(576px) {

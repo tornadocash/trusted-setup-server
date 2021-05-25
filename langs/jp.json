@@ -1,0 +1,82 @@
+{
+  "common": {
+    "loading": "読み込み中",
+    "error": "エラー",
+    "close": "閉じる"
+  },
+  "pages": {
+    "header": {
+      "instructions": "説明書"
+    },
+    "form": {
+      "twitterSignIn": "ツイッターでサインイン",
+      "githubSignIn": "ギットハブでサインイン"
+    },
+    "index": {
+      "sherpaCash": "シェルパ・キャッシュ",
+      "trustedSetupCeremonyTitle": "信頼されたセットアップセレモニー",
+      "zkSnarks": "zk-SNARKs（ゼットケー・スナーク）は証明者と検証者間の既存のセットアップを要求します。zk-SNARKsの構造において、一連の公開されたパラメーターは”ゲームのルール”を定義づけます。あなたのエントロピーソースを寄与していただくことで、シェルパ・キャッシュは完全に管理者による検証を必要としなくなります。",
+      "contribute": "貢献する",
+      "currently": "現在～",
+      "contributions": "コントリビューション（貢献）があります。",
+      "account": "アカウント",
+      "name": "名前",
+      "project": "プロジェクト",
+      "attestation": "認証",
+      "nothingHere": "何もありません",
+      "search": "検索"
+    },
+    "authorize": {
+      "saveInformation": "情報を保存する",
+      "postAttestationTwitter": "ツイッターへ認証を掲示できます",
+      "postAttestation": "認証を掲示する",
+      "contributeIdentity": "コントリビューション（貢献）のためにあなたの認証を提供したいですか",
+      "specifyName": "あなたの名前とプロジェクトを明記してください",
+      "contributionUpdated": "あなたのコントリビューション（貢献）がアップデートされました",
+      "somethingWrong": "不具合が起こりました。サポートにご連絡ください"
+    },
+    "contribution": {
+      "hello": "こんにちは, ",
+      "contributeHow": "シェルパ・キャッシュの信頼されたセットアップセレモニーにどのようにコントリビューション（貢献）をされたいですか?",
+      "anonymously": "匿名で",
+      "socialAccount": "ソーシャルアカウントを使用して",
+      "contributionHash": "コントリビューション（貢献）のハッシュ（Blake2b)",
+      "postAttestationTwitter": "現在あなたのツイッター認証を掲示できるようになりました",
+      "postAttestation": "認証を掲示する",
+      "provideIdentity": "あなたは以下に示す認証をコントリビューション（貢献）のためにさらに提供することできます: ",
+      "thisLink": "このリンクをクリックしてください",
+      "trustBinaries": "あなたがこのバイナリーを信頼できない場合は、以下を推奨します",
+      "instructions": "明書",
+      "easyCompile": "ソースコードを蓄積することでのコントリビューション（貢献）.それは非常に簡単です",
+      "contribution": "コントリビューション（貢献）",
+      "provideRandom": "ランダムな入力をご提供下さい。それによってブラウザーのRNG(乱数ジェネレーター)と連動しあなたのコントリビューション（貢献）のためのエントロピーソースとして使用されます。",
+      "contribute": "貢献する",
+      "downloadingLast": "最終のコントリビューション（貢献）をダウンロードしています",
+      "generatingRandom": "ランダムなコントリビューション（貢献）を作り出します。あなたのブラウザーは反応しない状態となるかもしれません。完了まで1分程度かかります。",
+      "uploadingContribution": "あなたのコントリビューション（貢献）をアップロード、検証しています",
+      "contributionVerified": "あなたのコントリビューション（貢献）は検証され、記録されました",
+      "failedUpload": "以下のコントリビューション（貢献）のアップロードに失敗しました (",
+      "attempts": " 試行)",
+      "uploadError": "あなたのコントリビューション（貢献）のアップロードにエラーが生じました",
+      "copied": "コピーされました!"
+    },
+    "instructions": {
+      "instructions" : "説明書",
+      "pureRust": "純粋なRustインプリメンテーション（実装）を使用:",
+      "installRust": "# Rustをインストール",
+      "cloneRepo": "# リポジトリ（保管場所）をセレモニーコードでクローンする",
+      "runCeremony": "# セレモニーを実行",
+      "afterContribution": "コントリビューション（貢献）した後は、 RAM（ランダムアクセスメモリ）をクリアするためをパソコンの再起動を推奨いたします",
+      "usingDocker": "Dockerのコンテナを使用する:",
+      "downloadRustContainer": "このメソッドを使用し、あなたはRustコンテナのストック内にある私達のgit repoからセレモニーソースコードをダウンロード、編集できます。これは事前に構築されたコンテナディストリビューションではありません",
+      "installDocker": "あなたのシステムにDockerをインストールすることにより開始:",
+      "windows": "Windows(ウィンドウズ)",
+      "mac": "Mac(マック）",
+      "linux": "Linux",
+      "downloadDockerfile": "# Dockerfileをダウンロード",
+      "buildDockerImage": "# Dockerイメージを構築",
+      "runCeremony": "# セレモニーを実行"
+
+    }
+  }
+}

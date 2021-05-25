@@ -1,0 +1,82 @@
+{
+  "common": {
+    "loading": "Loading",
+    "error": "error",
+    "close": "close"
+  },
+  "pages": {
+    "header": {
+      "instructions": "Instructions"
+    },
+    "form": {
+      "twitterSignIn": "Sign in with Twitter",
+      "githubSignIn": "Sign in with Github"
+    },
+    "index": {
+      "sherpaCash": "Sherpa.cash",
+      "trustedSetupCeremonyTitle": "Trusted Setup Ceremony",
+      "zkSnarks": "zk-SNARKs require a pre-existing setup between Prover and Verifier. A set of public parameters\n defines the “rules of the game” for the construction of zk-SNARKs. Please contribute with your\n source of entropy, so that Sherpa.cash can become fully trustless.",
+      "contribute": "Contribute",
+      "currently": "Currently there are",
+      "contributions": "contributions",
+      "account": "Account",
+      "name": "Name",
+      "project": "Project",
+      "attestation": "Attestation",
+      "nothingHere": "Nothing here.",
+      "search": "Search..."
+    },
+    "authorize": {
+      "saveInformation": "Save information",
+      "postAttestationTwitter": "Now you can post your attestation to Twitter",
+      "postAttestation": "Post attestation",
+      "contributeIdentity": "Would you like to provide identity for your contribution ",
+      "specifyName": "Please specify your name and project.",
+      "contributionUpdated": "Your contribution has been updated",
+      "somethingWrong": "Something went wrong. Please contact support"
+    },
+    "contribution": {
+      "hello": "Hello, ",
+      "contributeHow": "How would you like to contribute to the Sherpa.cash Trusted Setup Ceremony?",
+      "anonymously": "Anonymously",
+      "socialAccount": "By using social account",
+      "contributionHash": "Your contribution hash (Blake2b)",
+      "postAttestationTwitter": "And now you can post your attestation to Twitter.",
+      "postAttestation": "Post attestation",
+      "provideIdentity": "You can still provide identity for your contribution by following",
+      "thisLink": "this link",
+      "trustBinaries": "If you don’t trust binaries, we encourage you to follow these",
+      "instructions": "instructions",
+      "easyCompile": "to contribute by compiling from the source code. It is fairly easy!",
+      "contribution": "Contribution",
+      "provideRandom": "Please provide your random input that will be used as a source of entropy for your contribution along with browser's RNG.",
+      "contribute": "Contribute",
+      "downloadingLast": "Downloading last contribution",
+      "generatingRandom": "Generating random contribution. Your browser may appear unresponsive. It can take a minute or so to complete",
+      "uploadingContribution": "Uploading and verifying your contribution",
+      "contributionVerified": "Your contribution has been verified and recorded.",
+      "failedUpload": "Failed to upload your contribution after ",
+      "attempts": " attempts",
+      "uploadError": "Error uploading your contribution",
+      "copied": "Copied!"
+    },
+    "instructions": {
+      "instructions" : "Instructions",
+      "pureRust": "Using pure Rust implementation:",
+      "installRust": "# Install Rust",
+      "cloneRepo": "# Clone the repository with the ceremony code",
+      "runCeremony": "# Run the ceremony",
+      "afterContribution": "After the contribution, we recommend you to reboot your machine to clear your RAM.",
+      "usingDocker": "Using Docker container:",
+      "downloadRustContainer": "Using this method, you will download and compile the ceremony source code from our git repo in a stock Rust container. This is not a prebuilt container distribution.",
+      "installDocker": "Start by installing Docker on your system:",
+      "windows": "Windows",
+      "mac": "Mac",
+      "linux": "Linux",
+      "downloadDockerfile": "# Download Dockerfile",
+      "buildDockerImage": "# Build docker image",
+      "runCeremony": "# Run the ceremony"
+
+    }
+  }
+}
