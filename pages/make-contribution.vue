@@ -241,7 +241,8 @@ export default {
         } else if (resp.status === 422) {
           if (retry < 3) {
             console.log(`Looks like someone else uploaded contribution ahead of us, retrying`)
-            await this.makeContribution({ userInput, retry: retry++ })
+            console.log('Attempt ', retry+1)
+            await this.makeContribution({ userInput, retry: ++retry })
           } else {
             this.status.msg =
               this.$t('pages.contribution.failedUpload') +
