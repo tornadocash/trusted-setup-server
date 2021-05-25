@@ -17,7 +17,7 @@
         type="is-primary"
         outlined
       >
-        {{ $t('pages.index.saveInformation') }}
+        {{ $t('pages.authorize.saveInformation') }}
       </b-button>
     </div>
     <div v-show="status.type !== ''" class="status">
