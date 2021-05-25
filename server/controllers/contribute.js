@@ -73,11 +73,13 @@ router.post('/response', upload.single('response'), async (req, res) => {
       const socialType = req.session.socialType || 'anonymous'
       let name = null
       let company = null
+      let wallet = null
       let handle = null
       let token = null
       if (socialType !== 'anonymous' && req.body) {
         name = req.body.name || null
         company = req.body.company || null
+        wallet = req.body.wallet || null
         handle = req.session.handle || null
       } else {
         token = crypto.randomBytes(32).toString('hex')
@@ -93,7 +95,7 @@ router.post('/response', upload.single('response'), async (req, res) => {
         `./server/snark_files/response_${contributionIndex}`
       )
 
-      await Contribution.create({ name, company, handle, socialType, token })
+      await Contribution.create({ name, company, wallet, handle, socialType, token })
 
       console.log('Contribution finished.')
       res.json({ contributionIndex, token })
