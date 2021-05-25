@@ -58,6 +58,14 @@ export default {
         this.$store.commit('user/SET_NAME', value)
       }
     },
+    userWallet: {
+      get() {
+        return this.$store.state.user.wallet
+      },
+      set(value) {
+        this.$store.commit('user/SET_WALLET', value)
+      }
+    },
     userCompany: {
       get() {
         return this.$store.state.user.company
